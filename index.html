@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>#LeKo – Stärker werden. Nicht allein.</title>
+<meta name="description" content="#LeKo ist die Gemeinschaft für Männer von 25 bis 50 in Kärnten: Bildungsseminare, Bewegung, Resilienz und echte Bruderschaft. Gemeinnützig aus Klagenfurt.">
+<meta name="theme-color" content="#0A0A0A">
+<meta property="og:title" content="#LeKo – Stärker werden. Nicht allein.">
+<meta property="og:description" content="Bildungsseminare, Bewegung und Männer, auf die du zählen kannst. Gemeinnützig aus Klagenfurt.">
+<meta property="og:image" content="https://prinz03.github.io/leko-website/assets/logo/logo-512x512.png">
+<meta property="og:url" content="https://prinz03.github.io/leko-website/">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="de_AT">
+<link rel="icon" type="image/png" sizes="128x128" href="assets/logo/logo-128x128.png">
+<link rel="apple-touch-icon" href="assets/logo/logo-256x256.png">
+<link rel="stylesheet" href="assets/fonts/fonts.css">
+<style>
+/* ─── TOKENS ─────────────────────────────────────────────────────────── */
+:root{
+  --black:#0A0A0A; --black-2:#121212; --black-3:#1A1A1A;
+  --gold:#D4AF37; --gold-hi:#F1D77A; --gold-lo:#8C7020;
+  --white:#FFFFFF; --muted:rgba(255,255,255,.68); --line:rgba(212,175,55,.22);
+  --serif:'Playfair Display',Georgia,serif; --sans:'Inter',system-ui,-apple-system,sans-serif;
+  --gutter:20px; --max:1160px; --radius:14px;
+  --sticky-h:76px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{background:var(--black);color:var(--white);font-family:var(--sans);font-size:16px;line-height:1.6;
+  overflow-x:hidden;padding-bottom:calc(var(--sticky-h) + env(safe-area-inset-bottom))}
+img{max-width:100%;display:block}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:4px}
+.wrap{width:100%;max-width:var(--max);margin:0 auto;padding:0 var(--gutter)}
+.gold{color:var(--gold)}
+.eyebrow{font-size:.74rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--gold)}
+h1,h2,h3{font-family:var(--serif);line-height:1.08;letter-spacing:-.01em}
+h2{font-size:clamp(2rem,7.5vw,3.2rem);font-weight:800;margin:.6rem 0 1rem}
+h3{font-size:1.25rem;font-weight:700}
+.lead{color:var(--muted);font-size:1.05rem;max-width:38rem}
+section{padding:72px 0;position:relative}
+.sep{border-top:1px solid var(--line)}
+
+/* ─── BUTTONS ────────────────────────────────────────────────────────── */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;min-height:52px;padding:0 1.6rem;
+  border-radius:999px;font-weight:700;font-size:1rem;text-decoration:none;cursor:pointer;border:1.5px solid transparent;
+  transition:transform .2s ease,background .2s ease,box-shadow .2s ease,color .2s ease}
+.btn-gold{background:var(--gold);color:var(--black);box-shadow:0 8px 30px -8px rgba(212,175,55,.55)}
+.btn-gold:hover{background:var(--gold-hi);transform:translateY(-2px)}
+.btn-outline{border-color:rgba(255,255,255,.55);color:var(--white)}
+.btn-outline:hover{border-color:var(--gold);color:var(--gold)}
+.btn-row{display:flex;flex-direction:column;gap:12px}
+.btn-row .btn{width:100%}
+
+/* ─── NAV ────────────────────────────────────────────────────────────── */
+.nav{position:fixed;inset:0 0 auto 0;z-index:50;transition:background .3s,border-color .3s;border-bottom:1px solid transparent}
+.nav.scrolled,.nav.open{background:rgba(10,10,10,.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-color:var(--line)}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-family:var(--serif);font-weight:800;font-size:1.25rem}
+.brand img{width:36px;height:36px;border-radius:50%}
+.nav-links{display:none;gap:28px;list-style:none}
+.nav-links a{text-decoration:none;font-size:.92rem;color:var(--muted)}
+.nav-links a:hover{color:var(--gold)}
+.nav-cta{display:none}
+.burger{width:44px;height:44px;display:grid;place-items:center;background:none;border:0;color:var(--white);cursor:pointer}
+.burger span,.burger span::before,.burger span::after{display:block;width:22px;height:2px;background:currentColor;position:relative;transition:.3s}
+.burger span::before,.burger span::after{content:"";position:absolute;left:0}
+.burger span::before{top:-7px}.burger span::after{top:7px}
+.nav.open .burger span{background:transparent}
+.nav.open .burger span::before{top:0;transform:rotate(45deg)}
+.nav.open .burger span::after{top:0;transform:rotate(-45deg)}
+.drawer{position:fixed;top:64px;left:0;right:0;height:calc(100dvh - 64px);background:var(--black);padding:24px var(--gutter);display:flex;flex-direction:column;gap:6px;
+  transform:translateX(100%);transition:transform .35s ease,visibility .35s;visibility:hidden}
+.nav.open .drawer{transform:none;visibility:visible}
+.drawer a{font-family:var(--serif);font-size:1.6rem;text-decoration:none;padding:10px 0;border-bottom:1px solid var(--line)}
+.drawer .btn{margin-top:20px;font-family:var(--sans);font-size:1rem;border-bottom:0}
+
+/* ─── HERO ───────────────────────────────────────────────────────────── */
+.hero{min-height:100svh;display:flex;align-items:center;padding:96px 0 48px;overflow:hidden;
+  background:radial-gradient(ellipse 80% 60% at 85% 30%,rgba(212,175,55,.14),transparent 60%),var(--black)}
+.hero .wrap{display:grid;grid-template-columns:minmax(0,1fr);gap:8px;position:relative}
+.hero-text{position:relative;z-index:2}
+.hero h1{font-size:clamp(2.9rem,13vw,5.6rem);font-weight:900;margin:14px 0 18px}
+.hero h1 em{font-style:italic;color:var(--gold);display:block}
+.hero .lead{margin-bottom:28px}
+.hero-meta{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:22px;font-size:.85rem;color:var(--muted)}
+.hero-meta span::before{content:"◆";color:var(--gold);font-size:.6rem;margin-right:8px;vertical-align:2px}
+
+/* 3D-Kompass */
+.compass-stage{position:absolute;z-index:1;top:-40px;right:-34vw;width:88vw;max-width:520px;aspect-ratio:1;
+  perspective:1100px;opacity:.38;pointer-events:none}
+.compass{position:absolute;inset:0;transform-style:preserve-3d;
+  transform:rotateX(calc(18deg + var(--rx,0deg))) rotateY(calc(-22deg + var(--ry,0deg)));
+  transition:transform .6s cubic-bezier(.2,.7,.2,1)}
+.compass .float{position:absolute;inset:0;transform-style:preserve-3d;animation:float 7s ease-in-out infinite}
+.layer{position:absolute;inset:0;border-radius:50%;transform-style:preserve-3d}
+.rim{border:2px solid var(--gold-lo);background:radial-gradient(circle,#1b1608 0%,#0d0b05 70%)}
+.face{background:radial-gradient(circle at 35% 30%,#24201a 0%,#101010 55%,#070707 100%);
+  border:3px solid var(--gold);box-shadow:inset 0 0 40px rgba(0,0,0,.9),0 0 60px rgba(212,175,55,.25)}
+.layer svg{width:100%;height:100%;overflow:visible}
+.bezel{animation:spin 90s linear infinite}
+.needle{inset:12%;animation:needle 9s ease-in-out infinite}
+.cap{inset:46.5%;background:radial-gradient(circle at 35% 30%,var(--gold-hi),var(--gold) 45%,var(--gold-lo));
+  box-shadow:0 2px 10px rgba(0,0,0,.6)}
+.glow{position:absolute;inset:-12%;border-radius:50%;background:radial-gradient(circle,rgba(212,175,55,.22),transparent 62%);
+  filter:blur(10px);animation:pulse 5s ease-in-out infinite}
+.shadow{position:absolute;left:15%;right:15%;bottom:-14%;height:10%;border-radius:50%;
+  background:radial-gradient(ellipse,rgba(212,175,55,.25),transparent 70%);filter:blur(8px);animation:shadow 7s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0) rotateZ(0)}50%{transform:translateY(-14px) rotateZ(2deg)}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes needle{0%{transform:translateZ(46px) rotate(-38deg)}12%{transform:translateZ(46px) rotate(24deg)}
+  22%{transform:translateZ(46px) rotate(-10deg)}32%,100%{transform:translateZ(46px) rotate(8deg)}}
+@keyframes pulse{0%,100%{opacity:.65;transform:scale(1)}50%{opacity:1;transform:scale(1.05)}}
+@keyframes shadow{0%,100%{transform:scale(1);opacity:.9}50%{transform:scale(.85);opacity:.6}}
+
+/* Hero-Einblendung */
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .8s ease,transform .8s cubic-bezier(.2,.7,.2,1)}
+.reveal.in{opacity:1;transform:none}
+.hero .reveal:nth-child(2){transition-delay:.1s}.hero .reveal:nth-child(3){transition-delay:.2s}
+.hero .reveal:nth-child(4){transition-delay:.3s}.hero .reveal:nth-child(5){transition-delay:.4s}
+
+/* ─── KENNST DU DAS ──────────────────────────────────────────────────── */
+.pains{display:grid;gap:12px;margin-top:28px}
+.pain{display:flex;gap:14px;align-items:flex-start;padding:18px;border:1px solid var(--line);border-radius:var(--radius);background:var(--black-2)}
+.pain b{font-family:var(--serif);color:var(--gold);font-size:1.4rem;line-height:1}
+.pain p{color:var(--muted)}.pain strong{color:var(--white);font-weight:600}
+.turn{margin-top:28px;font-family:var(--serif);font-size:clamp(1.4rem,5vw,1.9rem);font-style:italic}
+
+/* ─── SÄULEN ─────────────────────────────────────────────────────────── */
+.grid{display:grid;gap:14px;margin-top:32px}
+.card{padding:26px 22px;border-radius:var(--radius);background:linear-gradient(160deg,var(--black-3),var(--black-2));
+  border:1px solid var(--line);position:relative;overflow:hidden;transition:border-color .3s,transform .3s}
+.card:hover{border-color:rgba(212,175,55,.6);transform:translateY(-3px)}
+.card .ic{width:46px;height:46px;border-radius:12px;display:grid;place-items:center;background:rgba(212,175,55,.1);
+  border:1px solid var(--line);margin-bottom:16px;color:var(--gold)}
+.card .ic svg{width:24px;height:24px}
+.card p{color:var(--muted);margin-top:8px;font-size:.96rem}
+.card .num{position:absolute;top:14px;right:18px;font-family:var(--serif);font-size:2.6rem;font-weight:900;color:rgba(212,175,55,.09)}
+
+/* ─── DEIN WEG ───────────────────────────────────────────────────────── */
+.steps{display:grid;gap:14px;margin-top:32px;counter-reset:s}
+.step{padding:24px 22px 24px 74px;border-radius:var(--radius);border:1px solid var(--line);position:relative;background:var(--black-2)}
+.step::before{counter-increment:s;content:counter(s);position:absolute;left:20px;top:22px;width:38px;height:38px;border-radius:50%;
+  display:grid;place-items:center;font-family:var(--serif);font-weight:800;background:var(--gold);color:var(--black)}
+.step .tag{font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);font-weight:600}
+.step p{color:var(--muted);margin:6px 0 14px;font-size:.96rem}
+.step a{color:var(--gold);font-weight:600;text-decoration:none}
+.step a:hover{text-decoration:underline}
+
+/* ─── APP ────────────────────────────────────────────────────────────── */
+.app{background:linear-gradient(180deg,var(--black),#0f0d06 50%,var(--black))}
+.badge{display:inline-block;padding:5px 12px;border-radius:999px;border:1px solid var(--gold);color:var(--gold);font-size:.72rem;
+  font-weight:600;letter-spacing:.14em;text-transform:uppercase}
+.feat{display:grid;gap:12px;margin-top:28px}
+.feat li{list-style:none;padding:16px 18px;border-left:3px solid var(--gold);background:var(--black-2);border-radius:0 10px 10px 0}
+.feat li strong{display:block;font-weight:600}
+.feat li span{color:var(--muted);font-size:.94rem}
+
+/* ─── HALTUNG ────────────────────────────────────────────────────────── */
+.stance{display:grid;gap:10px;margin-top:24px}
+.stance div{padding:16px 18px;border-radius:10px;border:1px dashed var(--line);color:var(--muted)}
+.stance strong{color:var(--white)}
+.help{margin-top:18px;font-size:.88rem;color:var(--muted)}
+
+/* ─── MITGLIED WERDEN ────────────────────────────────────────────────── */
+.join{text-align:center;background:radial-gradient(ellipse 70% 60% at 50% 0%,rgba(212,175,55,.16),transparent 70%),var(--black)}
+.claim{font-family:var(--serif);font-weight:900;font-size:clamp(2rem,8.5vw,4rem);line-height:1.1}
+.claim span{display:block}.claim span:last-child{color:var(--gold)}
+.join .lead{margin:20px auto 28px}
+.benefits{display:grid;grid-template-columns:1fr 1fr;gap:10px;max-width:640px;margin:0 auto 32px;text-align:left}
+.benefits li{list-style:none;padding:14px;border-radius:10px;background:var(--black-2);border:1px solid var(--line);font-size:.9rem}
+.benefits li::before{content:"✓";color:var(--gold);font-weight:700;margin-right:8px}
+.join .btn-row{max-width:420px;margin:0 auto}
+.fine{margin-top:16px;font-size:.8rem;color:var(--muted)}
+
+/* ─── FAQ ────────────────────────────────────────────────────────────── */
+.faq{margin-top:28px;display:grid;gap:10px}
+details{border:1px solid var(--line);border-radius:12px;background:var(--black-2);overflow:hidden}
+summary{cursor:pointer;list-style:none;padding:18px 52px 18px 18px;font-weight:600;position:relative}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";position:absolute;right:18px;top:50%;transform:translateY(-50%);color:var(--gold);font-size:1.5rem;transition:transform .3s}
+details[open] summary::after{transform:translateY(-50%) rotate(45deg)}
+details p{padding:0 18px 18px;color:var(--muted)}
+
+/* ─── IMPRESSUM / FOOTER ─────────────────────────────────────────────── */
+.imp{display:grid;gap:14px;margin-top:28px}
+.imp dl{padding:22px;border-radius:var(--radius);border:1px solid var(--line);background:var(--black-2);display:grid;gap:12px}
+.imp dt{font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--gold)}
+.imp dd{color:var(--muted);font-size:.95rem;overflow-wrap:anywhere}
+footer{padding:40px 0;border-top:1px solid var(--line);text-align:center;color:var(--muted);font-size:.85rem}
+footer .slogan{font-family:var(--serif);font-style:italic;color:var(--white);font-size:1.1rem;margin-bottom:10px}
+
+/* ─── STICKY-CTA (MOBIL) ─────────────────────────────────────────────── */
+.sticky{position:fixed;left:0;right:0;bottom:0;z-index:40;padding:12px var(--gutter) calc(12px + env(safe-area-inset-bottom));
+  background:rgba(10,10,10,.92);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-top:1px solid var(--line);
+  transform:translateY(110%);transition:transform .35s ease}
+.sticky.show{transform:none}
+.sticky .btn{width:100%}
+
+/* ─── TABLET / DESKTOP ───────────────────────────────────────────────── */
+@media (min-width:640px){
+  .btn-row{flex-direction:row}.btn-row .btn{width:auto}
+  .grid{grid-template-columns:1fr 1fr}
+  .pains{grid-template-columns:1fr 1fr}
+  .benefits{grid-template-columns:repeat(3,1fr)}
+  .imp{grid-template-columns:1fr 1fr}
+}
+@media (min-width:960px){
+  :root{--gutter:32px}
+  body{padding-bottom:0}
+  section{padding:110px 0}
+  .nav-links{display:flex}.nav-cta{display:inline-flex;min-height:42px;font-size:.9rem}.burger,.drawer{display:none}
+  .hero .wrap{grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);align-items:center;gap:40px}
+  .compass-stage{position:relative;top:auto;right:auto;width:100%;opacity:1;pointer-events:auto}
+  .grid{grid-template-columns:repeat(3,1fr)}
+  .steps{grid-template-columns:repeat(3,1fr)}
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start}
+  .sticky{display:none}
+}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+  .reveal{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+
+<!-- ─── NAVIGATION ─────────────────────────────────────────────────── -->
+<header class="nav" id="nav">
+  <div class="wrap">
+    <a href="#top" class="brand"><img src="assets/logo/logo-128x128.png" alt="" width="36" height="36">#LeKo</a>
+    <ul class="nav-links">
+      <li><a href="#saeulen">Säulen</a></li>
+      <li><a href="#weg">Dein Weg</a></li>
+      <li><a href="#app">Väter-App</a></li>
+      <li><a href="#faq">FAQ</a></li>
+      <li><a href="#kontakt">Kontakt</a></li>
+    </ul>
+    <a href="#mitglied" class="btn btn-gold nav-cta">Jetzt Mitglied werden</a>
+    <button class="burger" id="burger" aria-label="Menü öffnen" aria-expanded="false" aria-controls="drawer"><span></span></button>
+  </div>
+  <nav class="drawer" id="drawer" aria-label="Mobile Navigation">
+    <a href="#saeulen">Säulen</a>
+    <a href="#weg">Dein Weg</a>
+    <a href="#app">Väter-App</a>
+    <a href="#faq">FAQ</a>
+    <a href="#kontakt">Kontakt</a>
+    <a href="#mitglied" class="btn btn-gold">Jetzt Mitglied werden</a>
+  </nav>
+</header>
+
+<main id="top">
+
+<!-- ─── HERO ───────────────────────────────────────────────────────── -->
+<section class="hero" id="hero">
+  <div class="wrap">
+    <div class="hero-text">
+      <p class="eyebrow reveal">Es ist an der Zeit, Deinen Kompass neu auszurichten.</p>
+      <h1 class="reveal">Stärker werden. <em>Nicht allein.</em></h1>
+      <p class="lead reveal">#LeKo ist die Gemeinschaft für Männer von 25 bis 50 in Kärnten: Bildungsseminare, Bewegung und Brüder, auf die du zählen kannst.</p>
+      <div class="btn-row reveal">
+        <a href="#mitglied" class="btn btn-gold">Jetzt Mitglied werden</a>
+        <a href="#weg" class="btn btn-outline">Unverbindlich kennenlernen</a>
+      </div>
+      <div class="hero-meta reveal"><span>Klagenfurt am Wörthersee</span><span>Gemeinnützig</span><span>Ehrenamtlich geführt</span></div>
+    </div>
+
+    <div class="compass-stage" aria-hidden="true">
+      <div class="glow"></div>
+      <div class="shadow"></div>
+      <div class="compass" id="compass">
+        <div class="float">
+          <!-- Gehäusetiefe: gestapelte Ringe ergeben den 3D-Rand -->
+          <div class="layer rim" style="transform:translateZ(-24px)"></div>
+          <div class="layer rim" style="transform:translateZ(-18px)"></div>
+          <div class="layer rim" style="transform:translateZ(-12px)"></div>
+          <div class="layer rim" style="transform:translateZ(-6px)"></div>
+          <div class="layer face" style="transform:translateZ(0)"></div>
+
+          <!-- Skala mit Slogan -->
+          <div class="layer" style="transform:translateZ(8px)">
+            <svg viewBox="0 0 240 240" class="bezel">
+              <defs>
+                <path id="txt" d="M120,120 m-84,0 a84,84 0 1,1 168,0 a84,84 0 1,1 -168,0"/>
+              </defs>
+              <circle cx="120" cy="120" r="104" fill="none" stroke="#D4AF37" stroke-opacity=".5" stroke-width=".8"/>
+              <g id="ticks" stroke="#D4AF37"></g>
+              <text font-family="Inter,sans-serif" font-size="6.4" letter-spacing="2.6" fill="#D4AF37" fill-opacity=".7">
+                <textPath href="#txt">ICH BIN STARK · DU BIST STARK · WIR SIND STARK · ICH BIN STARK · DU BIST STARK · WIR SIND STARK ·</textPath>
+              </text>
+            </svg>
+          </div>
+
+          <!-- Windrose -->
+          <div class="layer" style="transform:translateZ(20px)">
+            <svg viewBox="0 0 240 240">
+              <g fill="none" stroke="#D4AF37" stroke-opacity=".35"><circle cx="120" cy="120" r="70"/><circle cx="120" cy="120" r="40"/></g>
+              <g opacity=".55">
+                <polygon points="120,62 128,112 120,120 112,112" fill="#8C7020" transform="rotate(45 120 120)"/>
+                <polygon points="120,62 128,112 120,120 112,112" fill="#8C7020" transform="rotate(135 120 120)"/>
+                <polygon points="120,62 128,112 120,120 112,112" fill="#8C7020" transform="rotate(225 120 120)"/>
+                <polygon points="120,62 128,112 120,120 112,112" fill="#8C7020" transform="rotate(315 120 120)"/>
+              </g>
+              <g>
+                <polygon points="120,44 130,110 120,120" fill="#F1D77A"/><polygon points="120,44 110,110 120,120" fill="#D4AF37"/>
+                <polygon points="120,44 130,110 120,120" fill="#D4AF37" transform="rotate(90 120 120)"/><polygon points="120,44 110,110 120,120" fill="#8C7020" transform="rotate(90 120 120)"/>
+                <polygon points="120,44 130,110 120,120" fill="#D4AF37" transform="rotate(180 120 120)"/><polygon points="120,44 110,110 120,120" fill="#8C7020" transform="rotate(180 120 120)"/>
+                <polygon points="120,44 130,110 120,120" fill="#D4AF37" transform="rotate(270 120 120)"/><polygon points="120,44 110,110 120,120" fill="#8C7020" transform="rotate(270 120 120)"/>
+              </g>
+              <g font-family="Playfair Display,Georgia,serif" font-weight="800" font-size="13" fill="#FFFFFF" text-anchor="middle">
+                <text x="120" y="60">N</text><text x="181" y="125">O</text><text x="120" y="190">S</text><text x="59" y="125">W</text>
+              </g>
+            </svg>
+          </div>
+
+          <!-- Nadel -->
+          <div class="layer needle">
+            <svg viewBox="0 0 240 240">
+              <polygon points="120,6 132,120 108,120" fill="#D4AF37"/>
+              <polygon points="120,6 120,120 108,120" fill="#F1D77A"/>
+              <polygon points="120,234 132,120 108,120" fill="#2a2a2a" stroke="#D4AF37" stroke-opacity=".5"/>
+            </svg>
+          </div>
+          <div class="layer cap" style="transform:translateZ(54px)"></div>
+          <!-- Glas -->
+          <div class="layer" style="transform:translateZ(60px);background:linear-gradient(135deg,rgba(255,255,255,.14),transparent 45%);border:1px solid rgba(255,255,255,.08)"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── KENNST DU DAS ──────────────────────────────────────────────── -->
+<section class="sep" id="kennst-du-das">
+  <div class="wrap">
+    <p class="eyebrow">Kennst du das?</p>
+    <h2>Du funktionierst. <span class="gold">Aber lebst du auch?</span></h2>
+    <div class="pains">
+      <div class="pain"><b>01</b><p><strong>Job, Termine, Pflichten.</strong> Du lieferst jeden Tag, aber deine eigene Richtung ist irgendwo verloren gegangen.</p></div>
+      <div class="pain"><b>02</b><p><strong>Viele Kontakte, wenig Freunde.</strong> Männer, mit denen du wirklich reden kannst, sind rar geworden.</p></div>
+      <div class="pain"><b>03</b><p><strong>Vater sein, oft nebenbei.</strong> Oder nach einer Trennung plötzlich auf Distanz.</p></div>
+      <div class="pain"><b>04</b><p><strong>Die Welt dreht schneller.</strong> KI und neue Technologien verändern alles, und keiner erklärt sie dir.</p></div>
+    </div>
+    <p class="turn">Es ist nicht zu spät. <span class="gold">Du musst es nur nicht allein machen.</span></p>
+  </div>
+</section>
+
+<!-- ─── SÄULEN ─────────────────────────────────────────────────────── -->
+<section class="sep" id="saeulen">
+  <div class="wrap">
+    <p class="eyebrow">Was wir tun</p>
+    <h2>Die 5 Säulen von <span class="gold">#LeKo</span></h2>
+    <p class="lead">Jede Säule ist ein Bereich, in dem wir dich fördern und fordern.</p>
+    <div class="grid">
+      <article class="card"><span class="num">01</span>
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.6 5.6 6 .7-4.5 4.1 1.2 6L12 16.4 6.7 19.4l1.2-6L3.4 9.3l6-.7z"/></svg></div>
+        <h3>Persönlichkeit &amp; Resilienz</h3><p>Mentale Stärke, Klarheit und Haltung. Nicht brechen, sondern wachsen.</p></article>
+      <article class="card"><span class="num">02</span>
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 7v10M18 7v10M3 10v4M21 10v4M6 12h12"/></svg></div>
+        <h3>Sport &amp; Bewegung</h3><p>Ein starker Körper ist das Fundament. Gemeinsame Trainings und Events.</p></article>
+      <article class="card"><span class="num">03</span>
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="2.5"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6M15 14.5c3 0 6 1.8 6 5.5"/></svg></div>
+        <h3>Gemeinschaft &amp; Bruderschaft</h3><p>Männer, die zuhören, ohne zu urteilen. Und die da sind, wenn es zählt.</p></article>
+      <article class="card"><span class="num">04</span>
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="6" r="2.5"/><circle cx="16.5" cy="10" r="1.8"/><path d="M4 21v-6a4 4 0 0 1 8 0v6M14 21v-4a2.5 2.5 0 0 1 5 0v4"/></svg></div>
+        <h3>Väter &amp; Neuanfang</h3><p>Der Vater sein, den du dir selbst gewünscht hättest. Auch nach einer Trennung.</p></article>
+      <article class="card"><span class="num">05</span>
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="5" width="14" height="14" rx="2"/><path d="M9 1v4M15 1v4M9 19v4M15 19v4M1 9h4M1 15h4M19 9h4M19 15h4M9 9h6v6H9z"/></svg></div>
+        <h3>Neue Technologien</h3><p>KI und digitale Werkzeuge verstehen und nutzen, statt abgehängt zu werden.</p></article>
+    </div>
+  </div>
+</section>
+
+<!-- ─── DEIN WEG ───────────────────────────────────────────────────── -->
+<section class="sep" id="weg">
+  <div class="wrap">
+    <p class="eyebrow">Dein Weg zu #LeKo</p>
+    <h2>Ein Schritt nach dem anderen.</h2>
+    <p class="lead">Du entscheidest das Tempo. Niemand muss am ersten Abend alles erzählen oder Höchstleistung bringen.</p>
+    <div class="steps">
+      <div class="step"><span class="tag">Reinschnuppern</span><h3>Offenes Treffen</h3>
+        <p>Komm vorbei, lern die Männer kennen und schau, ob es passt. Unverbindlich.</p>
+        <a href="#kontakt">Beim offenen Treffen vorbeischauen →</a></div>
+      <div class="step"><span class="tag">Dranbleiben</span><h3>Bildungsseminar</h3>
+        <p>Vertiefe ein Thema: Resilienz, Vatersein, Gesundheit oder neue Technologien.</p>
+        <a href="#kontakt">Nächste Termine anfragen →</a></div>
+      <div class="step"><span class="tag">Dazugehören</span><h3>Mitgliedschaft</h3>
+        <p>Werde fester Teil der Gemeinschaft, mit Stimmrecht und allen Angeboten.</p>
+        <a href="#mitglied">Jetzt Mitglied werden →</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── VÄTER-APP ──────────────────────────────────────────────────── -->
+<section class="sep app" id="app">
+  <div class="wrap split">
+    <div>
+      <span class="badge">In Entwicklung</span>
+      <h2>Die #LeKo <span class="gold">Väter-App</span></h2>
+      <p class="lead">Für Väter in Trennungssituationen und für jeden Mann, der Orientierung sucht: verständliche Infos, Rückhalt und eine echte Community.</p>
+    </div>
+    <ul class="feat">
+      <li><strong>Rechtliche Orientierung</strong><span>Kontaktrecht, Obsorge, Unterhalt – klar erklärt nach österreichischem Recht.</span></li>
+      <li><strong>Fachliche Kontakte</strong><span>Wege zu Familienrechts-Profis, ohne lange Suche.</span></li>
+      <li><strong>Väter-Community</strong><span>Männer, die verstehen, was du durchmachst.</span></li>
+      <li><strong>Zeit mit deinen Kindern</strong><span>Ideen und Planung für gemeinsame Wochenenden und Ferien.</span></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ─── HALTUNG ────────────────────────────────────────────────────── -->
+<section class="sep" id="haltung">
+  <div class="wrap split">
+    <div>
+      <p class="eyebrow">Unsere Haltung</p>
+      <h2>Stärke als Haltung. <span class="gold">Nicht als Pose.</span></h2>
+      <p class="lead">#LeKo ist ein gemeinnütziger Bildungsverein aus Klagenfurt, ehrenamtlich geführt. Wir stärken Männer, nicht Fronten.</p>
+    </div>
+    <div>
+      <div class="stance">
+        <div><strong>Gemeinnützig</strong> statt gewinnorientiert. Jeder Beitrag fließt in die Vereinsarbeit.</div>
+        <div><strong>Respekt</strong> statt Dominanz-Gehabe. Niemand wird abgewertet.</div>
+        <div><strong>Unabhängig</strong>: keine Politik, keine Religion, keine Ideologie.</div>
+        <div><strong>Kein Ersatz für Therapie.</strong> Wir sind Gemeinschaft und Bildung.</div>
+      </div>
+      <p class="help">Du steckst in einer akuten Krise? Bitte wende dich an professionelle Hilfe, zum Beispiel die Telefonseelsorge unter <a href="tel:142" class="gold">142</a> (rund um die Uhr, kostenlos) oder im Notfall an <a href="tel:144" class="gold">144</a>.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ─── MITGLIED WERDEN ────────────────────────────────────────────── -->
+<section class="sep join" id="mitglied">
+  <div class="wrap">
+    <p class="claim"><span>Ich bin Stark.</span><span>Du bist Stark.</span><span>Wir sind Stark.</span></p>
+    <p class="lead">Werde Teil von #LeKo. Männer, die Verantwortung für ihr Leben übernehmen. Keine Ausreden – nur Wachstum.</p>
+    <ul class="benefits">
+      <li>Bildungsseminare</li>
+      <li>Sport &amp; Training</li>
+      <li>Starkes Netzwerk</li>
+      <li>App Early Access</li>
+      <li>Mentoring</li>
+      <li>Stimmrecht im Verein</li>
+    </ul>
+    <div class="btn-row">
+      <!-- TODO: Link zum Aufnahmeantrag bzw. zur Telegram-Community eintragen -->
+      <a href="#kontakt" class="btn btn-gold">Jetzt Mitglied werden</a>
+      <a href="#weg" class="btn btn-outline">Erst mal reinschnuppern</a>
+    </div>
+    <p class="fine">Ordentliche Mitgliedschaft · Jahresbeitrag · 1 Jahr, verlängert sich automatisch · jederzeit schriftlich kündbar</p>
+  </div>
+</section>
+
+<!-- ─── FAQ ────────────────────────────────────────────────────────── -->
+<section class="sep" id="faq">
+  <div class="wrap split">
+    <div>
+      <p class="eyebrow">Fragen</p>
+      <h2>Ehrliche Antworten.</h2>
+      <p class="lead">Noch etwas offen? Frag uns direkt.</p>
+    </div>
+    <div class="faq">
+      <details><summary>Muss ich sportlich sein?</summary><p>Nein. Jeder startet dort, wo er gerade steht. Es geht um Weiterkommen, nicht um Höchstleistung.</p></details>
+      <details><summary>Kann ich erst mal nur schauen?</summary><p>Ja. Komm zu einem offenen Treffen und lern uns kennen, ganz ohne Verpflichtung.</p></details>
+      <details><summary>Für wen ist #LeKo gedacht?</summary><p>Für Männer zwischen 25 und 50, die mehr Klarheit, Stärke und echte Gemeinschaft wollen – ob Single, Partner, Vater oder im Neuanfang.</p></details>
+      <details><summary>Was kostet ein Bildungsseminar?</summary><p>Für Bildungsseminare gibt es einen Förderbeitrag, den wir bei jedem Termin transparent angeben. Der Verein ist gemeinnützig und arbeitet nicht gewinnorientiert.</p></details>
+      <details><summary>Wie werde ich Mitglied?</summary><p>Über einen Aufnahmeantrag. Das Präsidium entscheidet über die Aufnahme. Die Mitgliedschaft läuft ein Jahr und verlängert sich automatisch; du kannst jederzeit schriftlich kündigen.</p></details>
+    </div>
+  </div>
+</section>
+
+<!-- ─── KONTAKT / IMPRESSUM ────────────────────────────────────────── -->
+<section class="sep" id="kontakt">
+  <div class="wrap">
+    <p class="eyebrow">Kontakt &amp; Impressum</p>
+    <h2>Lass uns reden.</h2>
+    <!-- TODO: Telegram-Link, E-Mail-Adresse und Datenschutzerklärung ergänzen -->
+    <p class="lead">Schreib uns über die #LeKo Telegram-Community. Der Link folgt in Kürze.</p>
+    <div class="imp">
+      <dl>
+        <div><dt>Verein</dt><dd>Lebenskompass – Bildungsverein zur Förderung gesunder Bewegung, Resilienz, Persönlichkeitsentwicklung und Integration von neuen Technologien</dd></div>
+        <div><dt>Sitz</dt><dd>Klagenfurt am Wörthersee, Kärnten, Österreich</dd></div>
+        <div><dt>ZVR-Zahl</dt><dd>1346040358</dd></div>
+      </dl>
+      <dl>
+        <div><dt>Präsident</dt><dd>Markus Prinz</dd></div>
+        <div><dt>Vizepräsidentin</dt><dd>Jasmin Schlag</dd></div>
+        <div><dt>Vereinskonto</dt><dd>IBAN AT82 1700 0001 5700 2147 · Gemeinnützig nach §§ 34 ff BAO</dd></div>
+      </dl>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <p class="slogan">„Es ist an der Zeit, Deinen Kompass neu auszurichten."</p>
+    <p>© 2026 #LeKo · ZVR 1346040358 · <a href="#kontakt">Impressum</a></p>
+  </div>
+</footer>
+
+<div class="sticky" id="sticky"><a href="#mitglied" class="btn btn-gold">Jetzt Mitglied werden</a></div>
+
+<script>
+(function(){
+  // Skalenstriche erzeugen
+  var g=document.getElementById('ticks'), ns='http://www.w3.org/2000/svg';
+  for(var i=0;i<72;i++){
+    var l=document.createElementNS(ns,'line'), major=i%9===0, a=i*5*Math.PI/180;
+    var r1=104, r2=major?94:99;
+    l.setAttribute('x1',120+r1*Math.sin(a)); l.setAttribute('y1',120-r1*Math.cos(a));
+    l.setAttribute('x2',120+r2*Math.sin(a)); l.setAttribute('y2',120-r2*Math.cos(a));
+    l.setAttribute('stroke-width',major?1.6:.7); l.setAttribute('stroke-opacity',major?1:.55);
+    g.appendChild(l);
+  }
+
+  // Hero-Einblendung
+  requestAnimationFrame(function(){
+    document.querySelectorAll('.hero .reveal').forEach(function(el){el.classList.add('in')});
+  });
+
+  // Navigation
+  var nav=document.getElementById('nav'), burger=document.getElementById('burger');
+  function setMenu(open){
+    nav.classList.toggle('open',open);
+    burger.setAttribute('aria-expanded',open);
+    burger.setAttribute('aria-label',open?'Menü schließen':'Menü öffnen');
+    document.body.style.overflow=open?'hidden':'';
+  }
+  burger.addEventListener('click',function(){setMenu(!nav.classList.contains('open'))});
+  document.querySelectorAll('.drawer a').forEach(function(a){a.addEventListener('click',function(){setMenu(false)})});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')setMenu(false)});
+
+  // Scroll: Nav-Hintergrund und Sticky-CTA (versteckt im Hero und bei der Mitglieds-Sektion)
+  var sticky=document.getElementById('sticky'), hero=document.getElementById('hero'), join=document.getElementById('mitglied');
+  function onScroll(){
+    nav.classList.toggle('scrolled',window.scrollY>20);
+    var heroGone=hero.getBoundingClientRect().bottom<80;
+    var jr=join.getBoundingClientRect(), joinVisible=jr.top<window.innerHeight && jr.bottom>0;
+    sticky.classList.toggle('show',heroGone && !joinVisible);
+  }
+  window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
+
+  // 3D-Kompass folgt dem Mauszeiger (nur Desktop, nicht bei reduzierter Bewegung)
+  var compass=document.getElementById('compass');
+  var calm=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(!calm && window.matchMedia('(pointer:fine)').matches){
+    hero.addEventListener('pointermove',function(e){
+      var r=hero.getBoundingClientRect();
+      var x=(e.clientX-r.left)/r.width-.5, y=(e.clientY-r.top)/r.height-.5;
+      compass.style.setProperty('--ry',(x*30).toFixed(1)+'deg');
+      compass.style.setProperty('--rx',(-y*24).toFixed(1)+'deg');
+    });
+    hero.addEventListener('pointerleave',function(){compass.style.setProperty('--ry','0deg');compass.style.setProperty('--rx','0deg')});
+  }
+})();
+</script>
+</body>
+</html>
