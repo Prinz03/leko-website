@@ -18,16 +18,16 @@
 <style>
 /* ─── TOKENS ─────────────────────────────────────────────────────────── */
 :root{
-  --black:#0A0A0A; --black-2:#121212; --black-3:#1A1A1A;
-  --gold:#D4AF37; --gold-hi:#F1D77A; --gold-lo:#8C7020;
-  --white:#FFFFFF; --muted:rgba(255,255,255,.68); --line:rgba(212,175,55,.22);
+  --primary:#0A0A0A; --surface:#111111; --surface-2:#1a1a1a;
+  --gold:#c9a84c; --gold-light:#e8c96a; --gold-dark:#a8862a;
+  --text:#f5f5f5; --text-muted:#888888; --line:rgba(201,168,76,.22);
   --serif:'Playfair Display',Georgia,serif; --sans:'Inter',system-ui,-apple-system,sans-serif;
-  --gutter:20px; --max:1160px; --radius:14px;
+  --gutter:20px; --max:1160px; --radius:12px;
   --sticky-h:76px;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
-body{background:var(--black);color:var(--white);font-family:var(--sans);font-size:16px;line-height:1.6;
+body{background:var(--primary);color:var(--text);font-family:var(--sans);font-size:16px;line-height:1.6;
   overflow-x:hidden;padding-bottom:calc(var(--sticky-h) + env(safe-area-inset-bottom))}
 img{max-width:100%;display:block}
 a{color:inherit}
@@ -38,39 +38,39 @@ a{color:inherit}
 h1,h2,h3{font-family:var(--serif);line-height:1.08;letter-spacing:-.01em}
 h2{font-size:clamp(2rem,7.5vw,3.2rem);font-weight:800;margin:.6rem 0 1rem}
 h3{font-size:1.25rem;font-weight:700}
-.lead{color:var(--muted);font-size:1.05rem;max-width:38rem}
-section{padding:72px 0;position:relative}
+.lead{color:var(--text-muted);font-size:1.05rem;max-width:38rem}
+section{padding:100px 0;position:relative}
 .sep{border-top:1px solid var(--line)}
 
 /* ─── BUTTONS ────────────────────────────────────────────────────────── */
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;min-height:52px;padding:0 1.6rem;
   border-radius:999px;font-weight:700;font-size:1rem;text-decoration:none;cursor:pointer;border:1.5px solid transparent;
   transition:transform .2s ease,background .2s ease,box-shadow .2s ease,color .2s ease}
-.btn-gold{background:var(--gold);color:var(--black);box-shadow:0 8px 30px -8px rgba(212,175,55,.55)}
-.btn-gold:hover{background:var(--gold-hi);transform:translateY(-2px)}
-.btn-outline{border-color:rgba(255,255,255,.55);color:var(--white)}
-.btn-outline:hover{border-color:var(--gold);color:var(--gold)}
+.btn-gold{background:var(--gold);color:var(--primary);box-shadow:0 8px 30px -8px rgba(201,168,76,.55)}
+.btn-gold:hover,.btn-outline:hover{background:var(--gold-dark);transform:translateY(-2px)}
+.btn-outline{background:var(--gold);color:var(--primary)}
 .btn-row{display:flex;flex-direction:column;gap:12px}
 .btn-row .btn{width:100%}
 
 /* ─── NAV ────────────────────────────────────────────────────────────── */
 .nav{position:fixed;inset:0 0 auto 0;z-index:50;transition:background .3s,border-color .3s;border-bottom:1px solid transparent}
 .nav.scrolled,.nav.open{background:rgba(10,10,10,.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-color:var(--line)}
-.nav .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px;height:64px}
 .brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-family:var(--serif);font-weight:800;font-size:1.25rem}
 .brand img{width:36px;height:36px;border-radius:50%}
 .nav-links{display:none;gap:28px;list-style:none}
-.nav-links a{text-decoration:none;font-size:.92rem;color:var(--muted)}
+.nav-links a{text-decoration:none;font-size:.92rem;color:var(--text-muted)}
 .nav-links a:hover{color:var(--gold)}
-.nav-cta{display:none}
-.burger{width:44px;height:44px;display:grid;place-items:center;background:none;border:0;color:var(--white);cursor:pointer}
+.nav-cta{display:inline-flex;gap:0;margin-left:auto;min-height:40px;padding:0 16px;font-size:.84rem;box-shadow:none}
+@media (max-width:479px){.nav-cta .jetzt{display:none}}
+.burger{width:44px;height:44px;display:grid;place-items:center;background:none;border:0;color:var(--text);cursor:pointer}
 .burger span,.burger span::before,.burger span::after{display:block;width:22px;height:2px;background:currentColor;position:relative;transition:.3s}
 .burger span::before,.burger span::after{content:"";position:absolute;left:0}
 .burger span::before{top:-7px}.burger span::after{top:7px}
 .nav.open .burger span{background:transparent}
 .nav.open .burger span::before{top:0;transform:rotate(45deg)}
 .nav.open .burger span::after{top:0;transform:rotate(-45deg)}
-.drawer{position:fixed;top:64px;left:0;right:0;height:calc(100dvh - 64px);background:var(--black);padding:24px var(--gutter);display:flex;flex-direction:column;gap:6px;
+.drawer{position:fixed;top:64px;left:0;right:0;height:calc(100dvh - 64px);background:var(--primary);padding:24px var(--gutter);display:flex;flex-direction:column;gap:6px;
   transform:translateX(100%);transition:transform .35s ease,visibility .35s;visibility:hidden}
 .nav.open .drawer{transform:none;visibility:visible}
 .drawer a{font-family:var(--serif);font-size:1.6rem;text-decoration:none;padding:10px 0;border-bottom:1px solid var(--line)}
@@ -78,41 +78,23 @@ section{padding:72px 0;position:relative}
 
 /* ─── HERO ───────────────────────────────────────────────────────────── */
 .hero{min-height:100svh;display:flex;align-items:center;padding:96px 0 48px;overflow:hidden;
-  background:radial-gradient(ellipse 80% 60% at 85% 30%,rgba(212,175,55,.14),transparent 60%),var(--black)}
-.hero .wrap{display:grid;grid-template-columns:minmax(0,1fr);gap:8px;position:relative}
-.hero-text{position:relative;z-index:2}
+  background:radial-gradient(ellipse 80% 60% at 85% 30%,rgba(201,168,76,.14),transparent 60%),var(--primary)}
+.hero .wrap{position:relative}
+.hero-text{position:relative;z-index:2;text-align:center;max-width:46rem;margin:0 auto}
+.hero .lead{margin-left:auto;margin-right:auto}
+.hero .btn-row{justify-content:center}
 .hero h1{font-size:clamp(2.9rem,13vw,5.6rem);font-weight:900;margin:14px 0 18px}
 .hero h1 em{font-style:italic;color:var(--gold);display:block}
 .hero .lead{margin-bottom:28px}
-.hero-meta{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:22px;font-size:.85rem;color:var(--muted)}
+.hero-meta{display:flex;flex-wrap:wrap;justify-content:center;gap:8px 18px;margin-top:22px;font-size:.85rem;color:var(--text-muted)}
 .hero-meta span::before{content:"◆";color:var(--gold);font-size:.6rem;margin-right:8px;vertical-align:2px}
 
-/* 3D-Kompass */
-.compass-stage{position:absolute;z-index:1;top:-40px;right:-34vw;width:88vw;max-width:520px;aspect-ratio:1;
-  perspective:1100px;opacity:.38;pointer-events:none}
-.compass{position:absolute;inset:0;transform-style:preserve-3d;
-  transform:rotateX(calc(18deg + var(--rx,0deg))) rotateY(calc(-22deg + var(--ry,0deg)));
-  transition:transform .6s cubic-bezier(.2,.7,.2,1)}
-.compass .float{position:absolute;inset:0;transform-style:preserve-3d;animation:float 7s ease-in-out infinite}
-.layer{position:absolute;inset:0;border-radius:50%;transform-style:preserve-3d}
-.rim{border:2px solid var(--gold-lo);background:radial-gradient(circle,#1b1608 0%,#0d0b05 70%)}
-.face{background:radial-gradient(circle at 35% 30%,#24201a 0%,#101010 55%,#070707 100%);
-  border:3px solid var(--gold);box-shadow:inset 0 0 40px rgba(0,0,0,.9),0 0 60px rgba(212,175,55,.25)}
-.layer svg{width:100%;height:100%;overflow:visible}
-.bezel{animation:spin 90s linear infinite}
-.needle{inset:12%;animation:needle 9s ease-in-out infinite}
-.cap{inset:46.5%;background:radial-gradient(circle at 35% 30%,var(--gold-hi),var(--gold) 45%,var(--gold-lo));
-  box-shadow:0 2px 10px rgba(0,0,0,.6)}
-.glow{position:absolute;inset:-12%;border-radius:50%;background:radial-gradient(circle,rgba(212,175,55,.22),transparent 62%);
-  filter:blur(10px);animation:pulse 5s ease-in-out infinite}
-.shadow{position:absolute;left:15%;right:15%;bottom:-14%;height:10%;border-radius:50%;
-  background:radial-gradient(ellipse,rgba(212,175,55,.25),transparent 70%);filter:blur(8px);animation:shadow 7s ease-in-out infinite}
-@keyframes float{0%,100%{transform:translateY(0) rotateZ(0)}50%{transform:translateY(-14px) rotateZ(2deg)}}
-@keyframes spin{to{transform:rotate(360deg)}}
-@keyframes needle{0%{transform:translateZ(46px) rotate(-38deg)}12%{transform:translateZ(46px) rotate(24deg)}
-  22%{transform:translateZ(46px) rotate(-10deg)}32%,100%{transform:translateZ(46px) rotate(8deg)}}
-@keyframes pulse{0%,100%{opacity:.65;transform:scale(1)}50%{opacity:1;transform:scale(1.05)}}
-@keyframes shadow{0%,100%{transform:scale(1);opacity:.9}50%{transform:scale(.85);opacity:.6}}
+/* Kompass (SVG) */
+.kompass{display:block;width:min(300px,78vw);height:auto;margin:40px auto 0;overflow:visible;filter:drop-shadow(0 0 28px rgba(201,168,76,.22))}
+.kompass .innenring{transform-origin:150px 150px;animation:drehen 20s linear infinite}
+.kompass .nadel{transform-origin:150px 150px;animation:pendel 3s ease-in-out infinite alternate}
+@keyframes drehen{to{transform:rotate(360deg)}}
+@keyframes pendel{from{transform:rotate(-3deg)}to{transform:rotate(3deg)}}
 
 /* Hero-Einblendung */
 .reveal{opacity:0;transform:translateY(22px);transition:opacity .8s ease,transform .8s cubic-bezier(.2,.7,.2,1)}
@@ -122,82 +104,114 @@ section{padding:72px 0;position:relative}
 
 /* ─── KENNST DU DAS ──────────────────────────────────────────────────── */
 .pains{display:grid;gap:12px;margin-top:28px}
-.pain{display:flex;gap:14px;align-items:flex-start;padding:18px;border:1px solid var(--line);border-radius:var(--radius);background:var(--black-2)}
+.pain{display:flex;gap:14px;align-items:flex-start;padding:18px;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface)}
 .pain b{font-family:var(--serif);color:var(--gold);font-size:1.4rem;line-height:1}
-.pain p{color:var(--muted)}.pain strong{color:var(--white);font-weight:600}
+.pain p{color:var(--text-muted)}.pain strong{color:var(--text);font-weight:600}
 .turn{margin-top:28px;font-family:var(--serif);font-size:clamp(1.4rem,5vw,1.9rem);font-style:italic}
 
 /* ─── SÄULEN ─────────────────────────────────────────────────────────── */
 .grid{display:grid;gap:14px;margin-top:32px}
-.card{padding:26px 22px;border-radius:var(--radius);background:linear-gradient(160deg,var(--black-3),var(--black-2));
-  border:1px solid var(--line);position:relative;overflow:hidden;transition:border-color .3s,transform .3s}
-.card:hover{border-color:rgba(212,175,55,.6);transform:translateY(-3px)}
-.card .ic{width:46px;height:46px;border-radius:12px;display:grid;place-items:center;background:rgba(212,175,55,.1);
+.card,.step{border-radius:var(--radius);background:var(--surface-2);border:1px solid var(--line);border-top:3px solid var(--gold);
+  position:relative;transition:box-shadow .3s,transform .3s,border-color .3s}
+.card{padding:26px 22px;overflow:hidden}
+.card:hover,.step:hover{transform:translateY(-3px);border-color:rgba(201,168,76,.55);border-top-color:var(--gold-light);
+  box-shadow:0 0 0 1px rgba(201,168,76,.25),0 18px 50px -16px rgba(201,168,76,.45)}
+.card .ic{width:46px;height:46px;border-radius:12px;display:grid;place-items:center;background:rgba(201,168,76,.1);
   border:1px solid var(--line);margin-bottom:16px;color:var(--gold)}
 .card .ic svg{width:24px;height:24px}
-.card p{color:var(--muted);margin-top:8px;font-size:.96rem}
-.card .num{position:absolute;top:14px;right:18px;font-family:var(--serif);font-size:2.6rem;font-weight:900;color:rgba(212,175,55,.09)}
+.card p{color:var(--text-muted);margin-top:8px;font-size:.96rem}
+.card .num{position:absolute;top:14px;right:18px;font-family:var(--serif);font-size:2.6rem;font-weight:900;color:rgba(201,168,76,.09)}
 
 /* ─── DEIN WEG ───────────────────────────────────────────────────────── */
 .steps{display:grid;gap:14px;margin-top:32px;counter-reset:s}
-.step{padding:24px 22px 24px 74px;border-radius:var(--radius);border:1px solid var(--line);position:relative;background:var(--black-2)}
+.step{padding:24px 22px 24px 74px}
 .step::before{counter-increment:s;content:counter(s);position:absolute;left:20px;top:22px;width:38px;height:38px;border-radius:50%;
-  display:grid;place-items:center;font-family:var(--serif);font-weight:800;background:var(--gold);color:var(--black)}
+  display:grid;place-items:center;font-family:var(--serif);font-weight:800;background:var(--gold);color:var(--primary)}
 .step .tag{font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);font-weight:600}
-.step p{color:var(--muted);margin:6px 0 14px;font-size:.96rem}
+.step p{color:var(--text-muted);margin:6px 0 14px;font-size:.96rem}
 .step a{color:var(--gold);font-weight:600;text-decoration:none}
 .step a:hover{text-decoration:underline}
 
 /* ─── APP ────────────────────────────────────────────────────────────── */
-.app{background:linear-gradient(180deg,var(--black),#0f0d06 50%,var(--black))}
+.app{background:linear-gradient(180deg,var(--primary),#0f0d06 50%,var(--primary))}
 .badge{display:inline-block;padding:5px 12px;border-radius:999px;border:1px solid var(--gold);color:var(--gold);font-size:.72rem;
   font-weight:600;letter-spacing:.14em;text-transform:uppercase}
-.feat{display:grid;gap:12px;margin-top:28px}
-.feat li{list-style:none;padding:16px 18px;border-left:3px solid var(--gold);background:var(--black-2);border-radius:0 10px 10px 0}
-.feat li strong{display:block;font-weight:600}
-.feat li span{color:var(--muted);font-size:.94rem}
+.app-grid{display:grid;gap:56px;align-items:center}
+.features{list-style:none;display:grid;gap:12px;margin-top:28px}
+.features li{display:grid;grid-template-columns:46px 1fr;gap:14px;align-items:start;padding:16px 18px;border-radius:var(--radius);background:var(--surface-2);border:1px solid var(--line)}
+.features .ico{width:46px;height:46px;border-radius:12px;display:grid;place-items:center;font-size:1.35rem;background:rgba(201,168,76,.1);border:1px solid var(--line)}
+.features .nr{font-size:.72rem;font-weight:600;letter-spacing:.16em;color:var(--gold)}
+.features strong{display:block;font-weight:600;margin:1px 0 3px}
+.features p{color:var(--text-muted);font-size:.94rem}
+/* Handy-Mockup (nur CSS) */
+.phone-stage{display:grid;place-items:center}
+.phone{position:relative;width:260px;height:530px;border-radius:40px;background:#000;border:2px solid var(--gold);padding:12px;
+  box-shadow:0 40px 90px -30px rgba(201,168,76,.45),inset 0 0 0 5px #050505;animation:schweben 6s ease-in-out infinite}
+.notch{position:absolute;top:22px;left:50%;transform:translateX(-50%);width:84px;height:22px;border-radius:999px;background:#000;z-index:2}
+.notch::after{content:"";position:absolute;right:14px;top:7px;width:8px;height:8px;border-radius:50%;background:#1a1a2a;box-shadow:inset 0 0 2px rgba(255,255,255,.3)}
+.screen{height:100%;border-radius:30px;background:linear-gradient(180deg,#151515,#0b0b0b);padding:52px 14px 12px;display:flex;flex-direction:column;gap:12px;overflow:hidden}
+.screen-kopf{display:flex;align-items:center;justify-content:space-between}
+.screen-kopf b{font-family:var(--serif);font-size:1.3rem;font-weight:800;color:var(--gold)}
+.screen-kopf i{width:28px;height:28px;border-radius:50%;border:1.5px solid var(--gold);background:radial-gradient(circle at 35% 30%,var(--gold-light),var(--gold-dark))}
+.screen-gruss{font-size:.72rem;color:var(--text-muted);margin-top:-6px}
+.mini-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.mini{background:var(--surface-2);border:1px solid var(--line);border-radius:14px;padding:12px 10px;display:grid;gap:8px}
+.mini svg{width:20px;height:20px;color:var(--gold)}
+.mini b{font-size:.76rem;font-weight:600}
+.mini small{font-size:.62rem;color:var(--text-muted);margin-top:-6px}
+.mini.breit{grid-column:1/-1;display:flex;align-items:center;gap:10px}
+.mini.breit div{display:grid;gap:2px}
+.tabbar{margin-top:auto;display:flex;justify-content:space-around;padding:10px 0 4px;border-top:1px solid var(--line)}
+.tabbar i{width:6px;height:6px;border-radius:50%;background:rgba(201,168,76,.35)}
+.tabbar i:first-child{background:var(--gold);box-shadow:0 0 8px var(--gold)}
+@keyframes schweben{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+
+/* ─── ZAHLEN ─────────────────────────────────────────────────────────── */
+.zahlen{display:grid;gap:44px;text-align:center}
+.zahl b{display:block;font-family:var(--serif);font-size:64px;font-weight:900;line-height:1;color:var(--gold);font-variant-numeric:tabular-nums;text-shadow:0 0 30px rgba(201,168,76,.3)}
+.zahl span{display:block;margin:14px auto 0;max-width:16rem;color:var(--text);font-size:.95rem}
 
 /* ─── HALTUNG ────────────────────────────────────────────────────────── */
 .stance{display:grid;gap:10px;margin-top:24px}
-.stance div{padding:16px 18px;border-radius:10px;border:1px dashed var(--line);color:var(--muted)}
-.stance strong{color:var(--white)}
-.help{margin-top:18px;font-size:.88rem;color:var(--muted)}
+.stance div{padding:16px 18px;border-radius:10px;border:1px dashed var(--line);color:var(--text-muted)}
+.stance strong{color:var(--text)}
+.help{margin-top:18px;font-size:.88rem;color:var(--text-muted)}
 
 /* ─── MITGLIED WERDEN ────────────────────────────────────────────────── */
-.join{text-align:center;background:radial-gradient(ellipse 70% 60% at 50% 0%,rgba(212,175,55,.16),transparent 70%),var(--black)}
+.join{text-align:center;background:radial-gradient(ellipse 70% 60% at 50% 0%,rgba(201,168,76,.16),transparent 70%),var(--primary)}
 .claim{font-family:var(--serif);font-weight:900;font-size:clamp(2rem,8.5vw,4rem);line-height:1.1}
 .claim span{display:block}.claim span:last-child{color:var(--gold)}
 .join .lead{margin:20px auto 28px}
 .benefits{display:grid;grid-template-columns:1fr 1fr;gap:10px;max-width:640px;margin:0 auto 32px;text-align:left}
-.benefits li{list-style:none;padding:14px;border-radius:10px;background:var(--black-2);border:1px solid var(--line);font-size:.9rem}
+.benefits li{list-style:none;padding:14px;border-radius:10px;background:var(--surface);border:1px solid var(--line);font-size:.9rem}
 .benefits li::before{content:"✓";color:var(--gold);font-weight:700;margin-right:8px}
 .join .btn-row{max-width:420px;margin:0 auto}
-.fine{margin-top:16px;font-size:.8rem;color:var(--muted)}
+.fine{margin-top:16px;font-size:.8rem;color:var(--text-muted)}
 
 /* ─── FAQ ────────────────────────────────────────────────────────────── */
 .faq{margin-top:28px;display:grid;gap:10px}
-details{border:1px solid var(--line);border-radius:12px;background:var(--black-2);overflow:hidden}
+details{border:1px solid var(--line);border-radius:12px;background:var(--surface);overflow:hidden}
 summary{cursor:pointer;list-style:none;padding:18px 52px 18px 18px;font-weight:600;position:relative}
 summary::-webkit-details-marker{display:none}
 summary::after{content:"+";position:absolute;right:18px;top:50%;transform:translateY(-50%);color:var(--gold);font-size:1.5rem;transition:transform .3s}
 details[open] summary::after{transform:translateY(-50%) rotate(45deg)}
-details p{padding:0 18px 18px;color:var(--muted)}
+details p{padding:0 18px 18px;color:var(--text-muted)}
 
 /* ─── IMPRESSUM / FOOTER ─────────────────────────────────────────────── */
 .imp{display:grid;gap:14px;margin-top:28px}
-.imp dl{padding:22px;border-radius:var(--radius);border:1px solid var(--line);background:var(--black-2);display:grid;gap:12px}
+.imp dl{padding:22px;border-radius:var(--radius);border:1px solid var(--line);background:var(--surface);display:grid;gap:12px}
 .imp dt{font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--gold)}
-.imp dd{color:var(--muted);font-size:.95rem;overflow-wrap:anywhere}
-.privacy{max-width:46rem;margin-top:28px;color:var(--muted);font-size:.95rem}
-.privacy h3{color:var(--white);font-size:1.15rem;margin:28px 0 8px}
+.imp dd{color:var(--text-muted);font-size:.95rem;overflow-wrap:anywhere}
+.privacy{max-width:46rem;margin-top:28px;color:var(--text-muted);font-size:.95rem}
+.privacy h3{color:var(--text);font-size:1.15rem;margin:28px 0 8px}
 .privacy p{margin-bottom:10px;overflow-wrap:anywhere}
 .privacy ul{margin:0 0 10px 1.2rem}
 .privacy li{margin-bottom:4px}
-.privacy strong{color:var(--white);font-weight:600}
+.privacy strong{color:var(--text);font-weight:600}
 .privacy a{color:var(--gold)}
 .privacy .stand{margin-top:24px;font-size:.82rem}
-footer{padding:40px 0;border-top:1px solid var(--line);text-align:center;color:var(--muted);font-size:.85rem}
-footer .slogan{font-family:var(--serif);font-style:italic;color:var(--white);font-size:1.1rem;margin-bottom:10px}
+footer{padding:40px 0;border-top:1px solid var(--line);text-align:center;color:var(--text-muted);font-size:.85rem}
+footer .slogan{font-family:var(--serif);font-style:italic;color:var(--text);font-size:1.1rem;margin-bottom:10px}
 
 /* ─── STICKY-CTA (MOBIL) ─────────────────────────────────────────────── */
 .sticky{position:fixed;left:0;right:0;bottom:0;z-index:40;padding:12px var(--gutter) calc(12px + env(safe-area-inset-bottom));
@@ -213,17 +227,16 @@ footer .slogan{font-family:var(--serif);font-style:italic;color:var(--white);fon
   .pains{grid-template-columns:1fr 1fr}
   .benefits{grid-template-columns:repeat(3,1fr)}
   .imp{grid-template-columns:1fr 1fr}
+  .zahlen{grid-template-columns:repeat(3,1fr)}
 }
 @media (min-width:960px){
   :root{--gutter:32px}
   body{padding-bottom:0}
-  section{padding:110px 0}
-  .nav-links{display:flex}.nav-cta{display:inline-flex;min-height:42px;font-size:.9rem}.burger,.drawer{display:none}
-  .hero .wrap{grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);align-items:center;gap:40px}
-  .compass-stage{position:relative;top:auto;right:auto;width:100%;opacity:1;pointer-events:auto}
+  .nav-links{display:flex}.nav-cta{margin-left:0;min-height:42px;padding:0 1.6rem;font-size:.9rem}.burger,.drawer{display:none}
   .grid{grid-template-columns:repeat(3,1fr)}
   .steps{grid-template-columns:repeat(3,1fr)}
   .split{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start}
+  .app-grid{grid-template-columns:1.15fr .85fr}
   .sticky{display:none}
 }
 
@@ -246,7 +259,7 @@ footer .slogan{font-family:var(--serif);font-style:italic;color:var(--white);fon
       <li><a href="#faq">FAQ</a></li>
       <li><a href="#kontakt">Kontakt</a></li>
     </ul>
-    <a href="#mitglied" class="btn btn-gold nav-cta">Jetzt Mitglied werden</a>
+    <a href="#mitglied" class="btn btn-gold nav-cta"><span class="jetzt">Jetzt&nbsp;</span>Mitglied werden</a>
     <button class="burger" id="burger" aria-label="Menü öffnen" aria-expanded="false" aria-controls="drawer"><span></span></button>
   </div>
   <nav class="drawer" id="drawer" aria-label="Mobile Navigation">
@@ -275,68 +288,31 @@ footer .slogan{font-family:var(--serif);font-style:italic;color:var(--white);fon
       <div class="hero-meta reveal"><span>Klagenfurt am Wörthersee</span><span>Gemeinnützig</span><span>Ehrenamtlich geführt</span></div>
     </div>
 
-    <div class="compass-stage" aria-hidden="true">
-      <div class="glow"></div>
-      <div class="shadow"></div>
-      <div class="compass" id="compass">
-        <div class="float">
-          <!-- Gehäusetiefe: gestapelte Ringe ergeben den 3D-Rand -->
-          <div class="layer rim" style="transform:translateZ(-24px)"></div>
-          <div class="layer rim" style="transform:translateZ(-18px)"></div>
-          <div class="layer rim" style="transform:translateZ(-12px)"></div>
-          <div class="layer rim" style="transform:translateZ(-6px)"></div>
-          <div class="layer face" style="transform:translateZ(0)"></div>
-
-          <!-- Skala mit Slogan -->
-          <div class="layer" style="transform:translateZ(8px)">
-            <svg viewBox="0 0 240 240" class="bezel">
-              <defs>
-                <path id="txt" d="M120,120 m-84,0 a84,84 0 1,1 168,0 a84,84 0 1,1 -168,0"/>
-              </defs>
-              <circle cx="120" cy="120" r="104" fill="none" stroke="#D4AF37" stroke-opacity=".5" stroke-width=".8"/>
-              <g id="ticks" stroke="#D4AF37"></g>
-              <text font-family="Inter,sans-serif" font-size="6.4" letter-spacing="2.6" fill="#D4AF37" fill-opacity=".7">
-                <textPath href="#txt">ICH BIN STARK · DU BIST STARK · WIR SIND STARK · ICH BIN STARK · DU BIST STARK · WIR SIND STARK ·</textPath>
-              </text>
-            </svg>
-          </div>
-
-          <!-- Windrose -->
-          <div class="layer" style="transform:translateZ(20px)">
-            <svg viewBox="0 0 240 240">
-              <g fill="none" stroke="#D4AF37" stroke-opacity=".35"><circle cx="120" cy="120" r="70"/><circle cx="120" cy="120" r="40"/></g>
-              <g opacity=".55">
-                <polygon points="120,62 128,112 120,120 112,112" fill="#8C7020" transform="rotate(45 120 120)"/>
-                <polygon points="120,62 128,112 120,120 112,112" fill="#8C7020" transform="rotate(135 120 120)"/>
-                <polygon points="120,62 128,112 120,120 112,112" fill="#8C7020" transform="rotate(225 120 120)"/>
-                <polygon points="120,62 128,112 120,120 112,112" fill="#8C7020" transform="rotate(315 120 120)"/>
-              </g>
-              <g>
-                <polygon points="120,44 130,110 120,120" fill="#F1D77A"/><polygon points="120,44 110,110 120,120" fill="#D4AF37"/>
-                <polygon points="120,44 130,110 120,120" fill="#D4AF37" transform="rotate(90 120 120)"/><polygon points="120,44 110,110 120,120" fill="#8C7020" transform="rotate(90 120 120)"/>
-                <polygon points="120,44 130,110 120,120" fill="#D4AF37" transform="rotate(180 120 120)"/><polygon points="120,44 110,110 120,120" fill="#8C7020" transform="rotate(180 120 120)"/>
-                <polygon points="120,44 130,110 120,120" fill="#D4AF37" transform="rotate(270 120 120)"/><polygon points="120,44 110,110 120,120" fill="#8C7020" transform="rotate(270 120 120)"/>
-              </g>
-              <g font-family="Playfair Display,Georgia,serif" font-weight="800" font-size="13" fill="#FFFFFF" text-anchor="middle">
-                <text x="120" y="60">N</text><text x="181" y="125">O</text><text x="120" y="190">S</text><text x="59" y="125">W</text>
-              </g>
-            </svg>
-          </div>
-
-          <!-- Nadel -->
-          <div class="layer needle">
-            <svg viewBox="0 0 240 240">
-              <polygon points="120,6 132,120 108,120" fill="#D4AF37"/>
-              <polygon points="120,6 120,120 108,120" fill="#F1D77A"/>
-              <polygon points="120,234 132,120 108,120" fill="#2a2a2a" stroke="#D4AF37" stroke-opacity=".5"/>
-            </svg>
-          </div>
-          <div class="layer cap" style="transform:translateZ(54px)"></div>
-          <!-- Glas -->
-          <div class="layer" style="transform:translateZ(60px);background:linear-gradient(135deg,rgba(255,255,255,.14),transparent 45%);border:1px solid rgba(255,255,255,.08)"></div>
-        </div>
-      </div>
-    </div>
+    <svg class="kompass reveal" viewBox="0 0 300 300" aria-hidden="true">
+        <defs>
+          <radialGradient id="k-grund" cx="50%" cy="42%" r="62%"><stop offset="0" stop-color="#1d1a12"/><stop offset=".7" stop-color="#0e0e0e"/><stop offset="1" stop-color="#070707"/></radialGradient>
+          <radialGradient id="k-glow" r="50%"><stop offset=".7" stop-color="#c9a84c" stop-opacity=".16"/><stop offset="1" stop-color="#c9a84c" stop-opacity="0"/></radialGradient>
+          <linearGradient id="k-nadel" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#e8c96a"/><stop offset=".5" stop-color="#e8c96a"/><stop offset=".5" stop-color="#c9a84c"/><stop offset="1" stop-color="#a8862a"/></linearGradient>
+        </defs>
+        <circle cx="150" cy="150" r="150" fill="url(#k-glow)"/>
+        <circle cx="150" cy="150" r="138" fill="url(#k-grund)" stroke="#c9a84c" stroke-width="1.2"/>
+        <circle cx="150" cy="150" r="131" fill="none" stroke="#c9a84c" stroke-opacity=".28" stroke-width=".6"/>
+        <g stroke="#c9a84c"><line x1="150.0" y1="27.0" x2="150.0" y2="16.0" stroke-width="1.4"/><circle cx="241.22" cy="58.78" r="1.8" fill="#c9a84c" stroke="none"/><line x1="273.0" y1="150.0" x2="284.0" y2="150.0" stroke-width="1.4"/><circle cx="241.22" cy="241.22" r="1.8" fill="#c9a84c" stroke="none"/><line x1="150.0" y1="273.0" x2="150.0" y2="284.0" stroke-width="1.4"/><circle cx="58.78" cy="241.22" r="1.8" fill="#c9a84c" stroke="none"/><line x1="27.0" y1="150.0" x2="16.0" y2="150.0" stroke-width="1.4"/><circle cx="58.78" cy="58.78" r="1.8" fill="#c9a84c" stroke="none"/></g>
+        <g font-family="Playfair Display,Georgia,serif" font-weight="700" font-size="14" fill="#c9a84c" text-anchor="middle"><text x="150.0" y="45.0">N</text><text x="260.0" y="155.0">O</text><text x="150.0" y="265.0">S</text><text x="40.0" y="155.0">W</text></g>
+        <g class="innenring">
+          <circle cx="150" cy="150" r="100" fill="#0b0b0b" stroke="#c9a84c" stroke-opacity=".35" stroke-width=".8"/>
+          <g stroke="#c9a84c" stroke-opacity=".5" stroke-width=".6"><line x1="150.0" y1="50.0" x2="150.0" y2="58.0" stroke-opacity=".9" stroke-width="1.1"/><line x1="158.72" y1="50.38" x2="158.37" y2="54.37"/><line x1="167.36" y1="51.52" x2="166.67" y2="55.46"/><line x1="175.88" y1="53.41" x2="174.85" y2="57.27"/><line x1="184.2" y1="56.03" x2="182.83" y2="59.79"/><line x1="192.26" y1="59.37" x2="190.57" y2="62.99"/><line x1="200.0" y1="63.4" x2="196.0" y2="70.33" stroke-opacity=".9" stroke-width="1.1"/><line x1="207.36" y1="68.08" x2="205.06" y2="71.36"/><line x1="214.28" y1="73.4" x2="211.71" y2="76.46"/><line x1="220.71" y1="79.29" x2="217.88" y2="82.12"/><line x1="226.6" y1="85.72" x2="223.54" y2="88.29"/><line x1="231.92" y1="92.64" x2="228.64" y2="94.94"/><line x1="236.6" y1="100.0" x2="229.67" y2="104.0" stroke-opacity=".9" stroke-width="1.1"/><line x1="240.63" y1="107.74" x2="237.01" y2="109.43"/><line x1="243.97" y1="115.8" x2="240.21" y2="117.17"/><line x1="246.59" y1="124.12" x2="242.73" y2="125.15"/><line x1="248.48" y1="132.64" x2="244.54" y2="133.33"/><line x1="249.62" y1="141.28" x2="245.63" y2="141.63"/><line x1="250.0" y1="150.0" x2="242.0" y2="150.0" stroke-opacity=".9" stroke-width="1.1"/><line x1="249.62" y1="158.72" x2="245.63" y2="158.37"/><line x1="248.48" y1="167.36" x2="244.54" y2="166.67"/><line x1="246.59" y1="175.88" x2="242.73" y2="174.85"/><line x1="243.97" y1="184.2" x2="240.21" y2="182.83"/><line x1="240.63" y1="192.26" x2="237.01" y2="190.57"/><line x1="236.6" y1="200.0" x2="229.67" y2="196.0" stroke-opacity=".9" stroke-width="1.1"/><line x1="231.92" y1="207.36" x2="228.64" y2="205.06"/><line x1="226.6" y1="214.28" x2="223.54" y2="211.71"/><line x1="220.71" y1="220.71" x2="217.88" y2="217.88"/><line x1="214.28" y1="226.6" x2="211.71" y2="223.54"/><line x1="207.36" y1="231.92" x2="205.06" y2="228.64"/><line x1="200.0" y1="236.6" x2="196.0" y2="229.67" stroke-opacity=".9" stroke-width="1.1"/><line x1="192.26" y1="240.63" x2="190.57" y2="237.01"/><line x1="184.2" y1="243.97" x2="182.83" y2="240.21"/><line x1="175.88" y1="246.59" x2="174.85" y2="242.73"/><line x1="167.36" y1="248.48" x2="166.67" y2="244.54"/><line x1="158.72" y1="249.62" x2="158.37" y2="245.63"/><line x1="150.0" y1="250.0" x2="150.0" y2="242.0" stroke-opacity=".9" stroke-width="1.1"/><line x1="141.28" y1="249.62" x2="141.63" y2="245.63"/><line x1="132.64" y1="248.48" x2="133.33" y2="244.54"/><line x1="124.12" y1="246.59" x2="125.15" y2="242.73"/><line x1="115.8" y1="243.97" x2="117.17" y2="240.21"/><line x1="107.74" y1="240.63" x2="109.43" y2="237.01"/><line x1="100.0" y1="236.6" x2="104.0" y2="229.67" stroke-opacity=".9" stroke-width="1.1"/><line x1="92.64" y1="231.92" x2="94.94" y2="228.64"/><line x1="85.72" y1="226.6" x2="88.29" y2="223.54"/><line x1="79.29" y1="220.71" x2="82.12" y2="217.88"/><line x1="73.4" y1="214.28" x2="76.46" y2="211.71"/><line x1="68.08" y1="207.36" x2="71.36" y2="205.06"/><line x1="63.4" y1="200.0" x2="70.33" y2="196.0" stroke-opacity=".9" stroke-width="1.1"/><line x1="59.37" y1="192.26" x2="62.99" y2="190.57"/><line x1="56.03" y1="184.2" x2="59.79" y2="182.83"/><line x1="53.41" y1="175.88" x2="57.27" y2="174.85"/><line x1="51.52" y1="167.36" x2="55.46" y2="166.67"/><line x1="50.38" y1="158.72" x2="54.37" y2="158.37"/><line x1="50.0" y1="150.0" x2="58.0" y2="150.0" stroke-opacity=".9" stroke-width="1.1"/><line x1="50.38" y1="141.28" x2="54.37" y2="141.63"/><line x1="51.52" y1="132.64" x2="55.46" y2="133.33"/><line x1="53.41" y1="124.12" x2="57.27" y2="125.15"/><line x1="56.03" y1="115.8" x2="59.79" y2="117.17"/><line x1="59.37" y1="107.74" x2="62.99" y2="109.43"/><line x1="63.4" y1="100.0" x2="70.33" y2="104.0" stroke-opacity=".9" stroke-width="1.1"/><line x1="68.08" y1="92.64" x2="71.36" y2="94.94"/><line x1="73.4" y1="85.72" x2="76.46" y2="88.29"/><line x1="79.29" y1="79.29" x2="82.12" y2="82.12"/><line x1="85.72" y1="73.4" x2="88.29" y2="76.46"/><line x1="92.64" y1="68.08" x2="94.94" y2="71.36"/><line x1="100.0" y1="63.4" x2="104.0" y2="70.33" stroke-opacity=".9" stroke-width="1.1"/><line x1="107.74" y1="59.37" x2="109.43" y2="62.99"/><line x1="115.8" y1="56.03" x2="117.17" y2="59.79"/><line x1="124.12" y1="53.41" x2="125.15" y2="57.27"/><line x1="132.64" y1="51.52" x2="133.33" y2="55.46"/><line x1="141.28" y1="50.38" x2="141.63" y2="54.37"/></g>
+          <circle cx="150" cy="150" r="86" fill="none" stroke="#c9a84c" stroke-opacity=".35" stroke-width=".8" stroke-dasharray="1 5"/>
+        </g>
+        <g fill="none" stroke="#c9a84c" stroke-width=".7" stroke-opacity=".45"><polygon points="150,76 159,141 224,150 159,159 150,224 141,159 76,150 141,141" transform="rotate(0 150 150)"/><polygon points="150,102 156,144 198,150 156,156 150,198 144,156 102,150 144,144" transform="rotate(45 150 150)"/></g>
+        <g transform="rotate(35 150 150)">
+          <g class="nadel">
+            <polygon points="150,60 159,150 141,150" fill="url(#k-nadel)"/>
+            <polygon points="150,240 159,150 141,150" fill="#161616" stroke="#c9a84c" stroke-opacity=".6" stroke-width=".8"/>
+          </g>
+        </g>
+        <circle cx="150" cy="150" r="7.5" fill="#c9a84c"/><circle cx="150" cy="150" r="3" fill="#0a0a0a"/>
+      </svg>
   </div>
 </section>
 
@@ -352,6 +328,15 @@ footer .slogan{font-family:var(--serif);font-style:italic;color:var(--white);fon
       <div class="pain"><b>04</b><p><strong>Die Welt dreht schneller.</strong> KI und neue Technologien verändern alles, und keiner erklärt sie dir.</p></div>
     </div>
     <p class="turn">Es ist nicht zu spät. <span class="gold">Du musst es nur nicht allein machen.</span></p>
+  </div>
+</section>
+
+<!-- ─── ZAHLEN ─────────────────────────────────────────────────────── -->
+<section class="sep" id="zahlen" aria-label="#LeKo in Zahlen">
+  <div class="wrap zahlen">
+    <div class="zahl"><b data-ziel="800" data-nach="+">800+</b><span>Männer in Österreich kennen das Gefühl</span></div>
+    <div class="zahl"><b data-ziel="5">5</b><span>Säulen für ein starkes Leben</span></div>
+    <div class="zahl"><b data-ziel="1">1</b><span>Community. Die wirklich versteht.</span></div>
   </div>
 </section>
 
@@ -385,7 +370,7 @@ footer .slogan{font-family:var(--serif);font-style:italic;color:var(--white);fon
 <section class="sep" id="weg">
   <div class="wrap">
     <p class="eyebrow">Dein Weg zu #LeKo</p>
-    <h2>Ein Schritt nach dem anderen.</h2>
+    <h2>Ein Schritt <span class="gold">nach dem anderen.</span></h2>
     <p class="lead">Du entscheidest das Tempo. Niemand muss am ersten Abend alles erzählen oder Höchstleistung bringen.</p>
     <div class="steps">
       <div class="step"><span class="tag">Reinschnuppern</span><h3>Offenes Treffen</h3>
@@ -403,18 +388,37 @@ footer .slogan{font-family:var(--serif);font-style:italic;color:var(--white);fon
 
 <!-- ─── VÄTER-APP ──────────────────────────────────────────────────── -->
 <section class="sep app" id="app">
-  <div class="wrap split">
+  <div class="wrap app-grid">
     <div>
-      <span class="badge">In Entwicklung</span>
+      <span class="badge">Bald verfügbar</span>
       <h2>Die #LeKo <span class="gold">Väter-App</span></h2>
       <p class="lead">Für Väter in Trennungssituationen und für jeden Mann, der Orientierung sucht: verständliche Infos, Rückhalt und eine echte Community.</p>
+      <ul class="features">
+        <li><span class="ico" aria-hidden="true">🏛️</span><div><span class="nr">01</span><strong>Rechtliche Orientierung</strong><p>Obsorge, Besuchsrecht, Unterhalt — verständlich erklärt nach österreichischem Recht.</p></div></li>
+        <li><span class="ico" aria-hidden="true">👨‍👧</span><div><span class="nr">02</span><strong>Väter-Community</strong><p>Männer, die verstehen was du durchmachst. Kein Ratschlag, echte Erfahrung.</p></div></li>
+        <li><span class="ico" aria-hidden="true">📅</span><div><span class="nr">03</span><strong>Kalender &amp; Kinderzeit</strong><p>Plane deine Zeit mit den Kindern. Wochenenden, Ferien, besondere Momente.</p></div></li>
+        <li><span class="ico" aria-hidden="true">⚖️</span><div><span class="nr">04</span><strong>Fachliche Kontakte</strong><p>Direkter Zugang zu Familienrechts-Experten in Österreich.</p></div></li>
+        <li><span class="ico" aria-hidden="true">🤖</span><div><span class="nr">05</span><strong>Jarvis Vereinsassistent</strong><p>KI-gestützte Antworten, Protokolle und Erinnerungen — direkt im Telegram.</p></div></li>
+        <li><span class="ico" aria-hidden="true">🏆</span><div><span class="nr">06</span><strong>Sportevents &amp; Mitgliederbereich</strong><p>Gemeinsame Aktivitäten, Events und exklusiver Bereich für Mitglieder.</p></div></li>
+      </ul>
     </div>
-    <ul class="feat">
-      <li><strong>Rechtliche Orientierung</strong><span>Kontaktrecht, Obsorge, Unterhalt – klar erklärt nach österreichischem Recht.</span></li>
-      <li><strong>Fachliche Kontakte</strong><span>Wege zu Familienrechts-Profis, ohne lange Suche.</span></li>
-      <li><strong>Väter-Community</strong><span>Männer, die verstehen, was du durchmachst.</span></li>
-      <li><strong>Zeit mit deinen Kindern</strong><span>Ideen und Planung für gemeinsame Wochenenden und Ferien.</span></li>
-    </ul>
+    <div class="phone-stage" aria-hidden="true">
+      <div class="phone">
+        <span class="notch"></span>
+        <div class="screen">
+          <div class="screen-kopf"><b>#LeKo App</b><i></i></div>
+          <p class="screen-gruss">Willkommen zurück</p>
+          <div class="mini-grid">
+              <div class="mini"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg><b>Kalender</b><small>Sa · Kinderzeit</small></div>
+              <div class="mini"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3"/><path d="M3.5 19c.6-3.2 2.8-5 5.5-5s4.9 1.8 5.5 5"/><circle cx="17" cy="9" r="2.4"/><path d="M15.6 14.2c2.4-.3 4.4 1.1 5 4.3"/></svg><b>Community</b><small>12 neue Beiträge</small></div>
+              <div class="mini"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3h7l4 4v14H7z"/><path d="M14 3v4h4"/><path d="M10 12.5h5M10 16h5"/></svg><b>Protokoll</b><small>Entwurf gespeichert</small></div>
+              <div class="mini"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v14H4z"/><circle cx="10" cy="11" r="2.4"/><path d="M6.5 16.5c.5-1.8 1.8-2.8 3.5-2.8s3 1 3.5 2.8M15 10h3M15 13h3"/></svg><b>Kontakte</b><small>Fachleute in der Nähe</small></div>
+            <div class="mini breit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l2.6 5.6 6 .7-4.5 4.1 1.2 6L12 16.4 6.7 19.4l1.2-6L3.4 9.3l6-.7z"/></svg><div><b>Nächstes Treffen</b><small>Do · 19:00 · Klagenfurt</small></div></div>
+          </div>
+          <div class="tabbar"><i></i><i></i><i></i><i></i></div>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -465,7 +469,7 @@ footer .slogan{font-family:var(--serif);font-style:italic;color:var(--white);fon
   <div class="wrap split">
     <div>
       <p class="eyebrow">Fragen</p>
-      <h2>Ehrliche Antworten.</h2>
+      <h2>Ehrliche <span class="gold">Antworten.</span></h2>
       <p class="lead">Noch etwas offen? Frag uns direkt.</p>
     </div>
     <div class="faq">
@@ -482,7 +486,7 @@ footer .slogan{font-family:var(--serif);font-style:italic;color:var(--white);fon
 <section class="sep" id="kontakt">
   <div class="wrap">
     <p class="eyebrow">Kontakt &amp; Impressum</p>
-    <h2>Lass uns reden.</h2>
+    <h2>Lass uns <span class="gold">reden.</span></h2>
     <!-- TODO: Link zur Telegram-Community ergänzen -->
     <p class="lead">Schreib uns eine E-Mail an <a href="mailto:leko.verein@gmail.com" class="gold">leko.verein@gmail.com</a>. Der Link zur #LeKo Telegram-Community folgt in Kürze.</p>
     <div class="imp">
@@ -504,7 +508,7 @@ footer .slogan{font-family:var(--serif);font-style:italic;color:var(--white);fon
 <section class="sep" id="datenschutz">
   <div class="wrap">
     <p class="eyebrow">Datenschutz</p>
-    <h2>Datenschutzerklärung</h2>
+    <h2>Daten<span class="gold">schutz</span></h2>
     <p class="lead">Der Schutz deiner Daten ist uns wichtig. Wir verarbeiten personenbezogene Daten nur auf Grundlage der Datenschutz-Grundverordnung (DSGVO) und des österreichischen Datenschutzgesetzes (DSG). Hier erfährst du, welche Daten das sind und welche Rechte du hast.</p>
     <div class="privacy">
 
@@ -573,17 +577,6 @@ footer .slogan{font-family:var(--serif);font-style:italic;color:var(--white);fon
 
 <script>
 (function(){
-  // Skalenstriche erzeugen
-  var g=document.getElementById('ticks'), ns='http://www.w3.org/2000/svg';
-  for(var i=0;i<72;i++){
-    var l=document.createElementNS(ns,'line'), major=i%9===0, a=i*5*Math.PI/180;
-    var r1=104, r2=major?94:99;
-    l.setAttribute('x1',120+r1*Math.sin(a)); l.setAttribute('y1',120-r1*Math.cos(a));
-    l.setAttribute('x2',120+r2*Math.sin(a)); l.setAttribute('y2',120-r2*Math.cos(a));
-    l.setAttribute('stroke-width',major?1.6:.7); l.setAttribute('stroke-opacity',major?1:.55);
-    g.appendChild(l);
-  }
-
   // Hero-Einblendung
   requestAnimationFrame(function(){
     document.querySelectorAll('.hero .reveal').forEach(function(el){el.classList.add('in')});
@@ -611,17 +604,25 @@ footer .slogan{font-family:var(--serif);font-style:italic;color:var(--white);fon
   }
   window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
 
-  // 3D-Kompass folgt dem Mauszeiger (nur Desktop, nicht bei reduzierter Bewegung)
-  var compass=document.getElementById('compass');
+  // Zahlen zählen hoch, sobald sie ins Bild scrollen (einmalig, 1,5 s, easeOut)
   var calm=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if(!calm && window.matchMedia('(pointer:fine)').matches){
-    hero.addEventListener('pointermove',function(e){
-      var r=hero.getBoundingClientRect();
-      var x=(e.clientX-r.left)/r.width-.5, y=(e.clientY-r.top)/r.height-.5;
-      compass.style.setProperty('--ry',(x*30).toFixed(1)+'deg');
-      compass.style.setProperty('--rx',(-y*24).toFixed(1)+'deg');
+  function zaehlen(el){
+    var ziel=+el.dataset.ziel, nach=el.dataset.nach||'', start=null;
+    if(calm){el.textContent=ziel+nach;return}
+    requestAnimationFrame(function schritt(z){
+      if(!start)start=z;
+      var p=Math.min((z-start)/1500,1);
+      el.textContent=Math.round(ziel*(1-Math.pow(1-p,3)))+(p===1?nach:'');
+      if(p<1)requestAnimationFrame(schritt);
     });
-    hero.addEventListener('pointerleave',function(){compass.style.setProperty('--ry','0deg');compass.style.setProperty('--rx','0deg')});
+  }
+  var zahlen=document.querySelectorAll('[data-ziel]');
+  if('IntersectionObserver' in window){
+    zahlen.forEach(function(el){el.textContent='0'});
+    var beob=new IntersectionObserver(function(es){
+      es.forEach(function(e){if(e.isIntersecting){beob.unobserve(e.target);zaehlen(e.target)}});
+    },{threshold:.4});
+    zahlen.forEach(function(el){beob.observe(el)});
   }
 })();
 </script>
