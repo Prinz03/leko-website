@@ -181,56 +181,44 @@ index = f'''<!DOCTYPE html>
 
     <svg id="hero-kompass" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
       <defs>
-        <linearGradient id="goldN" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#f7e07a"/><stop offset="40%" stop-color="#c9a84c"/><stop offset="100%" stop-color="#7a5510"/></linearGradient>
-        <linearGradient id="goldE" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#f7e07a"/><stop offset="40%" stop-color="#c9a84c"/><stop offset="100%" stop-color="#7a5510"/></linearGradient>
-        <linearGradient id="goldS" x1="0" y1="1" x2="0" y2="0"><stop offset="0%" stop-color="#f7e07a"/><stop offset="40%" stop-color="#c9a84c"/><stop offset="100%" stop-color="#7a5510"/></linearGradient>
-        <linearGradient id="goldW" x1="1" y1="0" x2="0" y2="0"><stop offset="0%" stop-color="#f7e07a"/><stop offset="40%" stop-color="#c9a84c"/><stop offset="100%" stop-color="#7a5510"/></linearGradient>
-        <radialGradient id="centerGlow" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#f5d16a" stop-opacity="1"/><stop offset="35%" stop-color="#c9a84c" stop-opacity="0.6"/><stop offset="100%" stop-color="#c9a84c" stop-opacity="0"/></radialGradient>
-        <filter id="glow" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-        <filter id="tipGlow" x="-400%" y="-400%" width="900%" height="900%"><feGaussianBlur stdDeviation="10" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        <linearGradient id="gNS" x1="-25" y1="0" x2="25" y2="0" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#3a2206"/><stop offset="35%" stop-color="#c9a84c"/><stop offset="50%" stop-color="#f0d868"/><stop offset="65%" stop-color="#c9a84c"/><stop offset="100%" stop-color="#3a2206"/></linearGradient>
+        <linearGradient id="gOW" x1="0" y1="-25" x2="0" y2="25" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#3a2206"/><stop offset="35%" stop-color="#c9a84c"/><stop offset="50%" stop-color="#f0d868"/><stop offset="65%" stop-color="#c9a84c"/><stop offset="100%" stop-color="#3a2206"/></linearGradient>
+        <linearGradient id="gDiag" x1="-14" y1="0" x2="14" y2="0" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#1e1004"/><stop offset="50%" stop-color="#7a5220"/><stop offset="100%" stop-color="#1e1004"/></linearGradient>
+        <radialGradient id="hubGrad" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#c9a84c"/><stop offset="25%" stop-color="#5a3a10"/><stop offset="60%" stop-color="#1a1006"/><stop offset="100%" stop-color="#c9a84c"/></radialGradient>
+        <filter id="softGlow" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        <filter id="tipGlow" x="-300%" y="-300%" width="700%" height="700%"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
       </defs>
 
-      <!-- Äußerer Grad-Ring (dreht sich im Uhrzeigersinn, 120 s) -->
-      <g id="degreeRing">
-        <animateTransform attributeName="transform" type="rotate" values="0 300 300;360 300 300" dur="120s" repeatCount="indefinite"/>
-        <circle cx="300" cy="300" r="282" fill="none" stroke="#c9a84c" stroke-width="1.5" opacity="0.45"/>
-        <g id="ticks"></g>
-      </g>
+      <circle cx="300" cy="300" r="274" fill="none" stroke="#c9a84c" stroke-width="1.5"/>
+      <circle cx="300" cy="300" r="265" fill="#181208" stroke="none"/>
+      <g id="gradTicks"></g>
+      <circle cx="300" cy="300" r="232" fill="none" stroke="#c9a84c" stroke-width="2"/>
+      <circle cx="300" cy="300" r="228" fill="none" stroke="#c9a84c" stroke-width="0.5" opacity="0.4"/>
 
-      <!-- Innere Dekorationsringe -->
-      <circle cx="300" cy="300" r="258" fill="none" stroke="#c9a84c" stroke-width="0.5" opacity="0.2"/>
-      <circle cx="300" cy="300" r="248" fill="none" stroke="#c9a84c" stroke-width="1.5" opacity="0.35"/>
-      <circle cx="300" cy="300" r="62" fill="none" stroke="#c9a84c" stroke-width="1" opacity="0.4"/>
-
-      <!-- 8-Punkt-Windrose -->
       <g transform="translate(300,300)">
-        <path d="M0,-252 L-13,-32 L0,8 L13,-32 Z" fill="url(#goldN)" filter="url(#glow)"/>
-        <path d="M0,252 L13,32 L0,-8 L-13,32 Z" fill="url(#goldS)"/>
-        <path d="M252,0 L32,13 L-8,0 L32,-13 Z" fill="url(#goldE)"/>
-        <path d="M-252,0 L-32,-13 L8,0 L-32,13 Z" fill="url(#goldW)"/>
-        <path d="M0,-182 L-8,-24 L0,0 L8,-24 Z" transform="rotate(45)" fill="#c9a84c" opacity="0.78"/>
-        <path d="M0,-182 L-8,-24 L0,0 L8,-24 Z" transform="rotate(135)" fill="#c9a84c" opacity="0.78"/>
-        <path d="M0,-182 L-8,-24 L0,0 L8,-24 Z" transform="rotate(225)" fill="#c9a84c" opacity="0.78"/>
-        <path d="M0,-182 L-8,-24 L0,0 L8,-24 Z" transform="rotate(315)" fill="#c9a84c" opacity="0.78"/>
-        <circle cx="0" cy="0" r="38" fill="url(#centerGlow)"><animate attributeName="opacity" values="0.7;1;0.7" dur="3s" repeatCount="indefinite"/></circle>
-        <circle cx="0" cy="0" r="18" fill="none" stroke="#c9a84c" stroke-width="1.5" opacity="0.7"/>
-        <circle cx="0" cy="0" r="10" fill="#f5d16a"/>
-        <circle cx="0" cy="0" r="4" fill="#0a0a0a"/>
+        <path d="M0,-168 L-13,-13 L0,0 L13,-13 Z" transform="rotate(45)" fill="url(#gDiag)" opacity="0.9"/>
+        <path d="M0,-168 L-13,-13 L0,0 L13,-13 Z" transform="rotate(135)" fill="url(#gDiag)" opacity="0.9"/>
+        <path d="M0,-168 L-13,-13 L0,0 L13,-13 Z" transform="rotate(225)" fill="url(#gDiag)" opacity="0.9"/>
+        <path d="M0,-168 L-13,-13 L0,0 L13,-13 Z" transform="rotate(315)" fill="url(#gDiag)" opacity="0.9"/>
+        <path d="M0,-252 L-22,-45 L0,8 L22,-45 Z" fill="url(#gNS)" filter="url(#softGlow)"/>
+        <path d="M0,252 L22,45 L0,-8 L-22,45 Z" fill="url(#gNS)"/>
+        <path d="M252,0 L45,22 L-8,0 L45,-22 Z" fill="url(#gOW)"/>
+        <path d="M-252,0 L-45,-22 L8,0 L-45,22 Z" fill="url(#gOW)"/>
+        <circle cx="0" cy="0" r="42" fill="#151008" stroke="#c9a84c" stroke-width="2"/>
+        <circle cx="0" cy="0" r="32" fill="#0e0c06" stroke="#c9a84c" stroke-width="1.2"/>
+        <circle cx="0" cy="0" r="22" fill="url(#hubGrad)" stroke="#c9a84c" stroke-width="0.8"/>
+        <circle cx="0" cy="0" r="11" fill="#1e1608" stroke="#c9a84c" stroke-width="1.5"/>
+        <circle cx="0" cy="0" r="6" fill="#c9a84c" opacity="0.9"/>
+        <circle cx="0" cy="0" r="3" fill="#0e0c06"/>
+        <circle cx="0" cy="0" r="1" fill="#c9a84c" opacity="0.6"/>
       </g>
 
-      <!-- Glühende Punkte an den Spitzen -->
-      <circle cx="300" cy="48" r="6" fill="#f5d16a" filter="url(#tipGlow)"><animate attributeName="opacity" values="0.5;0.9;0.5" dur="3.5s" repeatCount="indefinite"/></circle>
-      <circle cx="552" cy="300" r="5" fill="#f5d16a" filter="url(#tipGlow)"><animate attributeName="opacity" values="0.3;0.7;0.3" dur="4.2s" begin="1s" repeatCount="indefinite"/></circle>
-      <circle cx="300" cy="552" r="5" fill="#f5d16a" filter="url(#tipGlow)"><animate attributeName="opacity" values="0.3;0.7;0.3" dur="3.8s" begin="2s" repeatCount="indefinite"/></circle>
-      <circle cx="48" cy="300" r="5" fill="#f5d16a" filter="url(#tipGlow)"><animate attributeName="opacity" values="0.3;0.7;0.3" dur="4.5s" begin="0.5s" repeatCount="indefinite"/></circle>
+      <g transform="translate(300,28)"><path d="M0,-18 L16,0 L0,18 L-16,0 Z" fill="#181208" stroke="#c9a84c" stroke-width="1.5"/><text x="0" y="6" text-anchor="middle" font-family="Playfair Display,serif" font-size="15" fill="#f0d060" font-weight="700" filter="url(#tipGlow)">N</text></g>
+      <g transform="translate(300,572)"><path d="M0,-18 L16,0 L0,18 L-16,0 Z" fill="#181208" stroke="#c9a84c" stroke-width="1.5"/><text x="0" y="6" text-anchor="middle" font-family="Playfair Display,serif" font-size="15" fill="#c9a84c">S</text></g>
+      <g transform="translate(572,300)"><path d="M0,-18 L18,0 L0,18 L-18,0 Z" fill="#181208" stroke="#c9a84c" stroke-width="1.5"/><text x="0" y="6" text-anchor="middle" font-family="Playfair Display,serif" font-size="15" fill="#c9a84c">O</text></g>
+      <g transform="translate(28,300)"><path d="M0,-18 L18,0 L0,18 L-18,0 Z" fill="#181208" stroke="#c9a84c" stroke-width="1.5"/><text x="0" y="6" text-anchor="middle" font-family="Playfair Display,serif" font-size="15" fill="#c9a84c">W</text></g>
 
-      <!-- Himmelsrichtungen (deutsch: O für Osten) -->
-      <text x="300" y="20" text-anchor="middle" font-family="Playfair Display,serif" font-size="26" fill="#f5d16a" font-weight="700" letter-spacing="4">N</text>
-      <text x="300" y="596" text-anchor="middle" font-family="Playfair Display,serif" font-size="20" fill="#c9a84c" letter-spacing="2">S</text>
-      <text x="584" y="307" text-anchor="middle" font-family="Playfair Display,serif" font-size="20" fill="#c9a84c" letter-spacing="2">O</text>
-      <text x="16" y="307" text-anchor="middle" font-family="Playfair Display,serif" font-size="20" fill="#c9a84c" letter-spacing="2">W</text>
-
-      <text x="300" y="314" text-anchor="middle" font-family="Playfair Display,serif" font-size="9" fill="#c9a84c" opacity="0.9" letter-spacing="4.5">LEBENSKOMPASS</text>
+      <circle cx="300" cy="28" r="5" fill="#f0d060" opacity="0.6" filter="url(#tipGlow)"><animate attributeName="opacity" values="0.4;0.8;0.4" dur="3s" repeatCount="indefinite"/></circle>
     </svg>
 
     <div class="hero-content wrap">
@@ -245,6 +233,14 @@ index = f'''<!DOCTYPE html>
 
     <div class="scroll-indicator" aria-hidden="true">↓</div>
 
+  </div>
+</section>
+
+<!-- ═══ BRÜCKE ═══ -->
+<section class="bruecke-section">
+  <div class="bruecke-inner">
+    <p class="bruecke-text">Du bist nicht allein damit.</p>
+    <p class="bruecke-text bruecke-text--sub">Es ist nicht zu spät.</p>
   </div>
 </section>
 
@@ -300,19 +296,28 @@ index = f'''<!DOCTYPE html>
     </div>
     <div class="netz ein" id="netz">
       <svg class="netz-linien" viewBox="0 0 100 100" aria-hidden="true">{linien}</svg>
-      <div class="chip-center" id="saulenChip" aria-hidden="true">
-        <div class="chip-glow"></div>
-        <div class="chip-body">
-          <div class="chip-pins chip-pins--top"><span></span><span></span><span></span><span></span></div>
-          <div class="chip-pins chip-pins--bottom"><span></span><span></span><span></span><span></span></div>
-          <div class="chip-pins chip-pins--left"><span></span><span></span></div>
-          <div class="chip-pins chip-pins--right"><span></span><span></span></div>
-          <div class="chip-inner">
-            <div class="chip-label-top">LK-01</div>
-            <div class="chip-title"><span>LEBENS</span><span>KOMPASS</span></div>
-            <div class="chip-label-bottom">v2.0</div>
-          </div>
-        </div>
+      <div class="vereinssiegel" id="saulenChip" aria-hidden="true">
+        <div class="siegel-glow"></div>
+        <svg class="siegel-svg" viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="80" cy="80" r="76" fill="none" stroke="#c9a84c" stroke-width="1.5" opacity="0.6"/>
+          <circle cx="80" cy="80" r="68" fill="none" stroke="#c9a84c" stroke-width="0.5" opacity="0.3"/>
+          <path id="kreisTextPfad" d="M80,80 m-63,0 a63,63 0 1,1 126,0 a63,63 0 1,1 -126,0" fill="none"/>
+          <text font-family="Playfair Display,serif" font-size="9.5" fill="#c9a84c" letter-spacing="3.5" opacity="0.85"><textPath href="#kreisTextPfad" startOffset="8%">VEREIN LEBENSKOMPASS · ÖSTERREICH ·</textPath></text>
+          <circle cx="80" cy="80" r="54" fill="#0f0e08" stroke="#c9a84c" stroke-width="1" opacity="0.5"/>
+          <circle cx="80" cy="58" r="9" fill="none" stroke="#c9a84c" stroke-width="1.5"/>
+          <path d="M65,90 Q80,76 95,90" fill="none" stroke="#c9a84c" stroke-width="1.5" stroke-linecap="round"/>
+          <circle cx="57" cy="62" r="7" fill="none" stroke="#c9a84c" stroke-width="1.2" opacity="0.7"/>
+          <path d="M46,90 Q57,79 68,90" fill="none" stroke="#c9a84c" stroke-width="1.2" stroke-linecap="round" opacity="0.7"/>
+          <circle cx="103" cy="62" r="7" fill="none" stroke="#c9a84c" stroke-width="1.2" opacity="0.7"/>
+          <path d="M92,90 Q103,79 114,90" fill="none" stroke="#c9a84c" stroke-width="1.2" stroke-linecap="round" opacity="0.7"/>
+          <path d="M64,66 Q80,56 96,66" fill="none" stroke="#c9a84c" stroke-width="0.8" stroke-dasharray="2,3" opacity="0.45"/>
+          <text x="80" y="116" text-anchor="middle" font-family="Playfair Display,serif" font-size="8.5" fill="#c9a84c" letter-spacing="3" opacity="0.8">LEBENSKOMPASS</text>
+          <line x1="55" y1="108" x2="105" y2="108" stroke="#c9a84c" stroke-width="0.5" opacity="0.4"/>
+          <circle cx="80" cy="27" r="2" fill="#c9a84c" opacity="0.6"/>
+          <circle cx="80" cy="133" r="2" fill="#c9a84c" opacity="0.6"/>
+          <circle cx="27" cy="80" r="2" fill="#c9a84c" opacity="0.6"/>
+          <circle cx="133" cy="80" r="2" fill="#c9a84c" opacity="0.6"/>
+        </svg>
       </div>{knoten}
     </div>
     <div class="saeulen-liste">{saeulen_liste}
@@ -359,51 +364,41 @@ index = f'''<!DOCTYPE html>
   </div>
 </section>
 
-<!-- ═══ 5 · HALTUNG (Sticky Cards) ═══ -->
-<section class="haltung-outer" id="haltung" aria-label="Unsere Haltung">
-  <div class="haltung-sticky">
-    <div class="haltung-label">Unsere Haltung</div>
-    <div class="kennst-progress">
-      <div class="kennst-progress-bar" id="haltungBar"></div>
+<!-- ═══ 5 · HALTUNG (2×2) ═══ -->
+<section class="haltung-section" id="haltung" aria-labelledby="haltung-titel">
+  <div class="haltung-container">
+    <div class="haltung-heading-block">
+      <h2 class="haltung-heading" id="haltung-titel">Unsere Haltung</h2>
+      <p class="haltung-sub">Was uns trägt — und was uns unterscheidet.</p>
     </div>
-
-    <div class="haltung-card" data-index="0">
-      <div class="haltung-card-inner">
-        <div class="haltung-icon" aria-hidden="true">◈</div>
+    <div class="haltung-grid">
+      <div class="haltung-karte">
+        <div class="haltung-karte-icon" aria-hidden="true">◈</div>
         <h3>Gemeinnützig</h3>
         <p>Wir handeln ohne Gewinnabsicht. Alles, was wir aufbauen, dient dem Verein — nicht einzelnen Personen. Jeder Beitrag fließt zurück in die Gemeinschaft.</p>
       </div>
-    </div>
-
-    <div class="haltung-card" data-index="1">
-      <div class="haltung-card-inner">
-        <div class="haltung-icon" aria-hidden="true">◈</div>
+      <div class="haltung-karte">
+        <div class="haltung-karte-icon" aria-hidden="true">◈</div>
         <h3>Respekt</h3>
         <p>Jede Geschichte verdient Gehör. Bei uns gibt es keine falschen Gefühle, keine unreifen Fragen. Wer sich zeigt, wird gesehen — ohne Wertung.</p>
       </div>
-    </div>
-
-    <div class="haltung-card" data-index="2">
-      <div class="haltung-card-inner">
-        <div class="haltung-icon" aria-hidden="true">◈</div>
+      <div class="haltung-karte">
+        <div class="haltung-karte-icon" aria-hidden="true">◈</div>
         <h3>Unabhängig</h3>
         <p>Keine Partei, keine Doktrin, keine Ideologie. Wir sind ein Ort für Menschen — nicht für Meinungen. Deine Richtung bestimmst du selbst.</p>
       </div>
-    </div>
-
-    <div class="haltung-card" data-index="3">
-      <div class="haltung-card-inner">
-        <div class="haltung-icon" aria-hidden="true">◈</div>
+      <div class="haltung-karte">
+        <div class="haltung-karte-icon" aria-hidden="true">◈</div>
         <h3>Kein Therapie-Ersatz</h3>
-        <p>Wir bieten Gemeinschaft, Orientierung und Wachstum. Aber wir ersetzen keine professionelle Hilfe. Wer sie braucht, wird von uns ermutigt, sie zu suchen.</p>
-        <div class="krisen-box">
-          <p class="krisen-title">Notfallnummern</p>
-          <div class="krisen-nummern">
-            <a href="tel:142">142 — Telefonseelsorge</a>
-            <a href="tel:144">144 — Rettung</a>
-            <a href="tel:133">133 — Polizei</a>
-          </div>
-        </div>
+        <p>Wir bieten Gemeinschaft und Orientierung. Wer professionelle Hilfe braucht, wird von uns ermutigt, sie zu suchen — nicht aufgehalten.</p>
+      </div>
+    </div>
+    <div class="krisen-box">
+      <p class="krisen-title">Notfall? Diese Nummern helfen sofort</p>
+      <div class="krisen-nummern">
+        <a href="tel:142">142 — Telefonseelsorge</a>
+        <a href="tel:144">144 — Rettung</a>
+        <a href="tel:133">133 — Polizei</a>
       </div>
     </div>
   </div>

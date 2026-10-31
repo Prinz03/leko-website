@@ -5,19 +5,22 @@
 
   // ── Hero: Tick-Striche + DJI-Scroll (Kompass tritt zurück, Text kommt nach vorn) ──
   (function initHeroKompass() {
-    var ticks = document.getElementById('ticks');
-    if (ticks) {
+    // Grad-Striche im Bezel-Ring (Haupt-Himmelsrichtungen frei für die Diamant-Rahmen)
+    var gradTicks = document.getElementById('gradTicks');
+    if (gradTicks) {
       for (var i = 0; i < 72; i++) {
-        var deg = i * 5, kardinal = deg % 45 === 0, gross = deg % 10 === 0;
-        var r1 = 282, r2 = kardinal ? 262 : gross ? 268 : 274;
+        var deg = i * 5;
+        if (deg % 90 === 0) continue;
+        var is30 = deg % 30 === 0, is10 = deg % 10 === 0;
+        var rAus = 263, rIn = is30 ? 248 : is10 ? 253 : 258;
         var rad = (deg - 90) * Math.PI / 180;
         var l = document.createElementNS(NS, 'line');
-        l.setAttribute('x1', 300 + r1 * Math.cos(rad)); l.setAttribute('y1', 300 + r1 * Math.sin(rad));
-        l.setAttribute('x2', 300 + r2 * Math.cos(rad)); l.setAttribute('y2', 300 + r2 * Math.sin(rad));
+        l.setAttribute('x1', 300 + rAus * Math.cos(rad)); l.setAttribute('y1', 300 + rAus * Math.sin(rad));
+        l.setAttribute('x2', 300 + rIn * Math.cos(rad)); l.setAttribute('y2', 300 + rIn * Math.sin(rad));
         l.setAttribute('stroke', '#c9a84c');
-        l.setAttribute('stroke-width', kardinal ? 2 : gross ? 1 : 0.5);
-        l.setAttribute('opacity', kardinal ? 0.9 : gross ? 0.6 : 0.35);
-        ticks.appendChild(l);
+        l.setAttribute('stroke-width', is30 ? 1.5 : is10 ? 1 : 0.5);
+        l.setAttribute('opacity', is30 ? 0.9 : is10 ? 0.5 : 0.3);
+        gradTicks.appendChild(l);
       }
     }
     var kompass = document.getElementById('hero-kompass');
@@ -47,7 +50,7 @@
     updateHero();
   })();
 
-  // ── Sticky Cards: Kennst du das? und Haltung (Karte wechselt mit dem Scroll-Fortschritt) ──
+  // ── Sticky Cards: Kennst du das? (Karte wechselt mit dem Scroll-Fortschritt) ──
   function stickyKarten(aussenSel, kartenSel, balkenId) {
     var aussen = document.querySelector(aussenSel), karten = document.querySelectorAll(kartenSel), balken = document.getElementById(balkenId);
     if (!aussen || !karten.length) return;
@@ -64,7 +67,6 @@
     update();
   }
   stickyKarten('.kennst-outer', '.kennst-card', 'kennstBar');
-  stickyKarten('.haltung-outer', '.haltung-card', 'haltungBar');
 
   // Säulen: Klick auf einen Knoten öffnet das Panel, die Linie zum Zentrum leuchtet
   var SAEULEN = [
