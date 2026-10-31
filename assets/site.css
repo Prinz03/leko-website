@@ -98,17 +98,12 @@ dialog.modal[open] .modal-innen{animation:modal-ein .5s var(--weich) both}
   .ein{opacity:1;transform:none}
 }
 
-/* ═══ STARTSEITE: HERO MIT SCROLL-KOMPASS ═══════════════════════════════ */
+/* ═══ STARTSEITE: HERO (sticky) ═══════════════════════════════ */
 .hero-outer{height:160vh;position:relative;background:#0a0a0a}
 .hero-sticky{position:sticky;top:0;height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden}
-#hero-kompass{position:absolute;width:85vmin;height:85vmin;top:50%;left:50%;transform:translate(-50%,-50%) scale(1);opacity:1;z-index:1;will-change:transform,opacity;overflow:visible}
-.hero-content{position:relative;z-index:10;text-align:center;will-change:opacity,transform}
-.js .hero-content{opacity:0;transform:translateY(24px);pointer-events:none}
-.hero-ruhig .hero-content{opacity:1;transform:none;pointer-events:auto}
-.hero-ruhig #hero-kompass{opacity:.16;transform:translate(-50%,-50%) scale(.56)}
+.hero-content{position:relative;z-index:10;text-align:center}
 .scroll-indicator{position:absolute;bottom:40px;left:50%;transform:translateX(-50%);color:#c9a84c;font-size:26px;z-index:20;animation:bounce 1.6s ease-in-out infinite alternate}
 @keyframes bounce{from{transform:translateX(-50%) translateY(0)}to{transform:translateX(-50%) translateY(10px)}}
-@media (max-width:768px){#hero-kompass{width:94vmin;height:94vmin}}
 
 /* ═══ STICKY CARDS: KENNST DU DAS? ══════════════════════════════════════ */
 .kennst-outer{height:500vh;position:relative}

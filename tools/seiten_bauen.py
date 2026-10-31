@@ -164,7 +164,6 @@ index = f'''<!DOCTYPE html>
 <meta property="og:url" content="https://prinz03.github.io/leko-website/">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="de_AT">
-<script>document.documentElement.classList.add('js')</script>
 <style>
 {INDEX_CSS}</style>
 </head>
@@ -178,48 +177,6 @@ index = f'''<!DOCTYPE html>
 <!-- ═══ 1 · HERO (Scroll-Kompass) ═══ -->
 <section class="hero-outer" id="top">
   <div class="hero-sticky">
-
-    <svg id="hero-kompass" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-      <defs>
-        <linearGradient id="gNS" x1="-25" y1="0" x2="25" y2="0" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#3a2206"/><stop offset="35%" stop-color="#c9a84c"/><stop offset="50%" stop-color="#f0d868"/><stop offset="65%" stop-color="#c9a84c"/><stop offset="100%" stop-color="#3a2206"/></linearGradient>
-        <linearGradient id="gOW" x1="0" y1="-25" x2="0" y2="25" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#3a2206"/><stop offset="35%" stop-color="#c9a84c"/><stop offset="50%" stop-color="#f0d868"/><stop offset="65%" stop-color="#c9a84c"/><stop offset="100%" stop-color="#3a2206"/></linearGradient>
-        <linearGradient id="gDiag" x1="-14" y1="0" x2="14" y2="0" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#1e1004"/><stop offset="50%" stop-color="#7a5220"/><stop offset="100%" stop-color="#1e1004"/></linearGradient>
-        <radialGradient id="hubGrad" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#c9a84c"/><stop offset="25%" stop-color="#5a3a10"/><stop offset="60%" stop-color="#1a1006"/><stop offset="100%" stop-color="#c9a84c"/></radialGradient>
-        <filter id="softGlow" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-        <filter id="tipGlow" x="-300%" y="-300%" width="700%" height="700%"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-      </defs>
-
-      <circle cx="300" cy="300" r="274" fill="none" stroke="#c9a84c" stroke-width="1.5"/>
-      <circle cx="300" cy="300" r="265" fill="#181208" stroke="none"/>
-      <g id="gradTicks"></g>
-      <circle cx="300" cy="300" r="232" fill="none" stroke="#c9a84c" stroke-width="2"/>
-      <circle cx="300" cy="300" r="228" fill="none" stroke="#c9a84c" stroke-width="0.5" opacity="0.4"/>
-
-      <g transform="translate(300,300)">
-        <path d="M0,-168 L-13,-13 L0,0 L13,-13 Z" transform="rotate(45)" fill="url(#gDiag)" opacity="0.9"/>
-        <path d="M0,-168 L-13,-13 L0,0 L13,-13 Z" transform="rotate(135)" fill="url(#gDiag)" opacity="0.9"/>
-        <path d="M0,-168 L-13,-13 L0,0 L13,-13 Z" transform="rotate(225)" fill="url(#gDiag)" opacity="0.9"/>
-        <path d="M0,-168 L-13,-13 L0,0 L13,-13 Z" transform="rotate(315)" fill="url(#gDiag)" opacity="0.9"/>
-        <path d="M0,-252 L-22,-45 L0,8 L22,-45 Z" fill="url(#gNS)" filter="url(#softGlow)"/>
-        <path d="M0,252 L22,45 L0,-8 L-22,45 Z" fill="url(#gNS)"/>
-        <path d="M252,0 L45,22 L-8,0 L45,-22 Z" fill="url(#gOW)"/>
-        <path d="M-252,0 L-45,-22 L8,0 L-45,22 Z" fill="url(#gOW)"/>
-        <circle cx="0" cy="0" r="42" fill="#151008" stroke="#c9a84c" stroke-width="2"/>
-        <circle cx="0" cy="0" r="32" fill="#0e0c06" stroke="#c9a84c" stroke-width="1.2"/>
-        <circle cx="0" cy="0" r="22" fill="url(#hubGrad)" stroke="#c9a84c" stroke-width="0.8"/>
-        <circle cx="0" cy="0" r="11" fill="#1e1608" stroke="#c9a84c" stroke-width="1.5"/>
-        <circle cx="0" cy="0" r="6" fill="#c9a84c" opacity="0.9"/>
-        <circle cx="0" cy="0" r="3" fill="#0e0c06"/>
-        <circle cx="0" cy="0" r="1" fill="#c9a84c" opacity="0.6"/>
-      </g>
-
-      <g transform="translate(300,28)"><path d="M0,-18 L16,0 L0,18 L-16,0 Z" fill="#181208" stroke="#c9a84c" stroke-width="1.5"/><text x="0" y="6" text-anchor="middle" font-family="Playfair Display,serif" font-size="15" fill="#f0d060" font-weight="700" filter="url(#tipGlow)">N</text></g>
-      <g transform="translate(300,572)"><path d="M0,-18 L16,0 L0,18 L-16,0 Z" fill="#181208" stroke="#c9a84c" stroke-width="1.5"/><text x="0" y="6" text-anchor="middle" font-family="Playfair Display,serif" font-size="15" fill="#c9a84c">S</text></g>
-      <g transform="translate(572,300)"><path d="M0,-18 L18,0 L0,18 L-18,0 Z" fill="#181208" stroke="#c9a84c" stroke-width="1.5"/><text x="0" y="6" text-anchor="middle" font-family="Playfair Display,serif" font-size="15" fill="#c9a84c">O</text></g>
-      <g transform="translate(28,300)"><path d="M0,-18 L18,0 L0,18 L-18,0 Z" fill="#181208" stroke="#c9a84c" stroke-width="1.5"/><text x="0" y="6" text-anchor="middle" font-family="Playfair Display,serif" font-size="15" fill="#c9a84c">W</text></g>
-
-      <circle cx="300" cy="28" r="5" fill="#f0d060" opacity="0.6" filter="url(#tipGlow)"><animate attributeName="opacity" values="0.4;0.8;0.4" dur="3s" repeatCount="indefinite"/></circle>
-    </svg>
 
     <div class="hero-content wrap">
       <p class="eyebrow auftritt" style="--d:.5s">Es ist an der Zeit, Deinen Kompass neu auszurichten.</p>

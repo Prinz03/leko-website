@@ -3,52 +3,13 @@
   var ruhig = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var NS = 'http://www.w3.org/2000/svg';
 
-  // ── Hero: Tick-Striche + DJI-Scroll (Kompass tritt zurück, Text kommt nach vorn) ──
-  (function initHeroKompass() {
-    // Grad-Striche im Bezel-Ring (Haupt-Himmelsrichtungen frei für die Diamant-Rahmen)
-    var gradTicks = document.getElementById('gradTicks');
-    if (gradTicks) {
-      for (var i = 0; i < 72; i++) {
-        var deg = i * 5;
-        if (deg % 90 === 0) continue;
-        var is30 = deg % 30 === 0, is10 = deg % 10 === 0;
-        var rAus = 263, rIn = is30 ? 248 : is10 ? 253 : 258;
-        var rad = (deg - 90) * Math.PI / 180;
-        var l = document.createElementNS(NS, 'line');
-        l.setAttribute('x1', 300 + rAus * Math.cos(rad)); l.setAttribute('y1', 300 + rAus * Math.sin(rad));
-        l.setAttribute('x2', 300 + rIn * Math.cos(rad)); l.setAttribute('y2', 300 + rIn * Math.sin(rad));
-        l.setAttribute('stroke', '#c9a84c');
-        l.setAttribute('stroke-width', is30 ? 1.5 : is10 ? 1 : 0.5);
-        l.setAttribute('opacity', is30 ? 0.9 : is10 ? 0.5 : 0.3);
-        gradTicks.appendChild(l);
-      }
-    }
-    var kompass = document.getElementById('hero-kompass');
-    var inhalt = document.querySelector('.hero-content');
-    var hinweis = document.querySelector('.scroll-indicator');
-    var aussen = document.querySelector('.hero-outer');
-    if (!kompass || !aussen) return;
-    if (ruhig) {                       // reduzierte Bewegung: SVG-Animationen anhalten, Text sofort zeigen
-      kompass.pauseAnimations();
-      document.documentElement.classList.add('hero-ruhig');
-      return;
-    }
-    function updateHero() {
-      var zone = aussen.offsetHeight * 0.45;
-      var p = Math.min(Math.max(window.scrollY / zone, 0), 1);
-      var e = p < 0.5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2;
-      kompass.style.transform = 'translate(-50%,-50%) scale(' + (1 - e * 0.44) + ')';
-      kompass.style.opacity = 1 - e * 0.84;
-      if (inhalt) {
-        inhalt.style.opacity = e;
-        inhalt.style.transform = 'translateY(' + (24 - e * 24) + 'px)';
-        inhalt.style.pointerEvents = e > 0.5 ? 'auto' : 'none';
-      }
-      if (hinweis) hinweis.style.opacity = Math.max(0, 1 - p * 3);
-    }
-    window.addEventListener('scroll', updateHero, { passive: true });
-    updateHero();
-  })();
+  // ── Hero: Scroll-Pfeil blendet beim ersten Scrollen aus ──
+  var hinweis = document.querySelector('.scroll-indicator');
+  if (hinweis) {
+    var pfeilAus = function () { hinweis.style.opacity = Math.max(0, 1 - window.scrollY / (window.innerHeight * 0.3)); };
+    window.addEventListener('scroll', pfeilAus, { passive: true });
+    pfeilAus();
+  }
 
   // ── Sticky Cards: Kennst du das? (Karte wechselt mit dem Scroll-Fortschritt) ──
   function stickyKarten(aussenSel, kartenSel, balkenId) {
