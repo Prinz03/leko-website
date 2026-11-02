@@ -38,15 +38,12 @@ I = {
 
 # ═══ Kennst du das? ═══
 SPIEGEL = [
-    'Es ist 23 Uhr. Die Wohnung ist still. Deine Kinder sind beim anderen Elternteil – und du weißt nicht, was du mit dir anfangen sollst.',
-    'Du willst kein Opfer sein. Du willst nicht jammern. Aber manchmal wäre es schön, wenn irgendwer einfach fragt: <em>»Wie geht’s dir wirklich?«</em>',
-    'Du hast Fragen zu Obsorge, Besuchsrecht, Unterhalt – und keinen Menschen, der dir ehrlich und ohne Eigeninteresse antwortet.',
-    'Du funktionierst. Arbeit, Kinder, Alltag. Aber innerlich weißt du, dass da mehr möglich sein müsste.',
+    'Es ist 23 Uhr. Die Wohnung ist still. Deine Kinder schlafen woanders – und du weißt nicht, wohin mit dir.',
+    'Du willst kein Mitleid. Aber manchmal wärst du froh, wenn irgendwer einfach fragt: <em>»Wie geht’s dir – wirklich?«</em>',
+    'Du kämpfst für deine Kinder. Aber das System erklärt dir die Spielregeln nicht.',
+    'Du funktionierst. Jeden Tag. Aber tief drinnen weißt du: So war das nicht geplant.',
 ]
-SPIEGEL_ICONS = ['🌙', '💬', '⚖️', '🔋']
-spiegel_html = ''.join(
-    f'\n    <div class="mirror-card" data-reveal data-reveal-delay="{n * 100}"><span class="mirror-card-icon" aria-hidden="true">{i}</span><p>{s}</p></div>'
-    for n, (i, s) in enumerate(zip(SPIEGEL_ICONS, SPIEGEL)))
+spiegel_html = ''.join(f'\n    <div class="mirror-item" data-reveal><p>{s}</p></div>' for s in SPIEGEL)
 
 # ═══ 5 Säulen (je eine Full-Screen-Sektion, abwechselnd links/rechts) ═══
 SAEULEN = [
@@ -232,9 +229,7 @@ index = f'''<!DOCTYPE html>
 
 <!-- ═══ 2 · KENNST DU DAS? (wie ein Freund, nicht wie Marketing) ═══ -->
 <section class="mirror-section" id="problem" aria-labelledby="mirror-titel">
-  <h2 class="mirror-label" id="mirror-titel" data-reveal>Kennst du das?</h2>
-  <div class="mirror-cards">{spiegel_html}
-  </div>
+  <h2 class="mirror-label" id="mirror-titel" data-reveal>Kennst du das?</h2>{spiegel_html}
   <p class="mirror-bridge" data-reveal>Dann bist du hier richtig.</p>
 </section>
 
