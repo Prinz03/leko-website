@@ -79,7 +79,7 @@ saeulen_html = ''.join(
     f'<h2 id="saeule-{n}">{head}</h2><p>{txt}</p></div>\n  </section>'
     for n, (name, icon, farbe, head, txt) in enumerate(SAEULEN))
 
-# ═══ Väter-App (Desktop sticky, Handy: Karten) ═══
+# ═══ Väter-App (Handy in der Mitte, Features strahlen per Linie aus · Handy-Bildschirm: Karten) ═══
 FEATURES = [
     ('Rechtliche Orientierung', 'Obsorge, Besuchsrecht, Unterhalt – klar erklärt.'),
     ('Väter-Community', 'Männer, die wirklich verstehen, was du durchmachst. Kein Ratschlag — echte Erfahrung.'),
@@ -87,10 +87,16 @@ FEATURES = [
     ('Fachliche Kontakte', 'Direkter Zugang zu Familienrechts-Experten.'),
     ('Sportevents &amp; Mitglieder', 'Gemeinsame Aktivitäten und ein exklusiver Bereich nur für Mitglieder.'),
 ]  # Jarvis gehört nicht in die Väter-App
-app_schritte = ''.join(
-    f'\n        <div class="app-schritt" data-step="{n}"><span class="as-nr">{n + 1:02d}</span><h3>{h}</h3><p>{txt}</p></div>'
-    for n, (h, txt) in enumerate(FEATURES))
-app_punkte = '<i></i>' * len(FEATURES)
+APP_BADGES = [  # (Seite, Emoji, Titel) – links drei, rechts zwei
+    ('links', '⚖️', 'Rechtliche Orientierung'),
+    ('links', '👥', 'Väter-Community'),
+    ('links', '📅', 'Kalender &amp; Kinderzeit'),
+    ('rechts', '👨‍⚖️', 'Fachliche Kontakte'),
+    ('rechts', '🏋️', 'Sport &amp; Events'),
+]
+def app_badges(seite):
+    return ''.join(f'\n          <li class="app-badge" data-reveal><span class="ab-icon" aria-hidden="true">{e}</span>{h}</li>'
+                   for s, e, h in APP_BADGES if s == seite)
 app_mobil = ''.join(f'\n    <div class="app-mobile-feature" data-reveal><h3>{h}</h3><p>{txt}</p></div>' for h, txt in FEATURES)
 
 # ═══ Haltung (2×2) ═══
@@ -245,32 +251,25 @@ index = f'''<!DOCTYPE html>
   </div>
 </div>
 
-<!-- ═══ 4 · VÄTER-APP (Desktop: Handy steht, Features wechseln · Handy: Karten) ═══ -->
+<!-- ═══ 4 · VÄTER-APP (Handy mit echtem App-Screen, Features per Strom-Linie verbunden) ═══ -->
 <section class="app" id="app" aria-labelledby="app-titel">
   <div class="wrap app-kopf" data-reveal>
+    <p class="eyebrow-gold">Die #LeKo Väter-App</p>
+    <h2 id="app-titel">Dein Werkzeug. <em>Wenn es zählt.</em></h2>
     <span class="badge">Bald verfügbar</span>
-    <h2 id="app-titel">Die #LeKo <em>Väter-App</em></h2>
-    <p class="lead">Für Väter in Trennungssituationen und für jeden Mann, der Orientierung sucht: verständliche Infos, Rückhalt und eine echte Community.</p>
   </div>
-  <div class="app-sticky-outer">
-    <div class="app-sticky-inner">
-      <div class="app-schritte">{app_schritte}
-      </div>
-      <div class="app-handy-wrap" aria-hidden="true">
-        <div class="app-handy">
-          <span class="notch"></span>
-          <div class="handy-screen">
-            <div class="handy-header">
-              <span class="handy-logo">#LeKo</span>
-              <span class="handy-subline">Väter-App</span>
-            </div>
-            <div class="handy-aktiv-titel"></div>
-            <div class="handy-aktiv-text"></div>
-          </div>
-          <div class="handy-punkte">{app_punkte}</div>
-        </div>
+  <div class="app-buehne" id="app-buehne">
+    <svg class="app-linien" id="app-linien" aria-hidden="true"></svg>
+    <ul class="app-badges links" aria-label="Funktionen der App">{app_badges('links')}
+    </ul>
+    <div class="app-geraet" id="app-geraet">
+      <div class="app-geraet-rahmen">
+        <img class="app-screen-bild" src="assets/img/app-screen.png" width="600" height="1128"
+             alt="Startbildschirm der KOMPASS-App: „Willkommen bei KOMPASS. Dein Werkzeug für schwierige Zeiten – von Vätern für Väter.“" loading="lazy" decoding="async">
       </div>
     </div>
+    <ul class="app-badges rechts" aria-label="Weitere Funktionen der App">{app_badges('rechts')}
+    </ul>
   </div>
   <div class="app-mobile-list wrap">{app_mobil}
   </div>

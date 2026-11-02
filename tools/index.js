@@ -36,3 +36,35 @@
   window.addEventListener('resize', inszenieren);
   inszenieren();
 })();
+
+// ── Väter-App: Linien vom Handy zu jedem Feature-Badge, mit laufendem Strom ──
+(function () {
+  'use strict';
+  var NS = 'http://www.w3.org/2000/svg';
+  var buehne = document.getElementById('app-buehne'), svg = document.getElementById('app-linien'), geraet = document.getElementById('app-geraet');
+  if (!buehne || !svg || !geraet) return;
+  function zeichnen() {
+    svg.textContent = '';
+    if (getComputedStyle(svg).display === 'none') return;
+    var b = buehne.getBoundingClientRect(), g = geraet.getBoundingClientRect();
+    svg.setAttribute('viewBox', '0 0 ' + b.width + ' ' + b.height);
+    var zaehler = { l: 0, r: 0 };
+    buehne.querySelectorAll('.app-badge').forEach(function (badge) {
+      var r = badge.getBoundingClientRect(), links = r.right <= g.left, k = zaehler[links ? 'l' : 'r']++;
+      var x1 = (links ? r.right : r.left) - b.left, y1 = r.top + r.height / 2 - b.top;
+      var x2 = (links ? g.left : g.right) - b.left, y2 = g.top - b.top + g.height * (links ? 0.3 + 0.2 * k : 0.38 + 0.24 * k);
+      var mx = (x1 + x2) / 2, d = 'M' + x1 + ' ' + y1 + 'C' + mx + ' ' + y1 + ' ' + mx + ' ' + y2 + ' ' + x2 + ' ' + y2;
+      ['app-bahn', 'app-strom'].forEach(function (klasse, i) {
+        var pfad = document.createElementNS(NS, 'path');
+        pfad.setAttribute('d', d); pfad.setAttribute('class', klasse);
+        if (i) pfad.style.animationDelay = (-(k * 0.4 + (links ? 0 : 0.2))).toFixed(1) + 's';
+        svg.appendChild(pfad);
+      });
+    });
+  }
+  zeichnen();
+  if ('ResizeObserver' in window) new ResizeObserver(zeichnen).observe(buehne);
+  window.addEventListener('load', zeichnen);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(zeichnen);
+  buehne.addEventListener('transitionend', zeichnen);
+})();

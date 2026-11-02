@@ -1,4 +1,4 @@
-/* #LeKo – gemeinsame Logik: Header, Mobil-Menü, Impressum-Modal, Jahreszahl, Einblenden, Akkordeons, Väter-App */
+/* #LeKo – gemeinsame Logik: Header, Mobil-Menü, Impressum-Modal, Jahreszahl, Einblenden, Akkordeons */
 (function () {
   'use strict';
 
@@ -67,35 +67,4 @@
       knopf.setAttribute('aria-expanded', String(auf));
     });
   });
-
-  // Väter-App (Desktop): Handy steht, die Features wechseln mit dem Scroll-Fortschritt
-  (function initAppScroll() {
-    var outer = document.querySelector('.app-sticky-outer'), schritte = document.querySelectorAll('.app-schritt');
-    var handy = document.querySelector('.app-handy'), titel = document.querySelector('.handy-aktiv-titel'), text = document.querySelector('.handy-aktiv-text');
-    var punkte = document.querySelectorAll('.handy-punkte i');
-    if (!outer || !schritte.length) return;
-    var daten = Array.prototype.map.call(schritte, function (s) {
-      return { titel: s.querySelector('h3').textContent, text: s.querySelector('p').textContent };
-    });
-    var aktuell = -1, glimmen;
-    function update() {
-      var weg = outer.offsetHeight - window.innerHeight;
-      var prog = weg > 0 ? Math.max(0, Math.min(1, -outer.getBoundingClientRect().top / weg)) : 0;
-      var schritt = Math.min(schritte.length - 1, Math.floor(prog * schritte.length));
-      if (schritt === aktuell) return;
-      aktuell = schritt;
-      schritte.forEach(function (s, i) { s.classList.toggle('aktiv', i === schritt); });
-      punkte.forEach(function (p, i) { p.classList.toggle('an', i === schritt); });
-      if (titel) titel.textContent = daten[schritt].titel;
-      if (text) text.textContent = daten[schritt].text;
-      if (handy) {  // kurzes Aufglühen beim Wechsel
-        handy.classList.add('glueht');
-        clearTimeout(glimmen);
-        glimmen = setTimeout(function () { handy.classList.remove('glueht'); }, 400);
-      }
-    }
-    window.addEventListener('scroll', update, { passive: true });
-    window.addEventListener('resize', update);
-    update();
-  })();
 })();
