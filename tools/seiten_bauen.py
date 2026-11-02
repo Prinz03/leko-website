@@ -39,7 +39,7 @@ I = {
 # ═══ Kennst du das? ═══
 SPIEGEL = [
     'Es ist 23 Uhr. Die Wohnung ist still. Deine Kinder schlafen woanders – und du weißt nicht, wohin mit dir.',
-    'Du willst kein Mitleid. Aber manchmal wärst du froh, wenn irgendwer einfach fragt: <em>»Wie geht’s dir – wirklich?«</em>',
+    'Du willst kein Mitleid. Aber manchmal wärst du froh, wenn irgendwer einfach fragt: <em style="color:var(--gold);font-style:italic">»Wie geht’s dir – wirklich?«</em>',
     'Du kämpfst für deine Kinder. Aber das System erklärt dir die Spielregeln nicht.',
     'Du funktionierst. Jeden Tag. Aber tief drinnen weißt du: So war das nicht geplant.',
 ]
