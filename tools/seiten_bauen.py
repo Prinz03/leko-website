@@ -38,10 +38,10 @@ I = {
 
 # ═══ Hero: 5 App-Screens im Handy (wechseln beim Scrollen) ═══
 SCREENS = [
-    ('⚖️', 'Rechtliche Orientierung', 'Obsorge, Besuchsrecht, Unterhalt – erklärt in verständlichem Österreichisch. Kein Juristendeutsch.'),
+    ('⚖️', 'Rechtliche Orientierung', 'Obsorge, Besuchsrecht, Unterhalt – erklärt in verständlicher Sprache. Kein Juristendeutsch.'),
     ('👥', 'Väter-Community', 'Männer, die dasselbe durchgemacht haben. Ehrlich. Direkt. Ohne Urteil.'),
     ('📅', 'Kalender Obsorgezeit', 'Strukturiere deine Zeit mit deinen Kindern. Termine, Notizen, Erinnerungen.'),
-    ('👨‍⚖️', 'Familienrechts-Experten', 'Direkter Zugang zu Anwälten, die Väterrechte kennen und vertreten.'),
+    ('👨‍⚖️', 'Familienrechts-Experten', 'Zugang zu empfohlenen Familienrechtsexperten.'),
     ('🏋️', 'Sport &amp; Events', 'Gemeinsame Trainings, Events, Mitgliederbereich – Verbindung durch Tun.'),
 ]
 app_screens = ''.join(
@@ -81,7 +81,7 @@ saeulen_html = ''.join(
 
 # ═══ Väter-App (Desktop sticky, Handy: Karten) ═══
 FEATURES = [
-    ('Rechtliche Orientierung', 'Obsorge, Besuchsrecht, Unterhalt — klar erklärt nach österreichischem Recht.'),
+    ('Rechtliche Orientierung', 'Obsorge, Besuchsrecht, Unterhalt — klar erklärt nach Familienrecht.'),
     ('Väter-Community', 'Männer, die wirklich verstehen, was du durchmachst. Kein Ratschlag — echte Erfahrung.'),
     ('Kalender &amp; Kinderzeit', 'Plane Wochenenden und Ferien mit System. Damit du nichts verpasst.'),
     ('Fachliche Kontakte', 'Direkter Zugang zu Familienrechts-Experten in Österreich.'),
@@ -102,7 +102,7 @@ I.update({
 HALTUNG = [
     ('h_herz', 'Gemeinnützig', 'Wir arbeiten nicht für Profit. Für Menschen.'),
     ('leute', 'Respekt ohne Urteil', 'Kein Raum für Urteile, Verurteilung oder Überlegenheit.'),
-    ('h_richtung', 'Unabhängig', 'Keine Kostenübernahme durch Institutionen.'),
+    ('h_richtung', 'Unabhängig', 'Keine Finanzierung durch staatliche Institutionen.'),
     ('h_wegweiser', 'Kein Therapie-Ersatz', 'Wir sind Gemeinschaft, keine Therapeuten. Profis empfehlen wir immer gerne weiter.'),
 ]
 haltung_html = ''.join(
