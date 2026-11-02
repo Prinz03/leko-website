@@ -36,20 +36,6 @@ I = {
     'pfeil-ab':  '<path d="M6 9l6 6 6-6"/>',
 }
 
-# ═══ Hero: 5 App-Screens im Handy (wechseln beim Scrollen) ═══
-SCREENS = [
-    ('⚖️', 'Rechtliche Orientierung', 'Obsorge, Besuchsrecht, Unterhalt – erklärt in verständlicher Sprache. Kein Juristendeutsch.'),
-    ('👥', 'Väter-Community', 'Männer, die dasselbe durchgemacht haben. Ehrlich. Direkt. Ohne Urteil.'),
-    ('📅', 'Kalender Obsorgezeit', 'Strukturiere deine Zeit mit deinen Kindern. Termine, Notizen, Erinnerungen.'),
-    ('👨‍⚖️', 'Familienrechts-Experten', 'Zugang zu empfohlenen Familienrechtsexperten.'),
-    ('🏋️', 'Sport &amp; Events', 'Gemeinsame Trainings, Events, Mitgliederbereich – Verbindung durch Tun.'),
-]
-app_screens = ''.join(
-    f'\n            <div class="app-screen{" active" if n == 0 else ""}"><span class="as-emoji">{e}</span>'
-    f'<b class="as-titel">{h}</b><span class="as-linie"></span><p>{txt}</p></div>'
-    for n, (e, h, txt) in enumerate(SCREENS))
-screen_punkte = '<i></i>' * len(SCREENS)
-
 # ═══ Kennst du das? ═══
 SPIEGEL = [
     'Es ist 23 Uhr. Die Wohnung ist still. Deine Kinder sind beim anderen Elternteil – und du weißt nicht, was du mit dir anfangen sollst.',
@@ -87,16 +73,16 @@ FEATURES = [
     ('Fachliche Kontakte', 'Direkter Zugang zu Familienrechts-Experten.'),
     ('Sportevents &amp; Mitglieder', 'Gemeinsame Aktivitäten und ein exklusiver Bereich nur für Mitglieder.'),
 ]  # Jarvis gehört nicht in die Väter-App
-APP_BADGES = [  # (Seite, Emoji, Titel) – links drei, rechts zwei
+APP_BADGES = [  # (Platz, Emoji, Titel) – je zwei links und rechts, einer mittig unter dem Handy
     ('links', '⚖️', 'Rechtliche Orientierung'),
     ('links', '👥', 'Väter-Community'),
-    ('links', '📅', 'Kalender &amp; Kinderzeit'),
     ('rechts', '👨‍⚖️', 'Fachliche Kontakte'),
     ('rechts', '🏋️', 'Sport &amp; Events'),
+    ('unten', '📅', 'Kalender &amp; Kinderzeit'),
 ]
-def app_badges(seite):
-    return ''.join(f'\n          <li class="app-badge" data-reveal><span class="ab-icon" aria-hidden="true">{e}</span>{h}</li>'
-                   for s, e, h in APP_BADGES if s == seite)
+def app_badges(platz):
+    return ''.join(f'\n          <li class="app-badge" data-platz="{s}" data-reveal><span class="ab-icon" aria-hidden="true">{e}</span>{h}</li>'
+                   for s, e, h in APP_BADGES if s == platz)
 app_mobil = ''.join(f'\n    <div class="app-mobile-feature" data-reveal><h3>{h}</h3><p>{txt}</p></div>' for h, txt in FEATURES)
 
 # ═══ Haltung (2×2) ═══
@@ -203,7 +189,7 @@ index = f'''<!DOCTYPE html>
 
 <main id="inhalt">
 
-<!-- ═══ 1 · HERO (sticky, 400vh: Headline → Handy fliegt ein → 5 App-Screens) ═══ -->
+<!-- ═══ 1 · HERO (ruhig: nur Text und Licht) ═══ -->
 <section class="hero-outer" id="top">
   <div class="hero-inner">
     <div class="hero-licht" aria-hidden="true"></div>
@@ -215,22 +201,8 @@ index = f'''<!DOCTYPE html>
       </h1>
       <p class="hero-sub auftritt" style="--d:1.1s">LeKo ist die Community für Männer, die ihr Leben selbst in die Hand nehmen – als Väter, als Persönlichkeiten, als Teil einer Gemeinschaft, die hält was sie verspricht.</p>
       <div class="hero-ctas auftritt" style="--d:1.25s">
-        <a href="#mitglied" class="btn btn-outline-gold">Jetzt Mitglied werden <span class="pfeil" aria-hidden="true">→</span></a>
+        <a href="#mitglied" class="btn btn-gold btn-gross">Jetzt Mitglied werden <span class="pfeil" aria-hidden="true">→</span></a>
       </div>
-    </div>
-    <div class="hero-phone" aria-hidden="true">
-      <div class="phone-frame">
-        <div class="phone-notch"></div>
-        <div class="phone-screen">
-          <div class="phone-status"><span>9:41</span><b>#LeKo</b></div>
-          <div class="app-screens">{app_screens}
-          </div>
-          <div class="phone-punkte">{screen_punkte}</div>
-        </div>
-      </div>
-    </div>
-    <div class="scroll-pfeil" aria-hidden="true">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
     </div>
   </div>
 </section>
@@ -269,6 +241,8 @@ index = f'''<!DOCTYPE html>
       <span class="app-koerper" id="app-koerper" aria-hidden="true"></span>
     </div>
     <ul class="app-badges rechts" aria-label="Weitere Funktionen der App">{app_badges('rechts')}
+    </ul>
+    <ul class="app-badges unten" aria-label="Weitere Funktion der App">{app_badges('unten')}
     </ul>
   </div>
   <div class="app-mobile-list wrap">{app_mobil}
