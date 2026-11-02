@@ -1,9 +1,8 @@
-/* #LeKo – gemeinsame Logik: Header, Mobil-Menü, Impressum-Modal, Scroll-Einblendung, Akkordeons, Kennst du das?, Väter-App, Haltung */
+/* #LeKo – gemeinsame Logik: Header, Mobil-Menü, Impressum-Modal, Jahreszahl, Einblenden, Akkordeons, Väter-App */
 (function () {
   'use strict';
-  var ruhig = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // Header: transparent → dunkel beim Scrollen
+  // Header: transparent → Glas-Leiste beim Scrollen
   var kopf = document.getElementById('kopf');
   function kopfZustand() { kopf.classList.toggle('solid', window.scrollY > 24); }
   kopfZustand();
@@ -21,7 +20,7 @@
   document.querySelectorAll('.schublade a').forEach(function (a) { a.addEventListener('click', function () { menue(false); }); });
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape') menue(false); });
 
-  // Modale Fenster (Impressum u. a.): öffnen per data-modal, schließen per × oder Klick daneben
+  // Modale Fenster (Impressum): öffnen per data-modal, schließen per × oder Klick daneben
   document.querySelectorAll('[data-modal]').forEach(function (k) {
     k.addEventListener('click', function () {
       var d = document.getElementById(k.getAttribute('data-modal'));
@@ -32,18 +31,24 @@
     d.addEventListener('click', function (e) { if (e.target === d || e.target.closest('[data-schliessen]')) d.close(); });
   });
 
-  // Scroll-Einblendung
-  var elemente = document.querySelectorAll('.ein');
-  if ('IntersectionObserver' in window && !ruhig) {
+  // Jahreszahl im Footer
+  document.querySelectorAll('[data-jahr]').forEach(function (el) { el.textContent = new Date().getFullYear(); });
+
+  // Einblenden beim Scrollen: alles mit data-reveal gleitet sanft herein (optional versetzt per data-reveal-delay in ms)
+  if ('IntersectionObserver' in window) {
     var beob = new IntersectionObserver(function (es) {
-      es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('da'); beob.unobserve(e.target); } });
-    }, { threshold: 0.18, rootMargin: '0px 0px -40px 0px' });
-    elemente.forEach(function (el) { beob.observe(el); });
-  } else {
-    elemente.forEach(function (el) { el.classList.add('da'); });
+      es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('revealed'); beob.unobserve(e.target); } });
+    }, { threshold: 0.15 });
+    document.querySelectorAll('[data-reveal]').forEach(function (el) {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(30px)';
+      el.style.transition = 'opacity .7s ease, transform .7s ease';
+      if (el.dataset.revealDelay) el.style.transitionDelay = el.dataset.revealDelay + 'ms';
+      beob.observe(el);
+    });
   }
 
-  // Akkordeons mit weicher Höhenanimation (FAQ, Säulen am Handy)
+  // Akkordeons mit weicher Höhenanimation (FAQ)
   document.querySelectorAll('.akk-frage').forEach(function (knopf) {
     knopf.addEventListener('click', function () {
       var item = knopf.closest('.akk-item'), antwort = item.querySelector('.akk-antwort');
@@ -63,7 +68,7 @@
     });
   });
 
-  // Väter-App: Handy steht, die Features wechseln mit dem Scroll-Fortschritt
+  // Väter-App (Desktop): Handy steht, die Features wechseln mit dem Scroll-Fortschritt
   (function initAppScroll() {
     var outer = document.querySelector('.app-sticky-outer'), schritte = document.querySelectorAll('.app-schritt');
     var handy = document.querySelector('.app-handy'), titel = document.querySelector('.handy-aktiv-titel'), text = document.querySelector('.handy-aktiv-text');
@@ -92,37 +97,5 @@
     window.addEventListener('scroll', update, { passive: true });
     window.addEventListener('resize', update);
     update();
-  })();
-
-  // Kennst du das?: die vier Sätze leuchten nacheinander auf, danach die Brücke
-  (function initProblem() {
-    var els = document.querySelectorAll('.pp, .bruecke-zeile1, .bruecke-zeile2');
-    if (!els.length) return;
-    if (!('IntersectionObserver' in window) || ruhig) { els.forEach(function (el) { el.classList.add('sichtbar'); }); return; }
-    var obs = new IntersectionObserver(function (es) {
-      es.forEach(function (e) {
-        if (e.isIntersecting) {
-          setTimeout(function () { e.target.classList.add('sichtbar'); }, parseInt(e.target.dataset.delay || 0, 10));
-          obs.unobserve(e.target);
-        }
-      });
-    }, { threshold: 0.3 });
-    els.forEach(function (el) { obs.observe(el); });
-  })();
-
-  // Haltung: Zeilen gleiten nacheinander von unten herein
-  (function initHaltungScroll() {
-    var zeilen = document.querySelectorAll('.haltung-zeile');
-    if (!zeilen.length) return;
-    if (!('IntersectionObserver' in window) || ruhig) { zeilen.forEach(function (z) { z.classList.add('sichtbar'); }); return; }
-    var obs = new IntersectionObserver(function (es) {
-      es.forEach(function (e, i) {
-        if (e.isIntersecting) {
-          setTimeout(function () { e.target.classList.add('sichtbar'); }, i * 150);
-          obs.unobserve(e.target);
-        }
-      });
-    }, { threshold: 0.2 });
-    zeilen.forEach(function (z) { obs.observe(z); });
   })();
 })();

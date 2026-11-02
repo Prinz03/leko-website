@@ -3,247 +3,158 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#000000">
+<meta name="theme-color" content="#080808">
 <link rel="icon" type="image/png" sizes="128x128" href="assets/logo/logo-128x128.png">
 <link rel="apple-touch-icon" href="assets/logo/logo-256x256.png">
 <link rel="stylesheet" href="assets/fonts/fonts.css">
 <link rel="stylesheet" href="assets/site.css">
-<title>#LeKo – Stärker werden. Nicht allein.</title>
-<meta name="description" content="#LeKo ist die Gemeinschaft für Männer von 25 bis 50 in Kärnten: Bildungsseminare, Bewegung, Resilienz und echte Bruderschaft. Gemeinnützig aus Klagenfurt.">
-<meta property="og:title" content="#LeKo – Stärker werden. Nicht allein.">
-<meta property="og:description" content="Bildungsseminare, Bewegung und Männer, auf die du zählen kannst. Gemeinnützig aus Klagenfurt.">
+<title>LeKo – Lebenskompass | Männer-Community Österreich &amp; Deutschland</title>
+<meta name="description" content="LeKo ist die Gemeinschaft für Männer zwischen 25 und 50, die Orientierung, Stärke und echte Verbindung suchen – als Väter, als Persönlichkeit, als Teil einer Community, die hält was sie verspricht. Österreich und Deutschland.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://prinz03.github.io/leko-website/">
+<meta property="og:title" content="LeKo – Stärker werden. Nicht allein.">
+<meta property="og:description" content="Männer-Community für Orientierung, Gemeinschaft und Stärke. Überall in Österreich und Deutschland.">
 <meta property="og:image" content="https://prinz03.github.io/leko-website/assets/logo/logo-512x512.png">
 <meta property="og:url" content="https://prinz03.github.io/leko-website/">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="de_AT">
 <style>
-/* ─── Seitenaufbau ───────────────────────────────────────────────────── */
-.sektion{padding:clamp(110px,14vw,180px) 0;position:relative}
-.schmal{max-width:880px}
-.kopfzeile{text-align:center;display:grid;justify-items:center;gap:20px;margin-bottom:clamp(56px,8vw,96px)}
-.kopfzeile .lead{margin:0 auto}
-.badge{display:inline-block;padding:6px 14px;border-radius:999px;background:rgba(201,168,76,.12);color:var(--gold-hell);font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase}
-.knoepfe{display:flex;flex-wrap:wrap;justify-content:center;gap:14px}
-@media (max-width:560px){.knoepfe{flex-direction:column;width:100%}.knoepfe .btn{width:100%}}
-/* Lichtkegel hinter einem Motiv – wie die Produktbühne bei DJI */
-.buehnenlicht{background:radial-gradient(ellipse 48% 42% at 50% var(--ly,40%),rgba(201,168,76,.14),rgba(201,168,76,.04) 45%,transparent 72%),var(--black)}
-
-/* ─── 1 · Hero: Einblendung beim Laden ───────────────────────────────── */
-/* „backwards“: nach dem Einblenden übernimmt wieder das Scroll-Skript Deckkraft und Lage */
+/* ─── 1 · HERO: sticky über 400vh – Headline, dann Handy, dann 5 App-Screens ─── */
+.hero-outer{min-height:400vh;position:relative;background:var(--bg-black);--p:0}
+.hero-inner{position:sticky;top:0;height:100vh;overflow:hidden;display:grid;place-items:center;text-align:center;padding:0 2rem}
+.hero-inner > *{grid-area:1/1}
+/* Goldener Lichtkegel von unten, wird mit dem Scrollen stärker */
+.hero-licht{position:absolute;inset:0;pointer-events:none;opacity:calc(.6 + var(--p) * .7);transform:scale(calc(1 + var(--p) * .3));transform-origin:50% 100%}
+.hero-licht::before{content:"";position:absolute;inset:0;
+  background:radial-gradient(ellipse 55% 38% at 50% 104%,rgba(232,200,120,.28),rgba(201,168,76,.09) 45%,transparent 72%),
+    conic-gradient(from 180deg at 50% 112%,transparent 152deg,rgba(232,200,120,.06) 166deg,transparent 174deg,transparent 186deg,rgba(232,200,120,.06) 194deg,transparent 208deg)}
+.hero-text{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center}
+.hero-pre{font-size:clamp(.75rem,1.5vw,.9rem);font-weight:600;letter-spacing:5px;text-transform:uppercase;color:var(--gold);margin-bottom:1.5rem}
+.hero-h1{font-size:clamp(3.4rem,10vw,9rem);font-weight:800;line-height:1;letter-spacing:-.04em;margin:0 0 2rem}
+.h1-weiss{display:block;color:var(--text-white)}
+.h1-gold{display:block;color:var(--gold)}
+.hero-sub{font-size:clamp(1rem,2vw,1.2rem);color:var(--text-gray);max-width:600px;line-height:1.7;margin-bottom:2.5rem}
+.hero-phone{position:relative;z-index:3;display:grid;place-items:center}
+/* Handy-Mockup (reines CSS) – Höhe passt sich niedrigen Bildschirmen an */
+.phone-frame{--h:min(580px,78vh);width:calc(var(--h) * .483);height:var(--h);border:2px solid var(--gold);border-radius:44px;background:#0a0a0a;
+  box-shadow:0 0 80px rgba(201,168,76,.15),inset 0 0 0 6px #111;position:relative;overflow:hidden;opacity:0;transform:translateY(120px)}
+.phone-notch{width:100px;height:28px;background:#0a0a0a;border-radius:0 0 18px 18px;margin:0 auto;position:relative;z-index:2;box-shadow:0 0 0 2px #111}
+.phone-screen{position:absolute;inset:6px;padding:40px 18px 18px;color:#fff;font-size:13px;text-align:left;border-radius:38px;background:linear-gradient(180deg,#141414,#0a0a0a)}
+.phone-status{display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--text-gray);margin-bottom:22%}
+.phone-status b{color:var(--gold);font-size:14px;letter-spacing:-.02em}
+.app-screens{position:relative}
+.app-screen{position:absolute;inset:0 0 auto;opacity:0;transform:translateY(14px);transition:opacity .5s ease,transform .5s var(--weich)}
+.app-screen.active{opacity:1;transform:none}
+.as-emoji{display:block;font-size:2.4rem;line-height:1;margin-bottom:1rem}
+.as-titel{display:block;color:var(--gold);font-size:.78rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;line-height:1.4}
+.as-linie{display:block;height:1px;background:var(--border);margin:.9rem 0}
+.app-screen p{font-size:.95rem;line-height:1.6;color:rgba(245,245,247,.85)}
+.phone-punkte{position:absolute;left:0;right:0;bottom:22px;display:flex;justify-content:center;gap:8px}
+.phone-punkte i{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.2);transition:background .3s,box-shadow .3s}
+.phone-punkte i.an{background:var(--gold);box-shadow:0 0 8px var(--gold)}
+.scroll-pfeil{position:absolute;bottom:28px;left:50%;width:28px;height:28px;margin-left:-14px;color:var(--gold);z-index:4;animation:pfeil 1.8s ease-in-out infinite}
+.scroll-pfeil svg{display:block;width:100%;height:100%}
+@keyframes pfeil{0%,100%{transform:translateY(0)}50%{transform:translateY(8px)}}
+/* „backwards“: nach dem Einblenden übernimmt das Scroll-Skript Deckkraft und Lage */
 .auftritt{animation:auftritt 1.4s var(--weich) backwards;animation-delay:var(--d,0s)}
 @keyframes auftritt{from{opacity:0;transform:translateY(24px)}}
 
-/* ─── 3 · Säulen: 5 Premium-Karten mit Gold-Verlauf-Rahmen ─────────────── */
-.saeulen{--ly:30%}
-.saeulen-section { padding: 8rem 0; }
-.saeulen-section h2 {
-  text-align: center; font-size: clamp(2rem, 5vw, 3.5rem);
-  font-weight: 900; margin-bottom: 0.75rem; color: #fff;
-}
-.saeulen-lead {
-  text-align: center; color: rgba(255,255,255,0.5);
-  font-size: 1.1rem; margin-bottom: 4rem;
-}
-.saeulen-karten {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 1rem; max-width: 1200px; margin: 0 auto;
-}
-@media(max-width:900px){ .saeulen-karten{grid-template-columns:repeat(3,1fr);} }
-@media(max-width:600px){ .saeulen-karten{grid-template-columns:1fr;} }
+/* ─── 2 · KENNST DU DAS? ─────────────────────────────────────────────── */
+.mirror-section{background:var(--bg-dark);padding:clamp(110px,15vw,180px) var(--gutter-r) clamp(110px,15vw,180px) var(--gutter-l);text-align:center}
+.mirror-label{font-size:clamp(2.6rem,6.5vw,5rem);font-weight:800;color:var(--gold);margin-bottom:clamp(3rem,6vw,4.5rem)}
+.mirror-item{max-width:680px;margin:0 auto 2.6rem}
+.mirror-item p{font-size:1.2rem;line-height:1.9;color:rgba(245,245,247,.85)}
+.mirror-item em{color:var(--text-white);font-style:italic}
+.mirror-bridge{max-width:680px;margin:clamp(3.5rem,7vw,5rem) auto 0;font-size:clamp(2rem,5vw,3.6rem);font-weight:800;letter-spacing:-.035em;line-height:1.1;color:var(--gold)}
 
-.saeule-karte-wrap {
-  background: linear-gradient(135deg,#c9a84c 0%,#1a0f00 50%,#c9a84c 100%);
-  border-radius: 12px; padding: 1.5px;
-  transition: transform 0.3s ease, filter 0.3s ease;
-}
-.saeule-karte-wrap:hover { transform: translateY(-6px); filter: brightness(1.25); }
-.saeule-karte {
-  background: #0d0d0d; border-radius: 11px;
-  padding: 2rem 1.5rem; height: 100%;
-  transition: box-shadow 0.3s;
-}
-.saeule-karte-wrap:hover .saeule-karte {
-  box-shadow: 0 0 50px rgba(201,168,76,0.3);
-}
-.sk-nr {
-  font-size: 3.5rem; font-weight: 900;
-  color: rgba(201,168,76,0.25); line-height: 1;
-  margin-bottom: 1rem; letter-spacing: -0.04em;
-}
-.sk-name {
-  font-size: 1.15rem; font-weight: 700;
-  color: #fff; margin: 0 0 0.75rem;
-}
-.sk-text {
-  font-size: 0.82rem; color: rgba(255,255,255,0.45);
-  line-height: 1.7; margin: 0;
+/* ─── 3 · 5 SÄULEN: je eine Full-Screen-Sektion ──────────────────────── */
+.saeulen{background:var(--bg-black)}
+.saeulen-intro{text-align:center;padding-top:clamp(110px,14vw,170px);padding-bottom:clamp(20px,4vw,40px);display:grid;justify-items:center;gap:18px}
+.saeulen-intro h2 em{display:block}
+.saeule-section{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;align-items:center;padding:0 8vw;gap:6vw;background:#080808}
+.saeule-section:nth-child(even){direction:rtl}
+.saeule-section:nth-child(even) > *{direction:ltr}
+.saeule-visual{display:grid;place-items:center}
+.saeule-icon{font-size:5rem;display:flex;align-items:center;justify-content:center;width:160px;height:160px;border-radius:40px;
+  background:linear-gradient(135deg,#1a1a1a,#111);border:1.5px solid var(--akzent);
+  box-shadow:0 0 60px color-mix(in srgb,var(--akzent) 14%,transparent),0 0 160px color-mix(in srgb,var(--akzent) 8%,transparent)}
+.saeule-label{display:block;font-size:13px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--akzent);margin-bottom:1.25rem}
+.saeule-text h2{font-size:clamp(1.8rem,3vw,2.8rem);color:#fff;font-weight:700;margin-bottom:1.5rem;line-height:1.2}
+.saeule-text p{font-size:1.05rem;color:#999;line-height:1.85;max-width:480px}
+@media (max-width:760px){
+  .saeule-section,.saeule-section:nth-child(even){grid-template-columns:1fr;direction:ltr;min-height:auto;padding:clamp(72px,16vw,110px) var(--gutter-r) clamp(72px,16vw,110px) var(--gutter-l);gap:2.5rem}
+  .saeule-visual{justify-items:start}
+  .saeule-icon{width:120px;height:120px;font-size:3.6rem;border-radius:30px}
 }
 
-/* Akkordeon (FAQ) */
-.akk-item{border-bottom:1px solid var(--linie);transition:background .4s}
-.akk-item:first-child{border-top:1px solid var(--linie)}
-.akk-item.offen{background:rgba(255,255,255,.025)}
-.akk-frage{width:100%;display:flex;align-items:center;gap:16px;padding:26px 18px;background:none;border:0;color:var(--white);font:600 1.15rem/1.4 var(--sans);letter-spacing:-.02em;text-align:left;cursor:pointer;transition:color .2s}
-.akk-frage:hover{color:var(--gold-hell)}
-.akk-titel{flex:1}
-.chevron{flex:none;width:22px;height:22px;color:var(--text-2);transition:transform .4s var(--weich),color .3s}
-.akk-item.offen .chevron{transform:rotate(180deg);color:var(--gold)}
-.akk-antwort{height:0;overflow:hidden;transition:height .45s var(--weich)}
-.akk-antwort p{padding:0 18px 26px;color:var(--text-2);font-size:1.02rem}
-
-/* ─── 4 · App: Sticky-Scroll (Handy steht rechts, Features wechseln links) ─── */
-.app{padding-bottom:0}
-.app .kopfzeile{margin-bottom:0}
-.app-sticky-outer {
-  /* Höhe = Anzahl Features × 100vh + 1 Bildschirm, damit genug Scrollraum da ist */
-  min-height: 600vh;
-  position: relative;
-}
-.app-sticky-inner {
-  position: sticky;
-  top: 0;
-  height: 100vh;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  align-items: center;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 2rem;
-  gap: 4rem;
-}
-.app-schritte {
-  position: relative;
-}
-.app-schritt {
-  opacity: 0;
-  transition: opacity 0.6s ease, transform 0.6s ease;
-  position: absolute;
-  top: 50%;
-  transform: translateY(calc(-50% + 30px));
-  width: 100%;
-}
-.app-schritt.aktiv {
-  opacity: 1;
-  transform: translateY(-50%);
-}
-.as-nr {
-  font-size: 3.5rem;
-  font-weight: 800;
-  color: #c9a84c;
-  line-height: 1;
-  letter-spacing: -.04em;
-  display: block;
-  margin-bottom: 1rem;
-}
-.app-schritt h3 {
-  font-size: 1.6rem;
-  font-weight: 700;
-  color: #fff;
-  margin: 0 0 1rem;
-}
-.app-schritt p {
-  font-size: 1rem;
-  color: rgba(255,255,255,0.6);
-  line-height: 1.7;
-  max-width: 28rem;
-}
-.app-handy-wrap {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: radial-gradient(circle at 50% 50%, rgba(201,168,76,.12), transparent 60%);
-}
-.app-handy {
-  position: relative;
-  width: 280px;
-  height: 560px;
-  background: #111;
-  border: 2px solid #c9a84c;
-  border-radius: 36px;
-  padding: 2rem 1.5rem;
-  box-shadow: 0 0 80px rgba(201,168,76,0.15), inset 0 0 30px rgba(0,0,0,0.8);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  transition: box-shadow .4s ease;
-}
-.app-handy.glueht { box-shadow: 0 0 120px rgba(201,168,76,0.35), inset 0 0 30px rgba(0,0,0,0.8); }
+/* ─── 4 · VÄTER-APP: Desktop sticky, Handy Karten ────────────────────── */
+.app{background:var(--bg-black);padding-top:clamp(110px,14vw,170px)}
+.app-kopf{text-align:center;display:grid;justify-items:center;gap:20px}
+.app-sticky-outer{min-height:600vh;position:relative}
+.app-sticky-inner{position:sticky;top:0;height:100vh;display:grid;grid-template-columns:1fr 1fr;align-items:center;max-width:1200px;margin:0 auto;padding:0 2rem;gap:4rem}
+.app-schritte{position:relative}
+.app-schritt{opacity:0;transition:opacity .6s ease,transform .6s ease;position:absolute;top:50%;transform:translateY(calc(-50% + 30px));width:100%}
+.app-schritt.aktiv{opacity:1;transform:translateY(-50%)}
+.as-nr{font-size:3.5rem;font-weight:800;color:var(--gold);line-height:1;letter-spacing:-.04em;display:block;margin-bottom:1rem}
+.app-schritt h3{font-size:1.6rem;font-weight:700;color:#fff;margin:0 0 1rem}
+.app-schritt p{font-size:1rem;color:rgba(255,255,255,.6);line-height:1.7;max-width:28rem}
+.app-handy-wrap{display:flex;justify-content:center;align-items:center;background:radial-gradient(circle at 50% 50%,rgba(201,168,76,.12),transparent 60%)}
+.app-handy{position:relative;width:280px;height:560px;background:#111;border:2px solid var(--gold);border-radius:36px;padding:2rem 1.5rem;
+  box-shadow:0 0 80px rgba(201,168,76,.15),inset 0 0 30px rgba(0,0,0,.8);display:flex;flex-direction:column;justify-content:center;transition:box-shadow .4s ease}
+.app-handy.glueht{box-shadow:0 0 120px rgba(201,168,76,.35),inset 0 0 30px rgba(0,0,0,.8)}
 .notch{position:absolute;top:16px;left:50%;transform:translateX(-50%);width:86px;height:22px;border-radius:999px;background:#000}
-.handy-header { margin-bottom: 2rem; }
-.handy-logo {
-  font-size: 1.4rem;
-  font-weight: 800;
-  color: #c9a84c;
-  display: block;
-}
-.handy-subline {
-  font-size: 0.75rem;
-  color: rgba(255,255,255,0.4);
-  letter-spacing: 3px;
-  text-transform: uppercase;
-}
-.handy-aktiv-titel {
-  font-size: 1rem;
-  font-weight: 700;
-  color: #fff;
-  margin-bottom: 0.5rem;
-  min-height: 1.5rem;
-  transition: opacity 0.3s;
-}
-.handy-aktiv-text {
-  font-size: 0.8rem;
-  color: rgba(255,255,255,0.5);
-  line-height: 1.6;
-  min-height: 3rem;
-  transition: opacity 0.3s;
-}
+.handy-header{margin-bottom:2rem}
+.handy-logo{font-size:1.4rem;font-weight:800;color:var(--gold);display:block}
+.handy-subline{font-size:.75rem;color:rgba(255,255,255,.4);letter-spacing:3px;text-transform:uppercase}
+.handy-aktiv-titel{font-size:1rem;font-weight:700;color:#fff;margin-bottom:.5rem;min-height:1.5rem}
+.handy-aktiv-text{font-size:.8rem;color:rgba(255,255,255,.5);line-height:1.6;min-height:3rem}
 .handy-punkte{position:absolute;left:0;right:0;bottom:22px;display:flex;justify-content:center;gap:8px}
 .handy-punkte i{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.2);transition:background .3s,box-shadow .3s}
 .handy-punkte i.an{background:var(--gold);box-shadow:0 0 8px var(--gold)}
-
-/* Mobil: kein Sticky – Handy oben, Features als nummerierte Liste darunter */
-@media(max-width:768px){
-  .app-sticky-outer { min-height: auto !important; }
-  .app-sticky-inner {
-    position: static !important; height: auto !important;
-    display: flex; flex-direction: column;
-    padding: 4rem 1.5rem; gap: 3rem;
-  }
-  .app-handy-wrap { order: -1; }
-  .app-handy { width: 250px; height: 460px; }
-  .app-schritt {
-    position: static !important;
-    opacity: 1 !important; transform: none !important;
-    margin-bottom: 2.5rem;
-    border-left: 2px solid #c9a84c;
-    padding-left: 1.5rem;
-  }
-  .app-schritt .as-nr {
-    font-size: 2rem; display: block; margin-bottom: 0.5rem;
-  }
-  .app-schritt h3 { font-size: 1.2rem; margin-bottom: 0.5rem; }
-  .app-schritt p  { font-size: 0.9rem; }
+@media (max-width:768px){
+  .app-sticky-outer{display:none}
+  .app-mobile-list{display:block;padding-top:3rem;padding-bottom:clamp(72px,16vw,110px)}
+  .app-mobile-feature{border-left:3px solid var(--gold);padding:1.5rem 1.5rem 1.5rem 2rem;margin-bottom:2rem;background:var(--bg-card);border-radius:0 12px 12px 0}
+  .app-mobile-feature h3{color:var(--gold);font-size:1rem;margin-bottom:.5rem;text-transform:uppercase;letter-spacing:.05em}
+  .app-mobile-feature p{color:#ccc;font-size:.95rem;line-height:1.7;margin:0}
 }
+@media (min-width:769px){.app-mobile-list{display:none}}
 
-/* ─── 6 · Mitglied ───────────────────────────────────────────────────── */
-.mitglied-block{max-width:820px;margin:0 auto;text-align:center;display:grid;justify-items:center;gap:22px;padding:clamp(56px,8vw,96px) clamp(22px,6vw,72px);
-  border-radius:32px;background:radial-gradient(ellipse 70% 55% at 50% 0%,rgba(201,168,76,.16),transparent 70%),var(--surface)}
-.vorteile{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:14px 32px;text-align:left;margin:14px 0 8px}
-.vorteile li{display:flex;gap:12px;color:var(--text-85)}
-.vorteile li::before{content:"✓";color:var(--gold);font-weight:700}
-.mini-kompass{width:60px;height:60px;animation:mini-puls 2.4s ease-in-out infinite}
-@keyframes mini-puls{0%,100%{transform:scale(1);filter:drop-shadow(0 0 2px rgba(201,168,76,.2))}50%{transform:scale(1.08);filter:drop-shadow(0 0 14px rgba(201,168,76,.7))}}
-@media (max-width:600px){.vorteile{grid-template-columns:1fr}}
+/* ─── 5 · HALTUNG (2×2) ──────────────────────────────────────────────── */
+.haltung{background:var(--bg-dark);padding:clamp(110px,14vw,170px) 0}
+.haltung-kopf{text-align:center;display:grid;justify-items:center;gap:18px;margin-bottom:clamp(48px,7vw,80px)}
+.haltung-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;max-width:980px;margin:0 auto}
+.haltung-karte{height:100%;padding:clamp(2rem,4vw,3rem);border-radius:28px;background:var(--bg-card);transition:transform .4s var(--weich),background .4s,box-shadow .4s}
+.haltung-karte:hover{transform:translateY(-6px);background:var(--bg-elevated);box-shadow:inset 0 0 0 1px var(--border)}
+.hk-icon{color:var(--gold);margin-bottom:1.5rem}
+.hk-icon svg{display:block;width:56px;height:56px}
+.haltung-karte h3{font-size:clamp(1.4rem,2.4vw,1.9rem);color:var(--text-white);margin-bottom:.8rem}
+.haltung-karte p{color:var(--text-gray);font-size:1.02rem;line-height:1.7}
+@media (max-width:680px){.haltung-grid{grid-template-columns:1fr}}
 
-/* ─── 7 · FAQ / 8 · Kontakt ──────────────────────────────────────────── */
-.kontakt{--ly:50%;text-align:center}
-.kontakt .ein{display:grid;justify-items:center;gap:22px}
-.mail{font-size:clamp(1.8rem,5.5vw,4rem);font-weight:600;letter-spacing:-.04em;text-decoration:none;overflow-wrap:anywhere;
-  background:var(--gold-verlauf);-webkit-background-clip:text;background-clip:text;color:transparent;transition:opacity .3s}
-.mail:hover{opacity:.8}
-.kontakt .btn{margin-top:12px}
-@media (max-width:560px){.kontakt .btn{width:100%}}
+/* ─── 6 · FAQ ────────────────────────────────────────────────────────── */
+.faq{background:var(--bg-black);padding:clamp(110px,14vw,170px) 0}
+.faq-kopf{text-align:center;display:grid;justify-items:center;gap:18px;margin-bottom:clamp(40px,6vw,64px)}
+.akk-item{border-bottom:1px solid var(--linie);transition:background .4s}
+.akk-item:first-child{border-top:1px solid var(--linie)}
+.akk-item.offen{background:rgba(255,255,255,.025)}
+.akk-frage{width:100%;display:flex;align-items:center;gap:16px;padding:26px 18px;background:none;border:0;color:var(--text-white);font:600 1.15rem/1.4 var(--sans);letter-spacing:-.02em;text-align:left;cursor:pointer;transition:color .2s}
+.akk-frage:hover{color:var(--gold-light)}
+.akk-titel{flex:1}
+.chevron{flex:none;width:22px;height:22px;color:var(--text-gray);transition:transform .4s var(--weich),color .3s}
+.akk-item.offen .chevron{transform:rotate(180deg);color:var(--gold)}
+.akk-antwort{height:0;overflow:hidden;transition:height .45s var(--weich)}
+.akk-antwort p{padding:0 18px 26px;color:var(--text-gray);font-size:1.02rem}
+
+/* ─── 7 · CTA ────────────────────────────────────────────────────────── */
+.cta{background:radial-gradient(ellipse 60% 55% at 50% 100%,rgba(201,168,76,.16),transparent 70%),var(--bg-black);padding:clamp(130px,18vw,220px) 0;text-align:center}
+.cta-inner{display:grid;justify-items:center;gap:24px}
+.cta h2{font-size:clamp(2.6rem,6.5vw,5.5rem);max-width:14em}
+.cta h2 em{display:block}
+.btn-gross{min-height:56px;padding:0 2.2rem;font-size:1.05rem;margin-top:8px}
+.cta-klein{font-size:.9rem;color:var(--text-gray)}
+.cta-klein a{color:var(--text-gray);text-decoration:none;border-bottom:1px solid var(--linie);transition:color .2s,border-color .2s}
+.cta-klein a:hover{color:var(--gold);border-color:var(--gold)}
 </style>
 </head>
 <body>
@@ -252,7 +163,7 @@
 <header class="kopf" id="kopf">
   <div class="wrap">
     <a href="#top" class="marke"><img src="assets/logo/logo-128x128.png" alt="" width="36" height="36">#LeKo</a>
-    <ul class="kopf-links"><li><a href="#saeulen">Säulen</a></li><li><a href="#app">Väter-App</a></li><li><a href="#haltung">Haltung</a></li><li><a href="#faq">FAQ</a></li><li><a href="#kontakt">Kontakt</a></li></ul>
+    <ul class="kopf-links"><li><a href="#saeulen">Säulen</a></li><li><a href="#app">Väter-App</a></li><li><a href="#haltung">Haltung</a></li><li><a href="#faq">FAQ</a></li><li><a href="#mitglied">Kontakt</a></li></ul>
     <a href="#mitglied" class="btn btn-gold kopf-cta"><span class="lang">Jetzt&nbsp;</span>Mitglied werden</a>
     <button class="burger" id="burger" type="button" aria-label="Menü öffnen" aria-expanded="false" aria-controls="schublade"><span></span></button>
   </div>
@@ -261,25 +172,42 @@
     <a href="#app">Väter-App</a>
     <a href="#haltung">Haltung</a>
     <a href="#faq">FAQ</a>
-    <a href="#kontakt">Kontakt</a>
+    <a href="#mitglied">Kontakt</a>
   </nav>
 </header>
 
 <main id="inhalt">
 
-<!-- ═══ 1 · HERO (sticky: das Licht wird stärker, der Text tritt stufenweise zurück) ═══ -->
+<!-- ═══ 1 · HERO (sticky, 400vh: Headline → Handy fliegt ein → 5 App-Screens) ═══ -->
 <section class="hero-outer" id="top">
   <div class="hero-inner">
     <div class="hero-licht" aria-hidden="true"></div>
-    <p class="hero-pre auftritt" style="--d:.3s">Für Männer. In Kärnten. Ohne Ausrede.</p>
-    <h1 class="hero-h1">
-      <span class="h1-weiss auftritt" style="--d:.55s">Stärker werden.</span>
-      <span class="h1-gold auftritt" style="--d:.85s">Nicht allein.</span>
-    </h1>
-    <p class="hero-sub auftritt" style="--d:1.1s">#LeKo ist die Gemeinschaft für Männer von 25 bis 50 in Kärnten: Bildungsseminare, Bewegung und Brüder, auf die du zählen kannst.</p>
-    <div class="hero-ctas knoepfe auftritt" style="--d:1.25s">
-      <a href="#mitglied" class="btn btn-gold">Jetzt Mitglied werden <span class="pfeil" aria-hidden="true">→</span></a>
-      <a href="#saeulen" class="btn btn-dunkel">Unverbindlich kennenlernen</a>
+    <div class="hero-text">
+      <p class="hero-pre auftritt" style="--d:.3s">Für Männer. Ohne Ausrede.</p>
+      <h1 class="hero-h1">
+        <span class="h1-weiss auftritt" style="--d:.55s">Stärker werden.</span>
+        <span class="h1-gold auftritt" style="--d:.85s">Nicht allein.</span>
+      </h1>
+      <p class="hero-sub auftritt" style="--d:1.1s">LeKo ist die Community für Männer, die ihr Leben selbst in die Hand nehmen – als Väter, als Persönlichkeiten, als Teil einer Gemeinschaft, die hält was sie verspricht.</p>
+      <div class="hero-ctas auftritt" style="--d:1.25s">
+        <a href="#mitglied" class="btn btn-outline-gold">Jetzt Mitglied werden <span class="pfeil" aria-hidden="true">→</span></a>
+      </div>
+    </div>
+    <div class="hero-phone" aria-hidden="true">
+      <div class="phone-frame">
+        <div class="phone-notch"></div>
+        <div class="phone-screen">
+          <div class="phone-status"><span>9:41</span><b>#LeKo</b></div>
+          <div class="app-screens">
+            <div class="app-screen active"><span class="as-emoji">⚖️</span><b class="as-titel">Rechtliche Orientierung</b><span class="as-linie"></span><p>Obsorge, Besuchsrecht, Unterhalt – erklärt in verständlichem Österreichisch. Kein Juristendeutsch.</p></div>
+            <div class="app-screen"><span class="as-emoji">👥</span><b class="as-titel">Väter-Community</b><span class="as-linie"></span><p>Männer, die dasselbe durchgemacht haben. Ehrlich. Direkt. Ohne Urteil.</p></div>
+            <div class="app-screen"><span class="as-emoji">📅</span><b class="as-titel">Kalender Obsorgezeit</b><span class="as-linie"></span><p>Strukturiere deine Zeit mit deinen Kindern. Termine, Notizen, Erinnerungen.</p></div>
+            <div class="app-screen"><span class="as-emoji">👨‍⚖️</span><b class="as-titel">Familienrechts-Experten</b><span class="as-linie"></span><p>Direkter Zugang zu Anwälten, die Väterrechte kennen und vertreten.</p></div>
+            <div class="app-screen"><span class="as-emoji">🏋️</span><b class="as-titel">Sport &amp; Events</b><span class="as-linie"></span><p>Gemeinsame Trainings, Events, Mitgliederbereich – Verbindung durch Tun.</p></div>
+          </div>
+          <div class="phone-punkte"><i></i><i></i><i></i><i></i><i></i></div>
+        </div>
+      </div>
     </div>
     <div class="scroll-pfeil" aria-hidden="true">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
@@ -287,48 +215,52 @@
   </div>
 </section>
 
-<!-- ═══ 2 · KENNST DU DAS? (emotionaler Spiegel + Brücke) ═══ -->
-<section class="problem-section" id="problem" aria-labelledby="problem-titel">
-  <div class="problem-inner">
-    <h2 class="problem-titel" id="problem-titel">
-      <span class="pt-gold">Kennst du das?</span>
-    </h2>
-    <div class="problem-punkte">
-      <p class="pp" data-delay="0">Du gibst alles — und trotzdem reicht es nie.</p>
-      <p class="pp" data-delay="150">Du willst für deine Kinder da sein, aber der Alltag holt dich ein.</p>
-      <p class="pp" data-delay="300">Echte Gespräche? Fehlanzeige. Männer reden nicht.</p>
-      <p class="pp" data-delay="450">Du weißt, du könntest mehr sein. Dir fehlt nur der Rahmen.</p>
-    </div>
-    <div class="bruecke">
-      <p class="bruecke-zeile1">Du bist nicht allein damit.</p>
-      <p class="bruecke-zeile2">Es ist nicht zu spät.</p>
-    </div>
-  </div>
+<!-- ═══ 2 · KENNST DU DAS? (wie ein Freund, nicht wie Marketing) ═══ -->
+<section class="mirror-section" id="problem" aria-labelledby="mirror-titel">
+  <h2 class="mirror-label" id="mirror-titel" data-reveal>Kennst du das?</h2>
+    <div class="mirror-item" data-reveal><p>Es ist 23 Uhr. Die Wohnung ist still. Deine Kinder sind beim anderen Elternteil – und du weißt nicht, was du mit dir anfangen sollst.</p></div>
+    <div class="mirror-item" data-reveal><p>Du willst kein Opfer sein. Du willst nicht jammern. Aber manchmal wäre es schön, wenn irgendwer einfach fragt: <em>»Wie geht’s dir wirklich?«</em></p></div>
+    <div class="mirror-item" data-reveal><p>Du hast Fragen zu Obsorge, Besuchsrecht, Unterhalt – und keinen Menschen, der dir ehrlich und ohne Eigeninteresse antwortet.</p></div>
+    <div class="mirror-item" data-reveal><p>Du funktionierst. Arbeit, Kinder, Alltag. Aber innerlich weißt du, dass da mehr möglich sein müsste.</p></div>
+  <p class="mirror-bridge" data-reveal>Dann bist du hier richtig.</p>
 </section>
 
-<!-- ═══ 3 · 5 SÄULEN ═══ -->
-<section class="sektion saeulen saeulen-section buehnenlicht" id="saeulen" aria-labelledby="saeulen-titel">
-  <div class="wrap">
-  <h2 id="saeulen-titel">Die 5 Säulen von <em>#LeKo</em></h2>
-  <p class="saeulen-lead">Jede Säule trägt. Gemeinsam tragen wir dich.</p>
-  <div class="saeulen-karten" role="list">
-    <div class="saeule-karte-wrap" role="listitem"><article class="saeule-karte"><div class="sk-nr">01</div><h3 class="sk-name">Orientierung</h3><p class="sk-text">Der Vater sein, den du dir selbst gewünscht hättest. Auch nach einer Trennung. Austausch mit Männern in ähnlicher Lage – und Orientierung, wenn der Alltag plötzlich ein anderer ist.</p></article></div>
-    <div class="saeule-karte-wrap" role="listitem"><article class="saeule-karte"><div class="sk-nr">02</div><h3 class="sk-name">Gemeinschaft</h3><p class="sk-text">Männer, die zuhören, ohne zu urteilen. Und die da sind, wenn es zählt. Bei unseren Treffen, in der Telegram-Community und überall dort, wo einer den anderen braucht.</p></article></div>
-    <div class="saeule-karte-wrap" role="listitem"><article class="saeule-karte"><div class="sk-nr">03</div><h3 class="sk-name">Stärke</h3><p class="sk-text">Ein starker Körper ist das Fundament. Gemeinsame Trainings und Events – vom lockeren Lauf bis zur echten Herausforderung. Jeder startet dort, wo er gerade steht.</p></article></div>
-    <div class="saeule-karte-wrap" role="listitem"><article class="saeule-karte"><div class="sk-nr">04</div><h3 class="sk-name">Resilienz</h3><p class="sk-text">Mentale Stärke, Klarheit und Haltung. Nicht brechen, sondern wachsen. Selbstführung, Umgang mit Druck und innere Stabilität – damit du auch in stürmischen Zeiten Kurs hältst.</p></article></div>
-    <div class="saeule-karte-wrap" role="listitem"><article class="saeule-karte"><div class="sk-nr">05</div><h3 class="sk-name">Verantwortung</h3><p class="sk-text">KI und digitale Werkzeuge verstehen und nutzen, statt abgehängt zu werden. Wir erklären verständlich und praxisnah – Verantwortung beginnt damit, informiert zu sein.</p></article></div>
+<!-- ═══ 3 · 5 SÄULEN (Full-Screen-Feature-Sektionen) ═══ -->
+<div class="saeulen" id="saeulen">
+  <header class="saeulen-intro wrap" data-reveal>
+    <p class="eyebrow-gold">Die 5 Säulen von #LeKo</p>
+    <h2>Jede Säule trägt. <em>Gemeinsam tragen wir dich.</em></h2>
+  </header>
+  <div class="saeulen-liste">
+  <section class="saeule-section" style="--akzent:#C9A84C" aria-labelledby="saeule-0">
+    <div class="saeule-visual" data-reveal><div class="saeule-icon" aria-hidden="true">🧭</div></div>
+    <div class="saeule-text" data-reveal data-reveal-delay="120"><span class="saeule-label">Säule 01 · Orientierung</span><h2 id="saeule-0">Der Vater sein, den du dir selbst gewünscht hättest.</h2><p>Auch nach einer Trennung, auch wenn das System gegen dich arbeitet – LeKo gibt dir den Kompass, der in keiner Schule gelehrt wurde. Orientierung für deinen Weg als Mann, als Vater, als Mensch.</p></div>
+  </section>
+  <section class="saeule-section" style="--akzent:#D9DDE3" aria-labelledby="saeule-1">
+    <div class="saeule-visual" data-reveal><div class="saeule-icon" aria-hidden="true">👥</div></div>
+    <div class="saeule-text" data-reveal data-reveal-delay="120"><span class="saeule-label">Säule 02 · Gemeinschaft</span><h2 id="saeule-1">Männer, die zuhören, ohne zu urteilen.</h2><p>Und die da sind, wenn es zählt. In unserer Community findest du Menschen, die denselben Weg gehen – ehrlich, direkt, ohne Performance. Keine Couch, kein Therapeut. Einfach echte Männer.</p></div>
+  </section>
+  <section class="saeule-section" style="--akzent:#C87533" aria-labelledby="saeule-2">
+    <div class="saeule-visual" data-reveal><div class="saeule-icon" aria-hidden="true">💪</div></div>
+    <div class="saeule-text" data-reveal data-reveal-delay="120"><span class="saeule-label">Säule 03 · Stärke</span><h2 id="saeule-2">Ein starker Körper ist das Fundament.</h2><p>Gemeinsame Trainings, Events und körperliche Herausforderungen – weil Stärke nicht nur im Kopf entsteht. Wir bewegen uns gemeinsam. Weil Männer, die sich gemeinsam fordern, sich gegenseitig tragen.</p></div>
+  </section>
+  <section class="saeule-section" style="--akzent:#B4553A" aria-labelledby="saeule-3">
+    <div class="saeule-visual" data-reveal><div class="saeule-icon" aria-hidden="true">🔥</div></div>
+    <div class="saeule-text" data-reveal data-reveal-delay="120"><span class="saeule-label">Säule 04 · Resilienz</span><h2 id="saeule-3">Nicht brechen, sondern wachsen.</h2><p>Mentale Stärke, Klarheit und Haltung – nicht als Theorie, sondern als Praxis. LeKo gibt dir Werkzeuge, die auch dann funktionieren, wenn es wirklich schwer wird. Weil Resilienz kein Ziel ist, sondern eine tägliche Entscheidung.</p></div>
+  </section>
+  <section class="saeule-section" style="--akzent:#3DA5FF" aria-labelledby="saeule-4">
+    <div class="saeule-visual" data-reveal><div class="saeule-icon" aria-hidden="true">⚡</div></div>
+    <div class="saeule-text" data-reveal data-reveal-delay="120"><span class="saeule-label">Säule 05 · Verantwortung</span><h2 id="saeule-4">KI und digitale Werkzeuge verstehen und nutzen, statt abgehängt zu werden.</h2><p>Die Welt verändert sich schneller als je zuvor. Wir zeigen dir, wie du die neuen Werkzeuge für dich und deine Familie nutzt – statt dich von ihnen überwältigen zu lassen.</p></div>
+  </section>
   </div>
-  </div>
-</section>
+</div>
 
-<!-- ═══ 4 · VÄTER-APP (Sticky-Scroll: Handy steht, Features wechseln) ═══ -->
-<section class="sektion app" id="app" aria-labelledby="app-titel">
-  <div class="wrap">
-    <div class="kopfzeile ein">
-      <span class="badge">Bald verfügbar</span>
-      <h2 id="app-titel">Die #LeKo <em>Väter-App</em></h2>
-      <p class="lead">Für Väter in Trennungssituationen und für jeden Mann, der Orientierung sucht: verständliche Infos, Rückhalt und eine echte Community.</p>
-    </div>
+<!-- ═══ 4 · VÄTER-APP (Desktop: Handy steht, Features wechseln · Handy: Karten) ═══ -->
+<section class="app" id="app" aria-labelledby="app-titel">
+  <div class="wrap app-kopf" data-reveal>
+    <span class="badge">Bald verfügbar</span>
+    <h2 id="app-titel">Die #LeKo <em>Väter-App</em></h2>
+    <p class="lead">Für Väter in Trennungssituationen und für jeden Mann, der Orientierung sucht: verständliche Infos, Rückhalt und eine echte Community.</p>
   </div>
   <div class="app-sticky-outer">
     <div class="app-sticky-inner">
@@ -355,68 +287,39 @@
       </div>
     </div>
   </div>
-</section>
-
-<!-- ═══ 5 · HALTUNG (Feature-Zeilen) ═══ -->
-<section class="haltung-section" id="haltung" aria-labelledby="haltung-titel">
-  <div class="haltung-container">
-    <div class="haltung-heading-block ein">
-      <h2 class="haltung-heading" id="haltung-titel">Unsere Haltung</h2>
-      <p class="haltung-sub">Was uns trägt — und was uns unterscheidet.</p>
-    </div>
-    <div class="haltung-zeilen">
-    <div class="haltung-zeile" data-n="0">
-      <div class="hz-text"><span class="hz-label">Haltung 01</span><h3 class="hz-titel">Gemeinnützig</h3><p class="hz-body">Wir handeln ohne Gewinnabsicht. Alles, was wir aufbauen, dient dem Verein — nicht einzelnen Personen. Jeder Beitrag fließt zurück in die Gemeinschaft.</p></div>
-      <div class="hz-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 10.2c-1.3-1.8-4.3-1.5-4.3.9 0 1.8 2.3 3.4 4.3 4.7 2-1.3 4.3-2.9 4.3-4.7 0-2.4-3-2.7-4.3-.9z"/><path d="M2.5 15.5l3.3-.6a4 4 0 0 1 3 .7l1.5 1.1h3.5a1.3 1.3 0 0 1 0 2.6H10"/><path d="M2.5 21.5h9.2l6.9-3.8a1.4 1.4 0 0 0-1.3-2.5l-3.4 1.6"/></svg></div>
-    </div>
-    <div class="haltung-zeile" data-n="1">
-      <div class="hz-text"><span class="hz-label">Haltung 02</span><h3 class="hz-titel">Respekt</h3><p class="hz-body">Jede Geschichte verdient Gehör. Bei uns gibt es keine falschen Gefühle, keine unreifen Fragen. Wer sich zeigt, wird gesehen — ohne Wertung.</p></div>
-      <div class="hz-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="2.5"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6M15 14.5c3 0 6 1.8 6 5.5"/></svg></div>
-    </div>
-    <div class="haltung-zeile" data-n="2">
-      <div class="hz-text"><span class="hz-label">Haltung 03</span><h3 class="hz-titel">Unabhängig</h3><p class="hz-body">Keine Partei, keine Doktrin, keine Ideologie. Wir sind ein Ort für Menschen — nicht für Meinungen. Deine Richtung bestimmst du selbst.</p></div>
-      <div class="hz-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9.5"/><path d="M15.8 8.2l-2.3 5.3-5.3 2.3 2.3-5.3z"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2"/></svg></div>
-    </div>
-    <div class="haltung-zeile" data-n="3">
-      <div class="hz-text"><span class="hz-label">Haltung 04</span><h3 class="hz-titel">Kein Therapie-Ersatz</h3><p class="hz-body">Wir bieten Gemeinschaft und Orientierung. Wer professionelle Hilfe braucht, wird von uns ermutigt, sie zu suchen — nicht aufgehalten.</p></div>
-      <div class="hz-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.5v19M8.5 21.5h7"/><path d="M12 5h6.5l2.5 2.5-2.5 2.5H12"/><path d="M12 12.5H5.5L3 15l2.5 2.5H12"/></svg></div>
-    </div>
-    </div>
+  <div class="app-mobile-list wrap">
+    <div class="app-mobile-feature" data-reveal><h3>Rechtliche Orientierung</h3><p>Obsorge, Besuchsrecht, Unterhalt — klar erklärt nach österreichischem Recht.</p></div>
+    <div class="app-mobile-feature" data-reveal><h3>Väter-Community</h3><p>Männer, die wirklich verstehen, was du durchmachst. Kein Ratschlag — echte Erfahrung.</p></div>
+    <div class="app-mobile-feature" data-reveal><h3>Kalender &amp; Kinderzeit</h3><p>Plane Wochenenden und Ferien mit System. Damit du nichts verpasst.</p></div>
+    <div class="app-mobile-feature" data-reveal><h3>Fachliche Kontakte</h3><p>Direkter Zugang zu Familienrechts-Experten in Österreich.</p></div>
+    <div class="app-mobile-feature" data-reveal><h3>Sportevents &amp; Mitglieder</h3><p>Gemeinsame Aktivitäten und ein exklusiver Bereich nur für Mitglieder.</p></div>
   </div>
 </section>
 
-<!-- ═══ 6 · MITGLIED WERDEN ═══ -->
-<section class="sektion mitglied" id="mitglied" aria-labelledby="mitglied-titel">
+<!-- ═══ 5 · HALTUNG (2×2) ═══ -->
+<section class="haltung" id="haltung" aria-labelledby="haltung-titel">
   <div class="wrap">
-    <div class="mitglied-block ein">
-      <p class="eyebrow">Mitgliedschaft</p>
-      <h2 id="mitglied-titel">Bereit, deinen Kompass <em>neu auszurichten?</em></h2>
-      <p class="lead">Jahresbeitrag, automatische Verlängerung, jederzeit schriftlich kündbar.</p>
-      <ul class="vorteile">
-        <li>Zugang zu allen Bildungsseminaren</li>
-        <li>Mitglied der Telegram-Community</li>
-        <li>#LeKo App (Väter-Bereich)</li>
-        <li>Sportevents &amp; gemeinsame Aktivitäten</li>
-        <li>Persönliches Erstgespräch mit Markus Prinz</li>
-        <li>Zugang zum Übergabeprotokoll-System</li>
-      </ul>
-      <svg class="mini-kompass" viewBox="0 0 60 60" aria-hidden="true"><circle cx="30" cy="30" r="28" fill="none" stroke="#c9a84c" stroke-width="1"/><circle cx="30" cy="30" r="21" fill="none" stroke="#c9a84c" stroke-opacity=".35" stroke-dasharray="1.5 3"/><polygon points="30,8 34,30 30,30" fill="#c9a84c"/><polygon points="30,8 26,30 30,30" fill="#e2c97e"/><polygon points="30,52 34,30 30,30" fill="#6e5620"/><polygon points="30,52 26,30 30,30" fill="#a8862a"/><circle cx="30" cy="30" r="3" fill="#c9a84c"/></svg>
-      <div class="knoepfe">
-        <a href="mailto:leko.verein@gmail.com?subject=Mitgliedschaft%20%23LeKo" class="btn btn-gold">Jetzt Mitglied werden <span class="pfeil" aria-hidden="true">→</span></a>
-        <a href="#kontakt" class="btn btn-dunkel">Unverbindlich kennenlernen</a>
-      </div>
+    <header class="haltung-kopf" data-reveal>
+      <h2 id="haltung-titel">Unsere Haltung</h2>
+      <p class="lead">Was uns trägt — und was uns unterscheidet.</p>
+    </header>
+    <div class="haltung-grid">
+      <div data-reveal data-reveal-delay="0"><article class="haltung-karte"><div class="hk-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 10.2c-1.3-1.8-4.3-1.5-4.3.9 0 1.8 2.3 3.4 4.3 4.7 2-1.3 4.3-2.9 4.3-4.7 0-2.4-3-2.7-4.3-.9z"/><path d="M2.5 15.5l3.3-.6a4 4 0 0 1 3 .7l1.5 1.1h3.5a1.3 1.3 0 0 1 0 2.6H10"/><path d="M2.5 21.5h9.2l6.9-3.8a1.4 1.4 0 0 0-1.3-2.5l-3.4 1.6"/></svg></div><h3>Gemeinnützig</h3><p>Wir arbeiten nicht für Profit. Für Menschen.</p></article></div>
+      <div data-reveal data-reveal-delay="100"><article class="haltung-karte"><div class="hk-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="2.5"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6M15 14.5c3 0 6 1.8 6 5.5"/></svg></div><h3>Respekt ohne Urteil</h3><p>Kein Raum für Urteile, Verurteilung oder Überlegenheit.</p></article></div>
+      <div data-reveal data-reveal-delay="200"><article class="haltung-karte"><div class="hk-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9.5"/><path d="M15.8 8.2l-2.3 5.3-5.3 2.3 2.3-5.3z"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2"/></svg></div><h3>Unabhängig</h3><p>Keine Kostenübernahme durch Institutionen.</p></article></div>
+      <div data-reveal data-reveal-delay="300"><article class="haltung-karte"><div class="hk-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.5v19M8.5 21.5h7"/><path d="M12 5h6.5l2.5 2.5-2.5 2.5H12"/><path d="M12 12.5H5.5L3 15l2.5 2.5H12"/></svg></div><h3>Kein Therapie-Ersatz</h3><p>Wir sind Gemeinschaft, keine Therapeuten. Profis empfehlen wir immer gerne weiter.</p></article></div>
     </div>
   </div>
 </section>
 
-<!-- ═══ 7 · FAQ ═══ -->
-<section class="sektion faq" id="faq" aria-labelledby="faq-titel">
+<!-- ═══ 6 · FAQ ═══ -->
+<section class="faq" id="faq" aria-labelledby="faq-titel">
   <div class="wrap schmal">
-    <div class="kopfzeile ein">
-      <p class="eyebrow">Fragen</p>
+    <header class="faq-kopf" data-reveal>
+      <p class="eyebrow-gold">Fragen</p>
       <h2 id="faq-titel">Ehrliche <em>Antworten.</em></h2>
-    </div>
-    <div class="akk ein">
+    </header>
+    <div class="akk" data-reveal>
       <div class="akk-item"><button class="akk-frage" type="button" aria-expanded="false" aria-controls="faq-1"><span class="akk-titel">Muss ich sportlich sein?</span><span class="chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></span></button><div class="akk-antwort" id="faq-1" role="region"><p>Nein. Jeder startet dort, wo er gerade steht. Es geht um Weiterkommen, nicht um Höchstleistung.</p></div></div>
       <div class="akk-item"><button class="akk-frage" type="button" aria-expanded="false" aria-controls="faq-2"><span class="akk-titel">Kann ich erst schnuppern?</span><span class="chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></span></button><div class="akk-antwort" id="faq-2" role="region"><p>Ja. Komm zu einem offenen Treffen und lern uns kennen, ganz ohne Verpflichtung.</p></div></div>
       <div class="akk-item"><button class="akk-frage" type="button" aria-expanded="false" aria-controls="faq-3"><span class="akk-titel">Für wen ist #LeKo gedacht?</span><span class="chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></span></button><div class="akk-antwort" id="faq-3" role="region"><p>Für Männer zwischen 25 und 50, die mehr Klarheit, Stärke und echte Gemeinschaft wollen – ob Single, Partner, Vater oder im Neuanfang.</p></div></div>
@@ -426,16 +329,13 @@
   </div>
 </section>
 
-<!-- ═══ 8 · KONTAKT ═══ -->
-<section class="sektion kontakt buehnenlicht" id="kontakt" aria-labelledby="kontakt-titel">
-  <div class="wrap schmal">
-    <div class="ein">
-      <p class="eyebrow">Kontakt</p>
-      <h2 id="kontakt-titel">Schreib <em>uns.</em></h2>
-      <a class="mail" href="mailto:leko.verein@gmail.com">leko.verein@gmail.com</a>
-      <p class="lead">Wir melden uns so schnell wie möglich.</p>
-      <a href="#mitglied" class="btn btn-gold">Jetzt Mitglied werden <span class="pfeil" aria-hidden="true">→</span></a>
-    </div>
+<!-- ═══ 7 · CTA ═══ -->
+<section class="cta" id="mitglied" aria-labelledby="cta-titel">
+  <div class="wrap cta-inner" data-reveal>
+    <h2 id="cta-titel">Bereit, den nächsten Schritt <em>zu gehen?</em></h2>
+    <p class="lead">LeKo ist kein Verein für später. LeKo ist für jetzt.</p>
+    <a href="mailto:leko.verein@gmail.com?subject=Mitgliedschaft%20%23LeKo" class="btn btn-gold btn-gross">Jetzt Mitglied werden <span class="pfeil" aria-hidden="true">→</span></a>
+    <p class="cta-klein"><a href="mailto:leko.verein@gmail.com">leko.verein@gmail.com</a></p>
   </div>
 </section>
 
@@ -443,8 +343,8 @@
 
 <footer class="fuss">
   <div class="wrap">
-    <span>© 2026 Lebenskompass – ZVR 1346040358</span>
-    <nav aria-label="Rechtliches"><button type="button" data-modal="impressum">Impressum</button><span aria-hidden="true">|</span><a href="datenschutz.html" target="_blank" rel="noopener">Datenschutz</a></nav>
+    <span>© <span data-jahr>2026</span> Lebenskompass – ZVR 1346040358</span>
+    <nav aria-label="Rechtliches"><button type="button" data-modal="impressum">Impressum</button><span aria-hidden="true">·</span><a href="datenschutz.html" target="_blank" rel="noopener">Datenschutz</a></nav>
   </div>
 </footer>
 
@@ -464,29 +364,37 @@
 <script>
 (function () {
   'use strict';
-  var ruhig = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // ── Hero (sticky): Vorzeile, Unterzeile und Buttons treten zuerst zurück, die Headline zuletzt – das Licht wird stärker ──
+  // ── Hero (sticky über 400vh): Headline tritt zurück → Handy fliegt ein (30–60 %) → 5 App-Screens wechseln (60–100 %) ──
   var hero = document.querySelector('.hero-outer');
   if (!hero) return;
-  var pre = hero.querySelector('.hero-pre'), h1 = hero.querySelector('.hero-h1'), pfeil = hero.querySelector('.scroll-pfeil');
-  var unten = hero.querySelectorAll('.hero-sub, .hero-ctas');
+  var text = hero.querySelector('.hero-text'), phone = hero.querySelector('.phone-frame'), pfeil = hero.querySelector('.scroll-pfeil');
+  var screens = hero.querySelectorAll('.app-screen'), punkte = hero.querySelectorAll('.phone-punkte i');
   function bis(p, start, ende) { return Math.max(0, Math.min(1, (p - start) / (ende - start))); }
-  var geplant = false;
+  var geplant = false, aktiv = -1;
   function inszenieren() {
     geplant = false;
     var weg = hero.offsetHeight - window.innerHeight;
-    var p = Math.max(0, Math.min(1, -hero.getBoundingClientRect().top / (weg || 1)));
-    if (pfeil) pfeil.style.opacity = 1 - bis(p, 0, 0.1);
-    if (ruhig) return;
-    hero.style.setProperty('--p', p.toFixed(3));
-    var a = bis(p, 0, 0.3), b = bis(p, 0, 0.2), c = bis(p, 0.6, 0.9);
-    if (pre) { pre.style.opacity = 1 - a; pre.style.transform = 'translateY(' + (-20 * a).toFixed(1) + 'px)'; }
-    unten.forEach(function (el) {
-      el.style.opacity = 1 - b; el.style.transform = 'translateY(' + (20 * b).toFixed(1) + 'px)';
-      el.style.pointerEvents = b > 0.9 ? 'none' : '';
-    });
-    if (h1) { h1.style.opacity = 1 - c; h1.style.transform = 'scale(' + (1 - 0.06 * c).toFixed(3) + ')'; }
+    var prog = Math.max(0, Math.min(1, -hero.getBoundingClientRect().top / (weg || 1)));
+    hero.style.setProperty('--p', prog.toFixed(3));
+    if (pfeil) pfeil.style.opacity = 1 - bis(prog, 0, 0.08);
+    var aus = bis(prog, 0.18, 0.32);
+    if (text) {
+      text.style.opacity = 1 - aus;
+      text.style.transform = 'translateY(' + (-40 * aus).toFixed(1) + 'px)';
+      text.style.pointerEvents = aus > 0.5 ? 'none' : '';
+    }
+    var ein = bis(prog, 0.3, 0.6);
+    if (phone) {
+      phone.style.opacity = ein;
+      phone.style.transform = 'translateY(' + ((1 - ein) * 120).toFixed(1) + 'px)';
+    }
+    var s = prog > 0.6 ? Math.min(screens.length - 1, Math.floor((prog - 0.6) / 0.4 * screens.length)) : 0;
+    if (s !== aktiv) {
+      aktiv = s;
+      screens.forEach(function (el, i) { el.classList.toggle('active', i === s); });
+      punkte.forEach(function (el, i) { el.classList.toggle('an', i === s); });
+    }
   }
   window.addEventListener('scroll', function () { if (!geplant) { geplant = true; requestAnimationFrame(inszenieren); } }, { passive: true });
   window.addEventListener('resize', inszenieren);

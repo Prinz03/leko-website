@@ -36,56 +36,79 @@ I = {
     'pfeil-ab':  '<path d="M6 9l6 6 6-6"/>',
 }
 
-MINI_KOMPASS = ('<svg class="mini-kompass" viewBox="0 0 60 60" aria-hidden="true"><circle cx="30" cy="30" r="28" fill="none" stroke="#c9a84c" stroke-width="1"/>'
-                '<circle cx="30" cy="30" r="21" fill="none" stroke="#c9a84c" stroke-opacity=".35" stroke-dasharray="1.5 3"/>'
-                '<polygon points="30,8 34,30 30,30" fill="#c9a84c"/><polygon points="30,8 26,30 30,30" fill="#e2c97e"/>'
-                '<polygon points="30,52 34,30 30,30" fill="#6e5620"/><polygon points="30,52 26,30 30,30" fill="#a8862a"/>'
-                '<circle cx="30" cy="30" r="3" fill="#c9a84c"/></svg>')
-
-# ═══ Säulen ═══
-SAEULEN = [
-    ('Orientierung', 'Der Vater sein, den du dir selbst gewünscht hättest. Auch nach einer Trennung. Austausch mit Männern in ähnlicher Lage – und Orientierung, wenn der Alltag plötzlich ein anderer ist.'),
-    ('Gemeinschaft', 'Männer, die zuhören, ohne zu urteilen. Und die da sind, wenn es zählt. Bei unseren Treffen, in der Telegram-Community und überall dort, wo einer den anderen braucht.'),
-    ('Stärke', 'Ein starker Körper ist das Fundament. Gemeinsame Trainings und Events – vom lockeren Lauf bis zur echten Herausforderung. Jeder startet dort, wo er gerade steht.'),
-    ('Resilienz', 'Mentale Stärke, Klarheit und Haltung. Nicht brechen, sondern wachsen. Selbstführung, Umgang mit Druck und innere Stabilität – damit du auch in stürmischen Zeiten Kurs hältst.'),
-    ('Verantwortung', 'KI und digitale Werkzeuge verstehen und nutzen, statt abgehängt zu werden. Wir erklären verständlich und praxisnah – Verantwortung beginnt damit, informiert zu sein.'),
+# ═══ Hero: 5 App-Screens im Handy (wechseln beim Scrollen) ═══
+SCREENS = [
+    ('⚖️', 'Rechtliche Orientierung', 'Obsorge, Besuchsrecht, Unterhalt – erklärt in verständlichem Österreichisch. Kein Juristendeutsch.'),
+    ('👥', 'Väter-Community', 'Männer, die dasselbe durchgemacht haben. Ehrlich. Direkt. Ohne Urteil.'),
+    ('📅', 'Kalender Obsorgezeit', 'Strukturiere deine Zeit mit deinen Kindern. Termine, Notizen, Erinnerungen.'),
+    ('👨‍⚖️', 'Familienrechts-Experten', 'Direkter Zugang zu Anwälten, die Väterrechte kennen und vertreten.'),
+    ('🏋️', 'Sport &amp; Events', 'Gemeinsame Trainings, Events, Mitgliederbereich – Verbindung durch Tun.'),
 ]
-saeulen_karten = ''.join(
-    f'\n    <div class="saeule-karte-wrap" role="listitem"><article class="saeule-karte">'
-    f'<div class="sk-nr">{n + 1:02d}</div><h3 class="sk-name">{t}</h3><p class="sk-text">{txt}</p></article></div>'
-    for n, (t, txt) in enumerate(SAEULEN))
+app_screens = ''.join(
+    f'\n            <div class="app-screen{" active" if n == 0 else ""}"><span class="as-emoji">{e}</span>'
+    f'<b class="as-titel">{h}</b><span class="as-linie"></span><p>{txt}</p></div>'
+    for n, (e, h, txt) in enumerate(SCREENS))
+screen_punkte = '<i></i>' * len(SCREENS)
 
-# ═══ App ═══
-FEATURES_L = [('waage', 'Rechtliche Orientierung', 'Obsorge, Besuchsrecht, Unterhalt — klar erklärt nach österreichischem Recht.'),
-              ('leute', 'Väter-Community', 'Männer, die wirklich verstehen, was du durchmachst. Kein Ratschlag — echte Erfahrung.'),
-              ('kalender', 'Kalender &amp; Kinderzeit', 'Plane Wochenenden und Ferien mit System. Damit du nichts verpasst.')]
-FEATURES_R = [('kontakt', 'Fachliche Kontakte', 'Direkter Zugang zu Familienrechts-Experten in Österreich.'),
-              ('jarvis', 'Jarvis Vereinsassistent', 'KI-gestützte Antworten, Protokolle und Erinnerungen im Telegram.'),
-              ('pokal', 'Sportevents &amp; Mitglieder', 'Gemeinsame Aktivitäten und ein exklusiver Bereich nur für Mitglieder.')]
-FEATURES = [f for f in FEATURES_L + FEATURES_R if f[0] != 'jarvis']  # Jarvis gehört nicht in die Väter-App
+# ═══ Kennst du das? ═══
+SPIEGEL = [
+    'Es ist 23 Uhr. Die Wohnung ist still. Deine Kinder sind beim anderen Elternteil – und du weißt nicht, was du mit dir anfangen sollst.',
+    'Du willst kein Opfer sein. Du willst nicht jammern. Aber manchmal wäre es schön, wenn irgendwer einfach fragt: <em>»Wie geht’s dir wirklich?«</em>',
+    'Du hast Fragen zu Obsorge, Besuchsrecht, Unterhalt – und keinen Menschen, der dir ehrlich und ohne Eigeninteresse antwortet.',
+    'Du funktionierst. Arbeit, Kinder, Alltag. Aber innerlich weißt du, dass da mehr möglich sein müsste.',
+]
+spiegel_html = ''.join(f'\n    <div class="mirror-item" data-reveal><p>{s}</p></div>' for s in SPIEGEL)
+
+# ═══ 5 Säulen (je eine Full-Screen-Sektion, abwechselnd links/rechts) ═══
+SAEULEN = [
+    ('Orientierung', '🧭', '#C9A84C', 'Der Vater sein, den du dir selbst gewünscht hättest.',
+     'Auch nach einer Trennung, auch wenn das System gegen dich arbeitet – LeKo gibt dir den Kompass, der in keiner Schule gelehrt wurde. Orientierung für deinen Weg als Mann, als Vater, als Mensch.'),
+    ('Gemeinschaft', '👥', '#D9DDE3', 'Männer, die zuhören, ohne zu urteilen.',
+     'Und die da sind, wenn es zählt. In unserer Community findest du Menschen, die denselben Weg gehen – ehrlich, direkt, ohne Performance. Keine Couch, kein Therapeut. Einfach echte Männer.'),
+    ('Stärke', '💪', '#C87533', 'Ein starker Körper ist das Fundament.',
+     'Gemeinsame Trainings, Events und körperliche Herausforderungen – weil Stärke nicht nur im Kopf entsteht. Wir bewegen uns gemeinsam. Weil Männer, die sich gemeinsam fordern, sich gegenseitig tragen.'),
+    ('Resilienz', '🔥', '#B4553A', 'Nicht brechen, sondern wachsen.',
+     'Mentale Stärke, Klarheit und Haltung – nicht als Theorie, sondern als Praxis. LeKo gibt dir Werkzeuge, die auch dann funktionieren, wenn es wirklich schwer wird. Weil Resilienz kein Ziel ist, sondern eine tägliche Entscheidung.'),
+    ('Verantwortung', '⚡', '#3DA5FF', 'KI und digitale Werkzeuge verstehen und nutzen, statt abgehängt zu werden.',
+     'Die Welt verändert sich schneller als je zuvor. Wir zeigen dir, wie du die neuen Werkzeuge für dich und deine Familie nutzt – statt dich von ihnen überwältigen zu lassen.'),
+]
+saeulen_html = ''.join(
+    f'\n  <section class="saeule-section" style="--akzent:{farbe}" aria-labelledby="saeule-{n}">'
+    f'\n    <div class="saeule-visual" data-reveal><div class="saeule-icon" aria-hidden="true">{icon}</div></div>'
+    f'\n    <div class="saeule-text" data-reveal data-reveal-delay="120"><span class="saeule-label">Säule {n + 1:02d} · {name}</span>'
+    f'<h2 id="saeule-{n}">{head}</h2><p>{txt}</p></div>\n  </section>'
+    for n, (name, icon, farbe, head, txt) in enumerate(SAEULEN))
+
+# ═══ Väter-App (Desktop sticky, Handy: Karten) ═══
+FEATURES = [
+    ('Rechtliche Orientierung', 'Obsorge, Besuchsrecht, Unterhalt — klar erklärt nach österreichischem Recht.'),
+    ('Väter-Community', 'Männer, die wirklich verstehen, was du durchmachst. Kein Ratschlag — echte Erfahrung.'),
+    ('Kalender &amp; Kinderzeit', 'Plane Wochenenden und Ferien mit System. Damit du nichts verpasst.'),
+    ('Fachliche Kontakte', 'Direkter Zugang zu Familienrechts-Experten in Österreich.'),
+    ('Sportevents &amp; Mitglieder', 'Gemeinsame Aktivitäten und ein exklusiver Bereich nur für Mitglieder.'),
+]  # Jarvis gehört nicht in die Väter-App
 app_schritte = ''.join(
     f'\n        <div class="app-schritt" data-step="{n}"><span class="as-nr">{n + 1:02d}</span><h3>{h}</h3><p>{txt}</p></div>'
-    for n, (_, h, txt) in enumerate(FEATURES))
+    for n, (h, txt) in enumerate(FEATURES))
 app_punkte = '<i></i>' * len(FEATURES)
+app_mobil = ''.join(f'\n    <div class="app-mobile-feature" data-reveal><h3>{h}</h3><p>{txt}</p></div>' for h, txt in FEATURES)
 
-# ═══ Haltung ═══
+# ═══ Haltung (2×2) ═══
 I.update({
     'h_herz':      '<path d="M12 10.2c-1.3-1.8-4.3-1.5-4.3.9 0 1.8 2.3 3.4 4.3 4.7 2-1.3 4.3-2.9 4.3-4.7 0-2.4-3-2.7-4.3-.9z"/><path d="M2.5 15.5l3.3-.6a4 4 0 0 1 3 .7l1.5 1.1h3.5a1.3 1.3 0 0 1 0 2.6H10"/><path d="M2.5 21.5h9.2l6.9-3.8a1.4 1.4 0 0 0-1.3-2.5l-3.4 1.6"/>',
     'h_richtung':  '<circle cx="12" cy="12" r="9.5"/><path d="M15.8 8.2l-2.3 5.3-5.3 2.3 2.3-5.3z"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2"/>',
     'h_wegweiser': '<path d="M12 2.5v19M8.5 21.5h7"/><path d="M12 5h6.5l2.5 2.5-2.5 2.5H12"/><path d="M12 12.5H5.5L3 15l2.5 2.5H12"/>',
 })
 HALTUNG = [
-    ('h_herz', 'Gemeinnützig', 'Wir handeln ohne Gewinnabsicht. Alles, was wir aufbauen, dient dem Verein — nicht einzelnen Personen. Jeder Beitrag fließt zurück in die Gemeinschaft.'),
-    ('leute', 'Respekt', 'Jede Geschichte verdient Gehör. Bei uns gibt es keine falschen Gefühle, keine unreifen Fragen. Wer sich zeigt, wird gesehen — ohne Wertung.'),
-    ('h_richtung', 'Unabhängig', 'Keine Partei, keine Doktrin, keine Ideologie. Wir sind ein Ort für Menschen — nicht für Meinungen. Deine Richtung bestimmst du selbst.'),
-    ('h_wegweiser', 'Kein Therapie-Ersatz', 'Wir bieten Gemeinschaft und Orientierung. Wer professionelle Hilfe braucht, wird von uns ermutigt, sie zu suchen — nicht aufgehalten.'),
+    ('h_herz', 'Gemeinnützig', 'Wir arbeiten nicht für Profit. Für Menschen.'),
+    ('leute', 'Respekt ohne Urteil', 'Kein Raum für Urteile, Verurteilung oder Überlegenheit.'),
+    ('h_richtung', 'Unabhängig', 'Keine Kostenübernahme durch Institutionen.'),
+    ('h_wegweiser', 'Kein Therapie-Ersatz', 'Wir sind Gemeinschaft, keine Therapeuten. Profis empfehlen wir immer gerne weiter.'),
 ]
-haltung_zeilen = ''.join(
-    f'\n    <div class="haltung-zeile" data-n="{n}">'
-    f'\n      <div class="hz-text"><span class="hz-label">Haltung {n + 1:02d}</span><h3 class="hz-titel">{h}</h3><p class="hz-body">{txt}</p></div>'
-    f'\n      <div class="hz-icon" aria-hidden="true">{ico(I[k], "1.1")}</div>\n    </div>'
+haltung_html = ''.join(
+    f'\n      <div data-reveal data-reveal-delay="{n * 100}"><article class="haltung-karte">'
+    f'<div class="hk-icon" aria-hidden="true">{ico(I[k], "1.2")}</div><h3>{h}</h3><p>{txt}</p></article></div>'
     for n, (k, h, txt) in enumerate(HALTUNG))
-
 
 FAQ = [
     ('Muss ich sportlich sein?', 'Nein. Jeder startet dort, wo er gerade steht. Es geht um Weiterkommen, nicht um Höchstleistung.'),
@@ -103,7 +126,7 @@ faq_html = ''.join(
 
 # ═══ Gemeinsame Teile ═══
 def kopf(vor):
-    links = [('saeulen', 'Säulen'), ('app', 'Väter-App'), ('haltung', 'Haltung'), ('faq', 'FAQ'), ('kontakt', 'Kontakt')]
+    links = [('saeulen', 'Säulen'), ('app', 'Väter-App'), ('haltung', 'Haltung'), ('faq', 'FAQ'), ('mitglied', 'Kontakt')]
     li = ''.join(f'<li><a href="{vor}#{a}">{n}</a></li>' for a, n in links)
     sl = ''.join(f'\n    <a href="{vor}#{a}">{n}</a>' for a, n in links)
     return f'''<header class="kopf" id="kopf">
@@ -121,8 +144,8 @@ def kopf(vor):
 def fuss(ds_link):
     return f'''<footer class="fuss">
   <div class="wrap">
-    <span>© 2026 Lebenskompass – ZVR 1346040358</span>
-    <nav aria-label="Rechtliches"><button type="button" data-modal="impressum">Impressum</button><span aria-hidden="true">|</span>{ds_link}</nav>
+    <span>© <span data-jahr>2026</span> Lebenskompass – ZVR 1346040358</span>
+    <nav aria-label="Rechtliches"><button type="button" data-modal="impressum">Impressum</button><span aria-hidden="true">·</span>{ds_link}</nav>
   </div>
 </footer>
 
@@ -141,7 +164,7 @@ def fuss(ds_link):
 
 KOPF_META = '''<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#000000">
+<meta name="theme-color" content="#080808">
 <link rel="icon" type="image/png" sizes="128x128" href="assets/logo/logo-128x128.png">
 <link rel="apple-touch-icon" href="assets/logo/logo-256x256.png">
 <link rel="stylesheet" href="assets/fonts/fonts.css">
@@ -154,10 +177,12 @@ index = f'''<!DOCTYPE html>
 <html lang="de-AT">
 <head>
 {KOPF_META}
-<title>#LeKo – Stärker werden. Nicht allein.</title>
-<meta name="description" content="#LeKo ist die Gemeinschaft für Männer von 25 bis 50 in Kärnten: Bildungsseminare, Bewegung, Resilienz und echte Bruderschaft. Gemeinnützig aus Klagenfurt.">
-<meta property="og:title" content="#LeKo – Stärker werden. Nicht allein.">
-<meta property="og:description" content="Bildungsseminare, Bewegung und Männer, auf die du zählen kannst. Gemeinnützig aus Klagenfurt.">
+<title>LeKo – Lebenskompass | Männer-Community Österreich &amp; Deutschland</title>
+<meta name="description" content="LeKo ist die Gemeinschaft für Männer zwischen 25 und 50, die Orientierung, Stärke und echte Verbindung suchen – als Väter, als Persönlichkeit, als Teil einer Community, die hält was sie verspricht. Österreich und Deutschland.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://prinz03.github.io/leko-website/">
+<meta property="og:title" content="LeKo – Stärker werden. Nicht allein.">
+<meta property="og:description" content="Männer-Community für Orientierung, Gemeinschaft und Stärke. Überall in Österreich und Deutschland.">
 <meta property="og:image" content="https://prinz03.github.io/leko-website/assets/logo/logo-512x512.png">
 <meta property="og:url" content="https://prinz03.github.io/leko-website/">
 <meta property="og:type" content="website">
@@ -172,19 +197,31 @@ index = f'''<!DOCTYPE html>
 
 <main id="inhalt">
 
-<!-- ═══ 1 · HERO (sticky: das Licht wird stärker, der Text tritt stufenweise zurück) ═══ -->
+<!-- ═══ 1 · HERO (sticky, 400vh: Headline → Handy fliegt ein → 5 App-Screens) ═══ -->
 <section class="hero-outer" id="top">
   <div class="hero-inner">
     <div class="hero-licht" aria-hidden="true"></div>
-    <p class="hero-pre auftritt" style="--d:.3s">Für Männer. In Kärnten. Ohne Ausrede.</p>
-    <h1 class="hero-h1">
-      <span class="h1-weiss auftritt" style="--d:.55s">Stärker werden.</span>
-      <span class="h1-gold auftritt" style="--d:.85s">Nicht allein.</span>
-    </h1>
-    <p class="hero-sub auftritt" style="--d:1.1s">#LeKo ist die Gemeinschaft für Männer von 25 bis 50 in Kärnten: Bildungsseminare, Bewegung und Brüder, auf die du zählen kannst.</p>
-    <div class="hero-ctas knoepfe auftritt" style="--d:1.25s">
-      <a href="#mitglied" class="btn btn-gold">Jetzt Mitglied werden <span class="pfeil" aria-hidden="true">→</span></a>
-      <a href="#saeulen" class="btn btn-dunkel">Unverbindlich kennenlernen</a>
+    <div class="hero-text">
+      <p class="hero-pre auftritt" style="--d:.3s">Für Männer. Ohne Ausrede.</p>
+      <h1 class="hero-h1">
+        <span class="h1-weiss auftritt" style="--d:.55s">Stärker werden.</span>
+        <span class="h1-gold auftritt" style="--d:.85s">Nicht allein.</span>
+      </h1>
+      <p class="hero-sub auftritt" style="--d:1.1s">LeKo ist die Community für Männer, die ihr Leben selbst in die Hand nehmen – als Väter, als Persönlichkeiten, als Teil einer Gemeinschaft, die hält was sie verspricht.</p>
+      <div class="hero-ctas auftritt" style="--d:1.25s">
+        <a href="#mitglied" class="btn btn-outline-gold">Jetzt Mitglied werden <span class="pfeil" aria-hidden="true">→</span></a>
+      </div>
+    </div>
+    <div class="hero-phone" aria-hidden="true">
+      <div class="phone-frame">
+        <div class="phone-notch"></div>
+        <div class="phone-screen">
+          <div class="phone-status"><span>9:41</span><b>#LeKo</b></div>
+          <div class="app-screens">{app_screens}
+          </div>
+          <div class="phone-punkte">{screen_punkte}</div>
+        </div>
+      </div>
     </div>
     <div class="scroll-pfeil" aria-hidden="true">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
@@ -192,43 +229,28 @@ index = f'''<!DOCTYPE html>
   </div>
 </section>
 
-<!-- ═══ 2 · KENNST DU DAS? (emotionaler Spiegel + Brücke) ═══ -->
-<section class="problem-section" id="problem" aria-labelledby="problem-titel">
-  <div class="problem-inner">
-    <h2 class="problem-titel" id="problem-titel">
-      <span class="pt-gold">Kennst du das?</span>
-    </h2>
-    <div class="problem-punkte">
-      <p class="pp" data-delay="0">Du gibst alles — und trotzdem reicht es nie.</p>
-      <p class="pp" data-delay="150">Du willst für deine Kinder da sein, aber der Alltag holt dich ein.</p>
-      <p class="pp" data-delay="300">Echte Gespräche? Fehlanzeige. Männer reden nicht.</p>
-      <p class="pp" data-delay="450">Du weißt, du könntest mehr sein. Dir fehlt nur der Rahmen.</p>
-    </div>
-    <div class="bruecke">
-      <p class="bruecke-zeile1">Du bist nicht allein damit.</p>
-      <p class="bruecke-zeile2">Es ist nicht zu spät.</p>
-    </div>
-  </div>
+<!-- ═══ 2 · KENNST DU DAS? (wie ein Freund, nicht wie Marketing) ═══ -->
+<section class="mirror-section" id="problem" aria-labelledby="mirror-titel">
+  <h2 class="mirror-label" id="mirror-titel" data-reveal>Kennst du das?</h2>{spiegel_html}
+  <p class="mirror-bridge" data-reveal>Dann bist du hier richtig.</p>
 </section>
 
-<!-- ═══ 3 · 5 SÄULEN ═══ -->
-<section class="sektion saeulen saeulen-section buehnenlicht" id="saeulen" aria-labelledby="saeulen-titel">
-  <div class="wrap">
-  <h2 id="saeulen-titel">Die 5 Säulen von <em>#LeKo</em></h2>
-  <p class="saeulen-lead">Jede Säule trägt. Gemeinsam tragen wir dich.</p>
-  <div class="saeulen-karten" role="list">{saeulen_karten}
+<!-- ═══ 3 · 5 SÄULEN (Full-Screen-Feature-Sektionen) ═══ -->
+<div class="saeulen" id="saeulen">
+  <header class="saeulen-intro wrap" data-reveal>
+    <p class="eyebrow-gold">Die 5 Säulen von #LeKo</p>
+    <h2>Jede Säule trägt. <em>Gemeinsam tragen wir dich.</em></h2>
+  </header>
+  <div class="saeulen-liste">{saeulen_html}
   </div>
-  </div>
-</section>
+</div>
 
-<!-- ═══ 4 · VÄTER-APP (Sticky-Scroll: Handy steht, Features wechseln) ═══ -->
-<section class="sektion app" id="app" aria-labelledby="app-titel">
-  <div class="wrap">
-    <div class="kopfzeile ein">
-      <span class="badge">Bald verfügbar</span>
-      <h2 id="app-titel">Die #LeKo <em>Väter-App</em></h2>
-      <p class="lead">Für Väter in Trennungssituationen und für jeden Mann, der Orientierung sucht: verständliche Infos, Rückhalt und eine echte Community.</p>
-    </div>
+<!-- ═══ 4 · VÄTER-APP (Desktop: Handy steht, Features wechseln · Handy: Karten) ═══ -->
+<section class="app" id="app" aria-labelledby="app-titel">
+  <div class="wrap app-kopf" data-reveal>
+    <span class="badge">Bald verfügbar</span>
+    <h2 id="app-titel">Die #LeKo <em>Väter-App</em></h2>
+    <p class="lead">Für Väter in Trennungssituationen und für jeden Mann, der Orientierung sucht: verständliche Infos, Rückhalt und eine echte Community.</p>
   </div>
   <div class="app-sticky-outer">
     <div class="app-sticky-inner">
@@ -250,66 +272,41 @@ index = f'''<!DOCTYPE html>
       </div>
     </div>
   </div>
-</section>
-
-<!-- ═══ 5 · HALTUNG (Feature-Zeilen) ═══ -->
-<section class="haltung-section" id="haltung" aria-labelledby="haltung-titel">
-  <div class="haltung-container">
-    <div class="haltung-heading-block ein">
-      <h2 class="haltung-heading" id="haltung-titel">Unsere Haltung</h2>
-      <p class="haltung-sub">Was uns trägt — und was uns unterscheidet.</p>
-    </div>
-    <div class="haltung-zeilen">{haltung_zeilen}
-    </div>
+  <div class="app-mobile-list wrap">{app_mobil}
   </div>
 </section>
 
-<!-- ═══ 6 · MITGLIED WERDEN ═══ -->
-<section class="sektion mitglied" id="mitglied" aria-labelledby="mitglied-titel">
+<!-- ═══ 5 · HALTUNG (2×2) ═══ -->
+<section class="haltung" id="haltung" aria-labelledby="haltung-titel">
   <div class="wrap">
-    <div class="mitglied-block ein">
-      <p class="eyebrow">Mitgliedschaft</p>
-      <h2 id="mitglied-titel">Bereit, deinen Kompass <em>neu auszurichten?</em></h2>
-      <p class="lead">Jahresbeitrag, automatische Verlängerung, jederzeit schriftlich kündbar.</p>
-      <ul class="vorteile">
-        <li>Zugang zu allen Bildungsseminaren</li>
-        <li>Mitglied der Telegram-Community</li>
-        <li>#LeKo App (Väter-Bereich)</li>
-        <li>Sportevents &amp; gemeinsame Aktivitäten</li>
-        <li>Persönliches Erstgespräch mit Markus Prinz</li>
-        <li>Zugang zum Übergabeprotokoll-System</li>
-      </ul>
-      {MINI_KOMPASS}
-      <div class="knoepfe">
-        <a href="mailto:leko.verein@gmail.com?subject=Mitgliedschaft%20%23LeKo" class="btn btn-gold">Jetzt Mitglied werden <span class="pfeil" aria-hidden="true">→</span></a>
-        <a href="#kontakt" class="btn btn-dunkel">Unverbindlich kennenlernen</a>
-      </div>
+    <header class="haltung-kopf" data-reveal>
+      <h2 id="haltung-titel">Unsere Haltung</h2>
+      <p class="lead">Was uns trägt — und was uns unterscheidet.</p>
+    </header>
+    <div class="haltung-grid">{haltung_html}
     </div>
   </div>
 </section>
 
-<!-- ═══ 7 · FAQ ═══ -->
-<section class="sektion faq" id="faq" aria-labelledby="faq-titel">
+<!-- ═══ 6 · FAQ ═══ -->
+<section class="faq" id="faq" aria-labelledby="faq-titel">
   <div class="wrap schmal">
-    <div class="kopfzeile ein">
-      <p class="eyebrow">Fragen</p>
+    <header class="faq-kopf" data-reveal>
+      <p class="eyebrow-gold">Fragen</p>
       <h2 id="faq-titel">Ehrliche <em>Antworten.</em></h2>
-    </div>
-    <div class="akk ein">{faq_html}
+    </header>
+    <div class="akk" data-reveal>{faq_html}
     </div>
   </div>
 </section>
 
-<!-- ═══ 8 · KONTAKT ═══ -->
-<section class="sektion kontakt buehnenlicht" id="kontakt" aria-labelledby="kontakt-titel">
-  <div class="wrap schmal">
-    <div class="ein">
-      <p class="eyebrow">Kontakt</p>
-      <h2 id="kontakt-titel">Schreib <em>uns.</em></h2>
-      <a class="mail" href="mailto:leko.verein@gmail.com">leko.verein@gmail.com</a>
-      <p class="lead">Wir melden uns so schnell wie möglich.</p>
-      <a href="#mitglied" class="btn btn-gold">Jetzt Mitglied werden <span class="pfeil" aria-hidden="true">→</span></a>
-    </div>
+<!-- ═══ 7 · CTA ═══ -->
+<section class="cta" id="mitglied" aria-labelledby="cta-titel">
+  <div class="wrap cta-inner" data-reveal>
+    <h2 id="cta-titel">Bereit, den nächsten Schritt <em>zu gehen?</em></h2>
+    <p class="lead">LeKo ist kein Verein für später. LeKo ist für jetzt.</p>
+    <a href="mailto:leko.verein@gmail.com?subject=Mitgliedschaft%20%23LeKo" class="btn btn-gold btn-gross">Jetzt Mitglied werden <span class="pfeil" aria-hidden="true">→</span></a>
+    <p class="cta-klein"><a href="mailto:leko.verein@gmail.com">leko.verein@gmail.com</a></p>
   </div>
 </section>
 
