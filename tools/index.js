@@ -37,11 +37,11 @@
   inszenieren();
 })();
 
-// ── Väter-App: Linien vom Handy zu jedem Feature-Badge, mit laufendem Strom ──
+// ── Väter-App: Linien vom Handy-Körper zu jedem Feature-Badge, mit laufendem Strom ──
 (function () {
   'use strict';
   var NS = 'http://www.w3.org/2000/svg';
-  var buehne = document.getElementById('app-buehne'), svg = document.getElementById('app-linien'), geraet = document.getElementById('app-geraet');
+  var buehne = document.getElementById('app-buehne'), svg = document.getElementById('app-linien'), geraet = document.getElementById('app-koerper');
   if (!buehne || !svg || !geraet) return;
   function zeichnen() {
     svg.textContent = '';
