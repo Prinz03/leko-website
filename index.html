@@ -38,12 +38,19 @@
 @keyframes auftritt{from{opacity:0;transform:translateY(24px)}}
 
 /* ─── 2 · KENNST DU DAS? ─────────────────────────────────────────────── */
-.mirror-section{background:var(--bg-dark);padding:clamp(110px,15vw,180px) var(--gutter-r) clamp(110px,15vw,180px) var(--gutter-l);text-align:center}
-.mirror-label{font-size:clamp(2.6rem,6.5vw,5rem);font-weight:800;color:var(--gold);margin-bottom:clamp(3rem,6vw,4.5rem)}
-.mirror-item{max-width:680px;margin:0 auto 2.6rem}
-.mirror-item p{font-size:1.2rem;line-height:1.9;color:rgba(245,245,247,.85)}
-.mirror-item em{color:var(--text-white);font-style:italic}
-.mirror-bridge{max-width:680px;margin:clamp(3.5rem,7vw,5rem) auto 0;font-size:clamp(2rem,5vw,3.6rem);font-weight:800;letter-spacing:-.035em;line-height:1.1;color:var(--gold)}
+.mirror-section{background:var(--bg-dark);padding:clamp(80px,12vw,140px) var(--gutter-r) clamp(80px,12vw,140px) var(--gutter-l);text-align:center}
+.mirror-label{font-size:clamp(2.4rem,6vw,4.5rem);font-weight:800;color:var(--gold);margin-bottom:clamp(2.5rem,5vw,4rem)}
+.mirror-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;max-width:1100px;margin:0 auto clamp(3rem,6vw,5rem)}
+.mirror-card{background:rgba(201,168,76,.05);border:1px solid rgba(201,168,76,.2);border-radius:20px;padding:36px 28px;text-align:left;display:flex;flex-direction:column;gap:16px}
+.mirror-card-icon{font-size:2.2rem;line-height:1}
+.mirror-card p{font-size:1.05rem;line-height:1.75;color:rgba(245,245,247,.82);margin:0}
+.mirror-card em{color:var(--gold);font-style:italic}
+.mirror-bridge{margin:0 auto;font-size:clamp(2rem,5vw,3.6rem);font-weight:800;letter-spacing:-.035em;line-height:1.1;color:var(--gold)}
+@media (max-width:760px){
+  .mirror-cards{grid-template-columns:1fr;gap:16px}
+  .mirror-card{flex-direction:row;align-items:flex-start;padding:22px 20px;gap:14px}
+  .mirror-card-icon{font-size:1.8rem;flex-shrink:0;margin-top:2px}
+}
 
 /* ─── 3 · 5 SÄULEN: je eine Full-Screen-Sektion ──────────────────────── */
 .saeulen{background:var(--bg-black)}
@@ -83,7 +90,7 @@
 /* zentriert ohne transform – die Einblend-Animation setzt transform am Ende auf none */
 .badge-bottom-center{left:0;right:0;margin-inline:auto;width:max-content;bottom:5%}
 .app-badge{position:absolute;z-index:1;display:flex;align-items:center;gap:14px;padding:16px 28px 16px 20px;border:1px solid var(--gold);border-radius:999px;background:rgba(17,17,17,.92);
-  font-size:1rem;font-weight:600;color:var(--text-white);white-space:nowrap;box-shadow:0 0 34px -8px rgba(201,168,76,.45);transition:box-shadow .3s,background .3s}
+  font-size:1rem;font-weight:600;color:var(--text-white);white-space:nowrap;box-shadow:0 0 34px -8px rgba(201,168,76,.45);transition:box-shadow .3s,background .3s;cursor:pointer}
 .app-badge:hover{background:var(--bg-elevated);box-shadow:0 0 60px -4px rgba(201,168,76,.75)}
 .ab-icon{font-size:1.35rem;line-height:1}
 /* Handy: generiertes iPhone-Mockup (zugeschnitten auf 603×1200), darin der echte App-Screen.
@@ -231,17 +238,17 @@
 <section class="app" id="app" aria-labelledby="app-titel">
   <div class="wrap app-kopf" data-reveal>
     <p class="eyebrow-gold">Die #LeKo Väter-App</p>
-    <h2 id="app-titel">Dein Werkzeug. <em>Wenn es zählt.</em></h2>
+    <h2 id="app-titel">Die App für Väter<br>in Trennung.<br><em>Dokumentieren. Vernetzt. Nie allein.</em></h2>
     <span class="badge">Bald verfügbar</span>
   </div>
   <div class="app-buehne" id="app-buehne">
     <svg class="app-linien" id="app-linien" aria-hidden="true"></svg>
     <ul class="app-badges" aria-label="Funktionen der App">
-      <li class="app-badge badge-top-left" data-platz="links" data-reveal><svg class="kette-linie" aria-hidden="true"><line class="app-bahn" x1="50%" y1="0" x2="50%" y2="100%"/><line class="app-strom" x1="50%" y1="0" x2="50%" y2="100%"/></svg><span class="ab-icon" aria-hidden="true">⚖️</span>Rechtliche Orientierung</li>
-      <li class="app-badge badge-mid-left" data-platz="links" data-reveal><svg class="kette-linie" aria-hidden="true"><line class="app-bahn" x1="50%" y1="0" x2="50%" y2="100%"/><line class="app-strom" x1="50%" y1="0" x2="50%" y2="100%"/></svg><span class="ab-icon" aria-hidden="true">👥</span>Väter-Community</li>
-      <li class="app-badge badge-top-right" data-platz="rechts" data-reveal><svg class="kette-linie" aria-hidden="true"><line class="app-bahn" x1="50%" y1="0" x2="50%" y2="100%"/><line class="app-strom" x1="50%" y1="0" x2="50%" y2="100%"/></svg><span class="ab-icon" aria-hidden="true">👨‍⚖️</span>Fachliche Kontakte</li>
-      <li class="app-badge badge-mid-right" data-platz="rechts" data-reveal><svg class="kette-linie" aria-hidden="true"><line class="app-bahn" x1="50%" y1="0" x2="50%" y2="100%"/><line class="app-strom" x1="50%" y1="0" x2="50%" y2="100%"/></svg><span class="ab-icon" aria-hidden="true">🏋️</span>Sport &amp; Events</li>
-      <li class="app-badge badge-bottom-center" data-platz="unten" data-reveal><svg class="kette-linie" aria-hidden="true"><line class="app-bahn" x1="50%" y1="0" x2="50%" y2="100%"/><line class="app-strom" x1="50%" y1="0" x2="50%" y2="100%"/></svg><span class="ab-icon" aria-hidden="true">📅</span>Kalender &amp; Kinderzeit</li>
+      <li class="app-badge badge-top-left" data-platz="links" data-reveal data-modal="badge-recht" tabindex="0" role="button" aria-haspopup="dialog"><svg class="kette-linie" aria-hidden="true"><line class="app-bahn" x1="50%" y1="0" x2="50%" y2="100%"/><line class="app-strom" x1="50%" y1="0" x2="50%" y2="100%"/></svg><span class="ab-icon" aria-hidden="true">⚖️</span>Rechtliche Orientierung</li>
+      <li class="app-badge badge-mid-left" data-platz="links" data-reveal data-modal="badge-community" tabindex="0" role="button" aria-haspopup="dialog"><svg class="kette-linie" aria-hidden="true"><line class="app-bahn" x1="50%" y1="0" x2="50%" y2="100%"/><line class="app-strom" x1="50%" y1="0" x2="50%" y2="100%"/></svg><span class="ab-icon" aria-hidden="true">👥</span>Väter-Community</li>
+      <li class="app-badge badge-top-right" data-platz="rechts" data-reveal data-modal="badge-kontakte" tabindex="0" role="button" aria-haspopup="dialog"><svg class="kette-linie" aria-hidden="true"><line class="app-bahn" x1="50%" y1="0" x2="50%" y2="100%"/><line class="app-strom" x1="50%" y1="0" x2="50%" y2="100%"/></svg><span class="ab-icon" aria-hidden="true">👨‍⚖️</span>Fachliche Kontakte</li>
+      <li class="app-badge badge-mid-right" data-platz="rechts" data-reveal data-modal="badge-sport" tabindex="0" role="button" aria-haspopup="dialog"><svg class="kette-linie" aria-hidden="true"><line class="app-bahn" x1="50%" y1="0" x2="50%" y2="100%"/><line class="app-strom" x1="50%" y1="0" x2="50%" y2="100%"/></svg><span class="ab-icon" aria-hidden="true">🏋️</span>Sport &amp; Events</li>
+      <li class="app-badge badge-bottom-center" data-platz="unten" data-reveal data-modal="badge-kalender" tabindex="0" role="button" aria-haspopup="dialog"><svg class="kette-linie" aria-hidden="true"><line class="app-bahn" x1="50%" y1="0" x2="50%" y2="100%"/><line class="app-strom" x1="50%" y1="0" x2="50%" y2="100%"/></svg><span class="ab-icon" aria-hidden="true">📅</span>Kalender &amp; Kinderzeit</li>
     </ul>
     <div class="app-geraet" id="app-geraet">
       <img class="app-mockup" src="assets/img/iphone-mockup.png" width="603" height="1200" alt="" loading="lazy" decoding="async">
@@ -316,6 +323,72 @@
   </div>
 </dialog>
 
+
+<dialog class="modal" id="badge-recht" aria-labelledby="badge-recht-titel">
+  <button class="schliessen" type="button" data-schliessen aria-label="Schließen">×</button>
+  <div class="modal-innen">
+    <p class="eyebrow">⚖️ Feature</p>
+    <h2 id="badge-recht-titel">Rechtliche Orientierung</h2>
+    <p>Obsorge, Besuchsrecht, Unterhalt – endlich in verständlicher Sprache erklärt. Kein Juristendeutsch, kein Eigeninteresse. Du bekommst klare Informationen, damit du in Gesprächen mit Anwälten und vor Gericht vorbereitet bist.</p>
+    <p style="color:var(--gold);font-weight:600">Dein Vorteil: Du weißt, welche Rechte du als Vater hast – bevor du zum ersten Mal vor dem Richter sitzt.</p>
+  </div>
+</dialog>
+
+<dialog class="modal" id="badge-community" aria-labelledby="badge-community-titel">
+  <button class="schliessen" type="button" data-schliessen aria-label="Schließen">×</button>
+  <div class="modal-innen">
+    <p class="eyebrow">👥 Feature</p>
+    <h2 id="badge-community-titel">Väter-Community</h2>
+    <p>Männer, die verstehen, was du durchmachst – ohne Mitleid, ohne Urteil. In der #LeKo Community findest du echte Väter in ähnlichen Situationen. Direkter Austausch, gegenseitige Unterstützung, keine Performance.</p>
+    <p style="color:var(--gold);font-weight:600">Dein Vorteil: Du bist nicht mehr allein mit dem, was dich nachts wachhält.</p>
+  </div>
+</dialog>
+
+<dialog class="modal" id="badge-kalender" aria-labelledby="badge-kalender-titel">
+  <button class="schliessen" type="button" data-schliessen aria-label="Schließen">×</button>
+  <div class="modal-innen">
+    <p class="eyebrow">📅 Feature</p>
+    <h2 id="badge-kalender-titel">Kalender &amp; Kinderzeit</h2>
+    <p>Deine Zeit mit den Kindern dokumentieren und planen – strukturiert und nachvollziehbar. Halte fest, wann du deine Kinder siehst, und behalte den Überblick über Übergaben, Termine und besondere Momente.</p>
+    <p style="color:var(--gold);font-weight:600">Dein Vorteil: Im Zweifelsfall hast du schwarz auf weiß, wie viel Zeit du wirklich mit deinen Kindern verbracht hast.</p>
+  </div>
+</dialog>
+
+<dialog class="modal" id="badge-kontakte" aria-labelledby="badge-kontakte-titel">
+  <button class="schliessen" type="button" data-schliessen aria-label="Schließen">×</button>
+  <div class="modal-innen">
+    <p class="eyebrow">👨‍⚖️ Feature</p>
+    <h2 id="badge-kontakte-titel">Fachliche Kontakte</h2>
+    <p>Geprüfte Experten, die auf die Situation von Trennungsvätern spezialisiert sind: Familienanwälte, Mediatoren, Psychologen. Kein Rätselraten, wem du vertrauen kannst.</p>
+    <p style="color:var(--gold);font-weight:600">Dein Vorteil: Du sparst Zeit, Geld und Nerven – weil du sofort den richtigen Ansprechpartner findest.</p>
+  </div>
+</dialog>
+
+<dialog class="modal" id="badge-sport" aria-labelledby="badge-sport-titel">
+  <button class="schliessen" type="button" data-schliessen aria-label="Schließen">×</button>
+  <div class="modal-innen">
+    <p class="eyebrow">🏋️ Feature</p>
+    <h2 id="badge-sport-titel">Sport &amp; Events</h2>
+    <p>Gemeinsam aktiv sein – Stammtische, Sport-Challenges, Ausflüge und Events mit anderen Vätern. Raus aus der Wohnung, rein ins Leben. Bewegung als Ventil und Gemeinschaft als Kraftquelle.</p>
+    <p style="color:var(--gold);font-weight:600">Dein Vorteil: Du baust echte Verbindungen auf – nicht nur online, sondern im echten Leben.</p>
+  </div>
+</dialog>
+
+<script>
+// Badge-Modals: Klick auf jeden Badge öffnet das entsprechende Modal
+(function () {
+  document.querySelectorAll('.app-badge[data-modal]').forEach(function(badge) {
+    badge.addEventListener('click', function() {
+      var id = badge.dataset.modal;
+      var dialog = document.getElementById(id);
+      if (dialog) dialog.showModal();
+    });
+    badge.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); badge.click(); }
+    });
+  });
+})();
+</script>
 <script src="assets/site.js"></script>
 <script>
 // ── Väter-App: Linien vom Handy-Körper zu jedem Feature-Badge, mit laufendem Strom ──
