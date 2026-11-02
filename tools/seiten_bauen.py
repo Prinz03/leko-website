@@ -81,10 +81,10 @@ saeulen_html = ''.join(
 
 # ═══ Väter-App (Desktop sticky, Handy: Karten) ═══
 FEATURES = [
-    ('Rechtliche Orientierung', 'Obsorge, Besuchsrecht, Unterhalt — klar erklärt nach Familienrecht.'),
+    ('Rechtliche Orientierung', 'Obsorge, Besuchsrecht, Unterhalt – klar erklärt.'),
     ('Väter-Community', 'Männer, die wirklich verstehen, was du durchmachst. Kein Ratschlag — echte Erfahrung.'),
     ('Kalender &amp; Kinderzeit', 'Plane Wochenenden und Ferien mit System. Damit du nichts verpasst.'),
-    ('Fachliche Kontakte', 'Direkter Zugang zu Familienrechts-Experten in Österreich.'),
+    ('Fachliche Kontakte', 'Direkter Zugang zu Familienrechts-Experten.'),
     ('Sportevents &amp; Mitglieder', 'Gemeinsame Aktivitäten und ein exklusiver Bereich nur für Mitglieder.'),
 ]  # Jarvis gehört nicht in die Väter-App
 app_schritte = ''.join(
