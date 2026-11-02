@@ -3,13 +3,28 @@
   var ruhig = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var NS = 'http://www.w3.org/2000/svg';
 
-  // ── Hero: Scroll-Pfeil blendet beim ersten Scrollen aus ──
+  // ── Inszenierung beim Scrollen: Hero tritt zurück, Brücken-Satz leuchtet Zeile für Zeile auf ──
   var hinweis = document.querySelector('.scroll-indicator');
-  if (hinweis) {
-    var pfeilAus = function () { hinweis.style.opacity = Math.max(0, 1 - window.scrollY / (window.innerHeight * 0.3)); };
-    window.addEventListener('scroll', pfeilAus, { passive: true });
-    pfeilAus();
+  var heroAussen = document.querySelector('.hero-outer'), bruecke = document.querySelector('.bruecke-section');
+  var zeilen = bruecke ? bruecke.querySelectorAll('.bruecken-satz span') : [];
+  function fortschritt(el) {
+    var weg = el.offsetHeight - window.innerHeight;
+    return Math.max(0, Math.min(1, -el.getBoundingClientRect().top / (weg || 1)));
   }
+  var geplant = false;
+  function inszenieren() {
+    geplant = false;
+    if (hinweis) hinweis.style.opacity = Math.max(0, 1 - window.scrollY / (window.innerHeight * 0.3));
+    if (ruhig) return;
+    if (heroAussen) heroAussen.style.setProperty('--p', fortschritt(heroAussen).toFixed(3));
+    if (bruecke) {
+      var q = fortschritt(bruecke);
+      zeilen.forEach(function (z, i) { z.style.setProperty('--l', Math.max(0, Math.min(1, (q - i * 0.35) / 0.4)).toFixed(3)); });
+    }
+  }
+  window.addEventListener('scroll', function () { if (!geplant) { geplant = true; requestAnimationFrame(inszenieren); } }, { passive: true });
+  window.addEventListener('resize', inszenieren);
+  inszenieren();
 
   // ── Sticky Cards: Kennst du das? (Karte wechselt mit dem Scroll-Fortschritt) ──
   function stickyKarten(aussenSel, kartenSel, balkenId) {

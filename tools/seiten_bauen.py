@@ -138,7 +138,7 @@ def fuss(ds_link):
 
 KOPF_META = '''<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#080808">
+<meta name="theme-color" content="#000000">
 <link rel="icon" type="image/png" sizes="128x128" href="assets/logo/logo-128x128.png">
 <link rel="apple-touch-icon" href="assets/logo/logo-256x256.png">
 <link rel="stylesheet" href="assets/fonts/fonts.css">
@@ -169,13 +169,14 @@ index = f'''<!DOCTYPE html>
 
 <main id="inhalt">
 
-<!-- ═══ 1 · HERO (Scroll-Kompass) ═══ -->
+<!-- ═══ 1 · HERO (Lichtbühne, tritt beim Scrollen zurück) ═══ -->
 <section class="hero-outer" id="top">
   <div class="hero-sticky">
+    <div class="hero-licht" aria-hidden="true"></div>
 
     <div class="hero-content wrap">
       <p class="eyebrow auftritt" style="--d:.5s">Es ist an der Zeit, Deinen Kompass neu auszurichten.</p>
-      <h1><span class="auftritt" style="--d:.8s">Stärker werden.</span><span class="gold-kursiv auftritt" style="--d:1.1s">Nicht allein.</span></h1>
+      <h1><span class="auftritt" style="--d:.8s">Stärker werden.</span><span class="gold-verlauf auftritt" style="--d:1.1s">Nicht allein.</span></h1>
       <p class="lead auftritt" style="--d:1.25s">#LeKo ist die Gemeinschaft für Männer von 25 bis 50 in Kärnten: Bildungsseminare, Bewegung und Brüder, auf die du zählen kannst.</p>
       <div class="knoepfe auftritt" style="--d:1.4s">
         <a href="#mitglied" class="btn btn-gold">Jetzt Mitglied werden <span class="pfeil" aria-hidden="true">→</span></a>
@@ -183,7 +184,7 @@ index = f'''<!DOCTYPE html>
       </div>
     </div>
 
-    <div class="scroll-indicator" aria-hidden="true">↓</div>
+    <div class="scroll-indicator" aria-hidden="true"><span></span></div>
 
   </div>
 </section>
@@ -241,10 +242,10 @@ index = f'''<!DOCTYPE html>
 </section>
 
 <!-- ═══ 3 · 5 SÄULEN (Tempel) ═══ -->
-<section class="sektion saeulen" id="saeulen" aria-labelledby="saeulen-titel">
+<section class="sektion saeulen buehnenlicht" id="saeulen" aria-labelledby="saeulen-titel">
   <div class="wrap">
-  <h2 id="saeulen-titel">Die 5 Säulen von <em>#LeKo</em></h2>
-  <p class="lead saeulen-lead">Jede Säule trägt. Gemeinsam tragen wir dich.</p>
+  <h2 class="ein" id="saeulen-titel">Die 5 Säulen von <em>#LeKo</em></h2>
+  <p class="lead saeulen-lead ein" style="--v:.1s">Jede Säule trägt. Gemeinsam tragen wir dich.</p>
 
   <div class="saeulen-tempel ein" aria-hidden="true">
     <div class="tempel-gebälk"></div>
@@ -253,7 +254,7 @@ index = f'''<!DOCTYPE html>
     <div class="tempel-stylobat"></div>
   </div>
 
-  <div class="saeulen-karten" role="list">{saeulen_karten}
+  <div class="saeulen-karten ein" role="list">{saeulen_karten}
   </div>
 
   <!-- Akkordeon für mobile -->
@@ -263,7 +264,7 @@ index = f'''<!DOCTYPE html>
 </section>
 
 <!-- ═══ 4 · VÄTER-APP ═══ -->
-<section class="sektion app" id="app" aria-labelledby="app-titel">
+<section class="sektion app buehnenlicht" id="app" aria-labelledby="app-titel">
   <div class="wrap">
     <div class="kopfzeile ein">
       <span class="badge">Bald verfügbar</span>
@@ -296,11 +297,11 @@ index = f'''<!DOCTYPE html>
 <!-- ═══ 5 · HALTUNG (2×2) ═══ -->
 <section class="haltung-section" id="haltung" aria-labelledby="haltung-titel">
   <div class="haltung-container">
-    <div class="haltung-heading-block">
+    <div class="haltung-heading-block ein">
       <h2 class="haltung-heading" id="haltung-titel">Unsere Haltung</h2>
       <p class="haltung-sub">Was uns trägt — und was uns unterscheidet.</p>
     </div>
-    <div class="haltung-grid">
+    <div class="haltung-grid ein">
       <div class="haltung-karte-wrap">
         <div class="haltung-karte">
           <div class="haltung-karte-icon" aria-hidden="true">◈</div>
@@ -370,7 +371,7 @@ index = f'''<!DOCTYPE html>
 </section>
 
 <!-- ═══ 8 · KONTAKT ═══ -->
-<section class="sektion kontakt" id="kontakt" aria-labelledby="kontakt-titel">
+<section class="sektion kontakt buehnenlicht" id="kontakt" aria-labelledby="kontakt-titel">
   <div class="wrap schmal">
     <div class="ein">
       <p class="eyebrow">Kontakt</p>
@@ -403,10 +404,10 @@ datenschutz = f'''<!DOCTYPE html>
 .ds{{padding:calc(var(--nav-h) + 72px) 0 100px}}
 .ds .wrap{{max-width:820px}}
 .ds h1{{font-size:clamp(2.4rem,7vw,4.2rem);margin:14px 0 22px}}
-.ds h1 em{{font-style:italic;color:var(--gold)}}
+.ds h1 em{{font-style:normal;background:var(--gold-verlauf);-webkit-background-clip:text;background-clip:text;color:transparent}}
 .ds .lead{{margin-bottom:40px}}
 .privacy{{color:var(--text-2);font-size:1rem}}
-.privacy h3{{font-family:var(--serif);color:var(--white);font-size:1.35rem;margin:40px 0 10px;padding-top:24px;border-top:1px solid var(--linie)}}
+.privacy h3{{color:var(--white);font-size:1.35rem;margin:40px 0 10px;padding-top:24px;border-top:1px solid var(--linie)}}
 .privacy p{{margin-bottom:12px;overflow-wrap:anywhere}}
 .privacy ul{{margin:0 0 12px 1.2rem}}
 .privacy li{{margin-bottom:6px}}
