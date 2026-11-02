@@ -16,13 +16,20 @@
 .auftritt{animation:auftritt 1.4s var(--weich) backwards;animation-delay:var(--d,0s)}
 @keyframes auftritt{from{opacity:0;transform:translateY(24px)}}
 
-/* ─── 2 · KENNST DU DAS? ─────────────────────────────────────────────── */
-.mirror-section{background:var(--bg-dark);padding:clamp(110px,15vw,180px) var(--gutter-r) clamp(110px,15vw,180px) var(--gutter-l);text-align:center}
-.mirror-label{font-size:clamp(2.6rem,6.5vw,5rem);font-weight:800;color:var(--gold);margin-bottom:clamp(3rem,6vw,4.5rem)}
-.mirror-item{max-width:680px;margin:0 auto 2.6rem}
-.mirror-item p{font-size:1.2rem;line-height:1.9;color:rgba(245,245,247,.85)}
-.mirror-item em{color:var(--text-white);font-style:italic}
-.mirror-bridge{max-width:680px;margin:clamp(3.5rem,7vw,5rem) auto 0;font-size:clamp(2rem,5vw,3.6rem);font-weight:800;letter-spacing:-.035em;line-height:1.1;color:var(--gold)}
+/* ─── 2 · KENNST DU DAS? – 4 Karten (2×2, Handy untereinander) ────────── */
+.mirror-section{background:var(--bg-dark);padding:clamp(80px,12vw,140px) var(--gutter-r) clamp(80px,12vw,140px) var(--gutter-l);text-align:center}
+.mirror-label{font-size:clamp(2.4rem,6vw,4.5rem);font-weight:800;color:var(--gold);margin-bottom:clamp(2.5rem,5vw,4rem)}
+.mirror-cards{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;max-width:960px;margin:0 auto clamp(3rem,6vw,5rem)}
+.mirror-card{background:rgba(201,168,76,.05);border:1px solid rgba(201,168,76,.2);border-radius:20px;padding:36px 28px;text-align:left;display:flex;flex-direction:column;gap:16px}
+.mirror-card-icon{font-size:2.2rem;line-height:1}
+.mirror-card p{font-size:1.05rem;line-height:1.75;color:rgba(245,245,247,.82);margin:0}
+.mirror-card em{color:var(--gold);font-style:italic}
+.mirror-bridge{margin:0 auto;font-size:clamp(2rem,5vw,3.6rem);font-weight:800;letter-spacing:-.035em;line-height:1.1;color:var(--gold)}
+@media (max-width:760px){
+  .mirror-cards{grid-template-columns:1fr;gap:16px}
+  .mirror-card{flex-direction:row;align-items:flex-start;padding:22px 20px;gap:14px}
+  .mirror-card-icon{font-size:1.8rem;flex-shrink:0;margin-top:2px}
+}
 
 /* ─── 3 · 5 SÄULEN: je eine Full-Screen-Sektion ──────────────────────── */
 .saeulen{background:var(--bg-black)}
@@ -62,9 +69,10 @@
 /* zentriert ohne transform – die Einblend-Animation setzt transform am Ende auf none */
 .badge-bottom-center{left:0;right:0;margin-inline:auto;width:max-content;bottom:5%}
 .app-badge{position:absolute;z-index:1;display:flex;align-items:center;gap:14px;padding:16px 28px 16px 20px;border:1px solid var(--gold);border-radius:999px;background:rgba(17,17,17,.92);
-  font-size:1rem;font-weight:600;color:var(--text-white);white-space:nowrap;box-shadow:0 0 34px -8px rgba(201,168,76,.45);transition:box-shadow .3s,background .3s}
+  font-size:1rem;font-weight:600;color:var(--text-white);white-space:nowrap;box-shadow:0 0 34px -8px rgba(201,168,76,.45);transition:box-shadow .3s,background .3s;cursor:pointer}
 .app-badge:hover{background:var(--bg-elevated);box-shadow:0 0 60px -4px rgba(201,168,76,.75)}
 .ab-icon{font-size:1.35rem;line-height:1}
+.modal-vorteil{color:var(--gold)!important;font-weight:600}  /* „Dein Vorteil“ in den Badge-Pop-ups */
 /* Handy: generiertes iPhone-Mockup (zugeschnitten auf 603×1200), darin der echte App-Screen.
    Prozentwerte im Bild ausgemessen: Screen innen 15,2 % von links, 72,3 % breit, endet bei 85,5 % Höhe. */
 /* ohne transform/z-index zentriert, damit mix-blend-mode mit dem Goldschein der Sektion mischt */

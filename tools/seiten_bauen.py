@@ -43,7 +43,10 @@ SPIEGEL = [
     'Du hast Fragen zu Obsorge, Besuchsrecht, Unterhalt – und keinen Menschen, der dir ehrlich und ohne Eigeninteresse antwortet.',
     'Du funktionierst. Arbeit, Kinder, Alltag. Aber innerlich weißt du, dass da mehr möglich sein müsste.',
 ]
-spiegel_html = ''.join(f'\n    <div class="mirror-item" data-reveal><p>{s}</p></div>' for s in SPIEGEL)
+SPIEGEL_ICONS = ['🌙', '💬', '⚖️', '🔋']
+spiegel_html = ''.join(
+    f'\n    <div class="mirror-card" data-reveal data-reveal-delay="{n * 100}"><span class="mirror-card-icon" aria-hidden="true">{i}</span><p>{s}</p></div>'
+    for n, (i, s) in enumerate(zip(SPIEGEL_ICONS, SPIEGEL)))
 
 # ═══ 5 Säulen (je eine Full-Screen-Sektion, abwechselnd links/rechts) ═══
 SAEULEN = [
@@ -74,7 +77,35 @@ APP_BADGES = [  # (Platz für die Linien, CSS-Position, Emoji, Titel) – 2 link
     ('unten', 'badge-bottom-center', '📅', 'Kalender &amp; Kinderzeit'),
 ]
 KETTE = '<svg class="kette-linie" aria-hidden="true"><line class="app-bahn" x1="50%" y1="0" x2="50%" y2="100%"/><line class="app-strom" x1="50%" y1="0" x2="50%" y2="100%"/></svg>'
-app_badges = ''.join(f'\n      <li class="app-badge {pos}" data-platz="{s}" data-reveal>{KETTE}<span class="ab-icon" aria-hidden="true">{e}</span>{h}</li>'
+BADGE_INFO = {  # Pop-up je Badge: (Modal-ID, Text, Vorteil)
+    'Rechtliche Orientierung': ('badge-recht',
+        'Obsorge, Besuchsrecht, Unterhalt – endlich in verständlicher Sprache erklärt. Kein Juristendeutsch, kein Eigeninteresse. Du bekommst klare Informationen, damit du in Gesprächen mit Anwälten und vor Gericht vorbereitet bist.',
+        'Du weißt, welche Rechte du als Vater hast – bevor du zum ersten Mal vor dem Richter sitzt.'),
+    'Väter-Community': ('badge-community',
+        'Männer, die verstehen, was du durchmachst – ohne Mitleid, ohne Urteil. In der #LeKo Community findest du echte Väter in ähnlichen Situationen. Direkter Austausch, gegenseitige Unterstützung, keine Performance.',
+        'Du bist nicht mehr allein mit dem, was dich nachts wachhält.'),
+    'Kalender &amp; Kinderzeit': ('badge-kalender',
+        'Deine Zeit mit den Kindern dokumentieren und planen – strukturiert und nachvollziehbar. Halte fest, wann du deine Kinder siehst, und behalte den Überblick über Übergaben, Termine und besondere Momente.',
+        'Im Zweifelsfall hast du schwarz auf weiß, wie viel Zeit du wirklich mit deinen Kindern verbracht hast.'),
+    'Fachliche Kontakte': ('badge-kontakte',
+        'Experten aus unserem Netzwerk, die auf die Situation von Trennungsvätern spezialisiert sind: Familienanwälte, Mediatoren, Psychologen. Kein Rätselraten, wem du vertrauen kannst.',
+        'Du sparst Zeit, Geld und Nerven – weil du sofort den richtigen Ansprechpartner findest.'),
+    'Sport &amp; Events': ('badge-sport',
+        'Gemeinsam aktiv sein – Stammtische, Sport-Challenges, Ausflüge und Events mit anderen Vätern. Raus aus der Wohnung, rein ins Leben. Bewegung als Ventil und Gemeinschaft als Kraftquelle.',
+        'Du baust echte Verbindungen auf – nicht nur online, sondern im echten Leben.'),
+}
+badge_dialoge = ''.join(f'''
+<dialog class="modal" id="{BADGE_INFO[h][0]}" aria-labelledby="{BADGE_INFO[h][0]}-titel">
+  <button class="schliessen" type="button" data-schliessen aria-label="Schließen">×</button>
+  <div class="modal-innen">
+    <p class="eyebrow">{e} Feature</p>
+    <h2 id="{BADGE_INFO[h][0]}-titel">{h}</h2>
+    <p>{BADGE_INFO[h][1]}</p>
+    <p class="modal-vorteil">Dein Vorteil: {BADGE_INFO[h][2]}</p>
+  </div>
+</dialog>
+''' for _, _, e, h in sorted(APP_BADGES, key=lambda b: list(BADGE_INFO).index(b[3])))
+app_badges = ''.join(f'\n      <li class="app-badge {pos}" data-platz="{s}" data-reveal data-modal="{BADGE_INFO[h][0]}" tabindex="0" role="button" aria-haspopup="dialog">{KETTE}<span class="ab-icon" aria-hidden="true">{e}</span>{h}</li>'
                      for s, pos, e, h in APP_BADGES)  # KETTE: senkrechte Linie nach oben, nur auf dem Handy sichtbar
 
 # ═══ Haltung (2×2) ═══
@@ -201,7 +232,9 @@ index = f'''<!DOCTYPE html>
 
 <!-- ═══ 2 · KENNST DU DAS? (wie ein Freund, nicht wie Marketing) ═══ -->
 <section class="mirror-section" id="problem" aria-labelledby="mirror-titel">
-  <h2 class="mirror-label" id="mirror-titel" data-reveal>Kennst du das?</h2>{spiegel_html}
+  <h2 class="mirror-label" id="mirror-titel" data-reveal>Kennst du das?</h2>
+  <div class="mirror-cards">{spiegel_html}
+  </div>
   <p class="mirror-bridge" data-reveal>Dann bist du hier richtig.</p>
 </section>
 
@@ -219,7 +252,7 @@ index = f'''<!DOCTYPE html>
 <section class="app" id="app" aria-labelledby="app-titel">
   <div class="wrap app-kopf" data-reveal>
     <p class="eyebrow-gold">Die #LeKo Väter-App</p>
-    <h2 id="app-titel">Dein Werkzeug. <em>Wenn es zählt.</em></h2>
+    <h2 id="app-titel">Die App für Väter<br>in Trennung.<br><em>Dokumentieren. Vernetzt. Nie allein.</em></h2>
     <span class="badge">Bald verfügbar</span>
   </div>
   <div class="app-buehne" id="app-buehne">
@@ -272,7 +305,7 @@ index = f'''<!DOCTYPE html>
 </main>
 
 {fuss('<a href="datenschutz.html" target="_blank" rel="noopener">Datenschutz</a>')}
-
+{badge_dialoge}
 <script src="assets/site.js"></script>
 <script>
 {INDEX_JS}</script>

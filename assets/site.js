@@ -20,11 +20,15 @@
   document.querySelectorAll('.schublade a').forEach(function (a) { a.addEventListener('click', function () { menue(false); }); });
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape') menue(false); });
 
-  // Modale Fenster (Impressum): öffnen per data-modal, schließen per × oder Klick daneben
+  // Modale Fenster (Impressum, App-Badges): öffnen per data-modal – Klick, bei Nicht-Buttons auch Enter/Leertaste –, schließen per × oder Klick daneben
   document.querySelectorAll('[data-modal]').forEach(function (k) {
-    k.addEventListener('click', function () {
+    function oeffnen() {
       var d = document.getElementById(k.getAttribute('data-modal'));
-      if (d && d.showModal) d.showModal();
+      if (d && d.showModal && !d.open) d.showModal();
+    }
+    k.addEventListener('click', oeffnen);
+    if (k.tagName !== 'BUTTON') k.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); oeffnen(); }
     });
   });
   document.querySelectorAll('dialog.modal').forEach(function (d) {
