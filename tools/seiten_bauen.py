@@ -66,13 +66,6 @@ saeulen_html = ''.join(
     for n, (name, icon, farbe, head, txt) in enumerate(SAEULEN))
 
 # ═══ Väter-App (Handy in der Mitte, Features strahlen per Linie aus · Handy-Bildschirm: Karten) ═══
-FEATURES = [
-    ('Rechtliche Orientierung', 'Obsorge, Besuchsrecht, Unterhalt – klar erklärt.'),
-    ('Väter-Community', 'Männer, die wirklich verstehen, was du durchmachst. Kein Ratschlag — echte Erfahrung.'),
-    ('Kalender &amp; Kinderzeit', 'Plane Wochenenden und Ferien mit System. Damit du nichts verpasst.'),
-    ('Fachliche Kontakte', 'Direkter Zugang zu Familienrechts-Experten.'),
-    ('Sportevents &amp; Mitglieder', 'Gemeinsame Aktivitäten und ein exklusiver Bereich nur für Mitglieder.'),
-]  # Jarvis gehört nicht in die Väter-App
 APP_BADGES = [  # (Platz für die Linien, CSS-Position, Emoji, Titel) – 2 links, 2 rechts, 1 unten Mitte
     ('links', 'badge-top-left', '⚖️', 'Rechtliche Orientierung'),
     ('links', 'badge-mid-left', '👥', 'Väter-Community'),
@@ -80,9 +73,9 @@ APP_BADGES = [  # (Platz für die Linien, CSS-Position, Emoji, Titel) – 2 link
     ('rechts', 'badge-mid-right', '🏋️', 'Sport &amp; Events'),
     ('unten', 'badge-bottom-center', '📅', 'Kalender &amp; Kinderzeit'),
 ]
-app_badges = ''.join(f'\n      <li class="app-badge {pos}" data-platz="{s}" data-reveal><span class="ab-icon" aria-hidden="true">{e}</span>{h}</li>'
-                     for s, pos, e, h in APP_BADGES)
-app_mobil = ''.join(f'\n    <div class="app-mobile-feature" data-reveal><h3>{h}</h3><p>{txt}</p></div>' for h, txt in FEATURES)
+KETTE = '<svg class="kette-linie" aria-hidden="true"><line class="app-bahn" x1="50%" y1="0" x2="50%" y2="100%"/><line class="app-strom" x1="50%" y1="0" x2="50%" y2="100%"/></svg>'
+app_badges = ''.join(f'\n      <li class="app-badge {pos}" data-platz="{s}" data-reveal>{KETTE}<span class="ab-icon" aria-hidden="true">{e}</span>{h}</li>'
+                     for s, pos, e, h in APP_BADGES)  # KETTE: senkrechte Linie nach oben, nur auf dem Handy sichtbar
 
 # ═══ Haltung (2×2) ═══
 I.update({
@@ -239,8 +232,6 @@ index = f'''<!DOCTYPE html>
            alt="Startbildschirm der KOMPASS-App: „Willkommen bei KOMPASS. Dein Werkzeug für schwierige Zeiten – von Vätern für Väter.“" loading="lazy" decoding="async">
       <span class="app-koerper" id="app-koerper" aria-hidden="true"></span>
     </div>
-  </div>
-  <div class="app-mobile-list wrap">{app_mobil}
   </div>
 </section>
 

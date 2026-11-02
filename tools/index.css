@@ -76,15 +76,18 @@
 /* unsichtbarer Kasten über dem Handy-Körper – daran docken die Linien an */
 .app-koerper{position:absolute;left:12.64%;right:10.09%;top:3.36%;bottom:13.57%;pointer-events:none}
 @media (prefers-reduced-motion:reduce){.app-strom{animation:none;stroke-dasharray:none;opacity:.6}}
-.app-mobile-list{display:none}
+.kette-linie{display:none}
+/* Handy: vertikale Kette – Handy → Linie → Badge 1 → Linie → … → Badge 5 */
 @media (max-width:899px){
-  .app-buehne{height:auto;padding:0 var(--gutter-r) 0 var(--gutter-l)}
-  .app-linien,.app-badges{display:none}
-  .app-geraet{position:relative;height:auto;width:min(80vw,340px);aspect-ratio:603/1200}
-  .app-mobile-list{display:block;padding-top:clamp(48px,10vw,72px)}
-  .app-mobile-feature{border-left:3px solid var(--gold);padding:1.5rem 1.5rem 1.5rem 2rem;margin-bottom:2rem;background:var(--bg-card);border-radius:0 12px 12px 0}
-  .app-mobile-feature h3{color:var(--gold);font-size:1rem;margin-bottom:.5rem;text-transform:uppercase;letter-spacing:.05em}
-  .app-mobile-feature p{color:#ccc;font-size:.95rem;line-height:1.7;margin:0}
+  .app-buehne{height:auto;padding:0 var(--gutter-r) 0 var(--gutter-l);display:flex;flex-direction:column;align-items:center}
+  .app-linien{display:none}
+  .app-geraet{position:relative;order:-1;height:auto;width:min(75vw,320px);aspect-ratio:603/1200}  /* Handy zuerst, Kette darunter */
+  .app-badges{display:flex;flex-direction:column;align-items:center;gap:40px;width:100%;margin-top:40px}
+  .app-badge{position:relative;inset:auto;margin:0;width:90%;justify-content:center;white-space:normal;text-align:center}
+  .badge-top-left{order:1}.badge-mid-left{order:2}.badge-bottom-center{order:3}.badge-top-right{order:4}.badge-mid-right{order:5}
+  /* Linie über jedem Badge; die erste reicht durch den Lichtschein unter dem Handy bis zu dessen Unterkante */
+  .kette-linie{display:block;position:absolute;left:50%;bottom:100%;width:8px;height:41px;margin-left:-4px;overflow:visible;pointer-events:none}
+  .badge-top-left .kette-linie{height:calc(41px + min(75vw,320px) * 0.27)}
 }
 
 /* ─── 5 · HALTUNG (2×2) ──────────────────────────────────────────────── */
