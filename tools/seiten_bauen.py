@@ -50,17 +50,9 @@ SAEULEN = [
     ('Resilienz', 'Mentale Stärke, Klarheit und Haltung. Nicht brechen, sondern wachsen. Selbstführung, Umgang mit Druck und innere Stabilität – damit du auch in stürmischen Zeiten Kurs hältst.'),
     ('Verantwortung', 'KI und digitale Werkzeuge verstehen und nutzen, statt abgehängt zu werden. Wir erklären verständlich und praxisnah – Verantwortung beginnt damit, informiert zu sein.'),
 ]
-saeulen_bau = ''.join(
-    f'\n      <div class="saeule" data-nr="{n}"><div class="saeule-kapitell"></div><div class="saeule-schaft"></div><div class="saeule-basis"></div></div>'
-    for n in range(len(SAEULEN)))
 saeulen_karten = ''.join(
-    f'\n    <article class="saeule-karte" data-nr="{n}" role="listitem" tabindex="0">'
-    f'<div class="sk-nr">{n + 1:02d}</div><h3 class="sk-name">{t}</h3><p class="sk-text">{txt}</p></article>'
-    for n, (t, txt) in enumerate(SAEULEN))
-saeulen_liste = ''.join(
-    f'\n    <div class="akk-item"><button class="akk-frage" type="button" aria-expanded="false" aria-controls="sl-{n}">'
-    f'<span class="akk-titel"><small>Säule {n + 1}</small>{t}</span><span class="chevron">{ico(I["pfeil-ab"], "2")}</span></button>'
-    f'<div class="akk-antwort" id="sl-{n}" role="region"><p>{txt}</p></div></div>'
+    f'\n    <div class="saeule-karte-wrap" role="listitem"><article class="saeule-karte">'
+    f'<div class="sk-nr">{n + 1:02d}</div><h3 class="sk-name">{t}</h3><p class="sk-text">{txt}</p></article></div>'
     for n, (t, txt) in enumerate(SAEULEN))
 
 # ═══ App ═══
@@ -70,19 +62,61 @@ FEATURES_L = [('waage', 'Rechtliche Orientierung', 'Obsorge, Besuchsrecht, Unter
 FEATURES_R = [('kontakt', 'Fachliche Kontakte', 'Direkter Zugang zu Familienrechts-Experten in Österreich.'),
               ('jarvis', 'Jarvis Vereinsassistent', 'KI-gestützte Antworten, Protokolle und Erinnerungen im Telegram.'),
               ('pokal', 'Sportevents &amp; Mitglieder', 'Gemeinsame Aktivitäten und ein exklusiver Bereich nur für Mitglieder.')]
-BFLOAT = ['4.2s', '5s', '4.6s', '5.4s', '4.4s', '4.8s']
+FEATURES = FEATURES_L + FEATURES_R
+app_schritte = ''.join(
+    f'\n        <div class="app-schritt" data-step="{n}"><span class="as-nr">{n + 1:02d}</span><h3>{h}</h3><p>{txt}</p></div>'
+    for n, (_, h, txt) in enumerate(FEATURES))
+app_punkte = '<i></i>' * len(FEATURES)
+
+# ═══ Hero-Kompass (320 × 320, Mitte 160) ═══
+def kompass_svg():
+    k = 160
+    s = ['<circle cx="160" cy="160" r="152" fill="none" stroke="#c9a84c" stroke-width="2"/>',
+         '<circle cx="160" cy="160" r="136" fill="none" stroke="#f0d868" stroke-width="1" opacity=".8"/>']
+    for i in range(72):  # 72 Kerben à 5°, jede 45° lang
+        r1 = 136 if i % 9 == 0 else (142 if i % 3 == 0 else 146)
+        (x1, y1), (x2, y2) = pol(r1, i * 5, k), pol(152, i * 5, k)
+        s.append(f'<line x1="{x1}" y1="{y1}" x2="{x2}" y2="{y2}" stroke="#c9a84c" stroke-width="{1.6 if i % 9 == 0 else 1}"/>')
+    for b, g in (('N', 0), ('O', 90), ('S', 180), ('W', 270)):
+        x, y = pol(118, g, k)
+        s.append(f'<text x="{x}" y="{y}" text-anchor="middle" dominant-baseline="central" font-family="Inter,system-ui,sans-serif" font-size="17" font-weight="700" fill="#f0d868">{b}</text>')
+    rose = []
+    for n in range(8):  # 8-Punkte-Rose: lange Spitzen gold, kurze weiß
+        g = n * 45; lang = n % 2 == 0
+        spitze, seite = (100, 14) if lang else (62, 10)
+        tip, l, r = pol(spitze, g, k), pol(seite, g - 45, k), pol(seite, g + 45, k)
+        hell, dunkel = ('#f0d868', '#8a6d2a') if lang else ('#ffffff', '#9a9a9a')
+        teil = (f'<polygon points="{k},{k} {l[0]},{l[1]} {tip[0]},{tip[1]}" fill="{hell}"/>'
+                f'<polygon points="{k},{k} {r[0]},{r[1]} {tip[0]},{tip[1]}" fill="{dunkel}"/>')
+        rose.insert(len(rose) if lang else 0, teil)
+    s.append('<g opacity=".5">' + ''.join(rose) + '</g>')
+    s.append('<g class="nadel">'
+             '<polygon points="160,50 160,160 151,160" fill="#f0d868"/><polygon points="160,50 160,160 169,160" fill="#c9a84c"/>'
+             '<polygon points="160,270 160,160 151,160" fill="#ffffff"/><polygon points="160,270 160,160 169,160" fill="#bdbdbd"/>'
+             '<circle cx="160" cy="160" r="9" fill="#0b0b0b" stroke="#c9a84c" stroke-width="2"/><circle cx="160" cy="160" r="3.5" fill="#f0d868"/></g>')
+    return '<svg viewBox="0 0 320 320" xmlns="http://www.w3.org/2000/svg">' + ''.join(s) + '</svg>'
 
 
-def bubbles(liste, start):
-    return ''.join(
-        f'\n        <div class="bubble" data-bubble="{start + n}" style="--f:{BFLOAT[start + n]};--fv:{-(start + n) * .7:.1f}s">'
-        f'<span class="b-ico">{ico(I[k])}</span><div><b><span class="b-nr">{start + n + 1:02d}</span>{t}</b><p>{txt}</p></div></div>'
-        for n, (k, t, txt) in enumerate(liste))
+KOMPASS = kompass_svg()
 
+# ═══ Haltung ═══
+I.update({
+    'h_herz':      '<path d="M12 10.2c-1.3-1.8-4.3-1.5-4.3.9 0 1.8 2.3 3.4 4.3 4.7 2-1.3 4.3-2.9 4.3-4.7 0-2.4-3-2.7-4.3-.9z"/><path d="M2.5 15.5l3.3-.6a4 4 0 0 1 3 .7l1.5 1.1h3.5a1.3 1.3 0 0 1 0 2.6H10"/><path d="M2.5 21.5h9.2l6.9-3.8a1.4 1.4 0 0 0-1.3-2.5l-3.4 1.6"/>',
+    'h_richtung':  '<circle cx="12" cy="12" r="9.5"/><path d="M15.8 8.2l-2.3 5.3-5.3 2.3 2.3-5.3z"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2"/>',
+    'h_wegweiser': '<path d="M12 2.5v19M8.5 21.5h7"/><path d="M12 5h6.5l2.5 2.5-2.5 2.5H12"/><path d="M12 12.5H5.5L3 15l2.5 2.5H12"/>',
+})
+HALTUNG = [
+    ('h_herz', 'Gemeinnützig', 'Wir handeln ohne Gewinnabsicht. Alles, was wir aufbauen, dient dem Verein — nicht einzelnen Personen. Jeder Beitrag fließt zurück in die Gemeinschaft.'),
+    ('leute', 'Respekt', 'Jede Geschichte verdient Gehör. Bei uns gibt es keine falschen Gefühle, keine unreifen Fragen. Wer sich zeigt, wird gesehen — ohne Wertung.'),
+    ('h_richtung', 'Unabhängig', 'Keine Partei, keine Doktrin, keine Ideologie. Wir sind ein Ort für Menschen — nicht für Meinungen. Deine Richtung bestimmst du selbst.'),
+    ('h_wegweiser', 'Kein Therapie-Ersatz', 'Wir bieten Gemeinschaft und Orientierung. Wer professionelle Hilfe braucht, wird von uns ermutigt, sie zu suchen — nicht aufgehalten.'),
+]
+haltung_zeilen = ''.join(
+    f'\n    <div class="haltung-zeile" data-n="{n}">'
+    f'\n      <div class="hz-text"><span class="hz-label">Haltung {n + 1:02d}</span><h3 class="hz-titel">{h}</h3><p class="hz-body">{txt}</p></div>'
+    f'\n      <div class="hz-icon" aria-hidden="true">{ico(I[k], "1.1")}</div>\n    </div>'
+    for n, (k, h, txt) in enumerate(HALTUNG))
 
-MINI = [('kalender', 'Kalender', 'Sa · Kinderzeit'), ('leute', 'Community', '12 neue Beiträge'),
-        ('protokoll', 'Protokoll', 'Entwurf gespeichert'), ('kontakt', 'Kontakte', 'Fachleute in der Nähe')]
-mini_karten = ''.join(f'\n              <div class="mini">{ico(I[k], "1.7")}<b>{h}</b><small>{u}</small></div>' for k, h, u in MINI)
 
 FAQ = [
     ('Muss ich sportlich sein?', 'Nein. Jeder startet dort, wo er gerade steht. Es geht um Weiterkommen, nicht um Höchstleistung.'),
@@ -169,7 +203,7 @@ index = f'''<!DOCTYPE html>
 
 <main id="inhalt">
 
-<!-- ═══ 1 · HERO (Lichtbühne, tritt beim Scrollen zurück) ═══ -->
+<!-- ═══ 1 · HERO (Lichtbühne → Kompass beim Scrollen) ═══ -->
 <section class="hero-outer" id="top">
   <div class="hero-sticky">
     <div class="hero-licht" aria-hidden="true"></div>
@@ -183,6 +217,8 @@ index = f'''<!DOCTYPE html>
         <a href="#kontakt" class="btn btn-dunkel">Unverbindlich kennenlernen</a>
       </div>
     </div>
+
+    <div class="hero-kompass" aria-hidden="true">{KOMPASS}</div>
 
     <div class="scroll-indicator" aria-hidden="true"><span></span></div>
 
@@ -241,95 +277,55 @@ index = f'''<!DOCTYPE html>
   </div>
 </section>
 
-<!-- ═══ 3 · 5 SÄULEN (Tempel) ═══ -->
+<!-- ═══ 3 · 5 SÄULEN ═══ -->
 <section class="sektion saeulen buehnenlicht" id="saeulen" aria-labelledby="saeulen-titel">
   <div class="wrap">
   <h2 class="ein" id="saeulen-titel">Die 5 Säulen von <em>#LeKo</em></h2>
   <p class="lead saeulen-lead ein" style="--v:.1s">Jede Säule trägt. Gemeinsam tragen wir dich.</p>
-
-  <div class="saeulen-tempel ein" aria-hidden="true">
-    <div class="tempel-gebälk"></div>
-    <div class="saeulen-reihe">{saeulen_bau}
-    </div>
-    <div class="tempel-stylobat"></div>
-  </div>
-
   <div class="saeulen-karten ein" role="list">{saeulen_karten}
-  </div>
-
-  <!-- Akkordeon für mobile -->
-  <div class="saeulen-akk nur-klein" role="list">{saeulen_liste}
   </div>
   </div>
 </section>
 
-<!-- ═══ 4 · VÄTER-APP ═══ -->
-<section class="sektion app buehnenlicht" id="app" aria-labelledby="app-titel">
+<!-- ═══ 4 · VÄTER-APP (Sticky-Scroll: Handy steht, Features wechseln) ═══ -->
+<section class="sektion app" id="app" aria-labelledby="app-titel">
   <div class="wrap">
     <div class="kopfzeile ein">
       <span class="badge">Bald verfügbar</span>
       <h2 id="app-titel">Die #LeKo <em>Väter-App</em></h2>
       <p class="lead">Für Väter in Trennungssituationen und für jeden Mann, der Orientierung sucht: verständliche Infos, Rückhalt und eine echte Community.</p>
     </div>
-    <div class="app-buehne" id="app-buehne">
-      <svg class="app-linien" id="app-linien" aria-hidden="true"></svg>
-      <div class="bubbles links">{bubbles(FEATURES_L, 0)}
+  </div>
+  <div class="app-sticky-outer">
+    <div class="app-sticky-inner">
+      <div class="app-schritte">{app_schritte}
       </div>
-      <div class="handy-stage" aria-hidden="true">
-        <div class="handy" id="handy">
+      <div class="app-handy-wrap" aria-hidden="true">
+        <div class="app-handy">
           <span class="notch"></span>
-          <div class="screen">
-            <div class="screen-kopf"><b>#LeKo App</b>{MINI_KOMPASS.replace('mini-kompass', 'screen-logo')}</div>
-            <p class="screen-gruss">Willkommen zurück</p>
-            <div class="mini-grid">{mini_karten}
+          <div class="handy-screen">
+            <div class="handy-header">
+              <span class="handy-logo">#LeKo</span>
+              <span class="handy-subline">Väter-App</span>
             </div>
-            <div class="mini breit">{ico(I['stern'], '1.7')}<div><b>Nächstes Treffen</b><small>Do · 19:00 · Klagenfurt</small></div></div>
-            <div class="tabbar"><i></i><i></i><i></i><i></i></div>
+            <div class="handy-aktiv-titel"></div>
+            <div class="handy-aktiv-text"></div>
           </div>
+          <div class="handy-punkte">{app_punkte}</div>
         </div>
-      </div>
-      <div class="bubbles rechts">{bubbles(FEATURES_R, 3)}
       </div>
     </div>
   </div>
 </section>
 
-<!-- ═══ 5 · HALTUNG (2×2) ═══ -->
+<!-- ═══ 5 · HALTUNG (Feature-Zeilen) ═══ -->
 <section class="haltung-section" id="haltung" aria-labelledby="haltung-titel">
   <div class="haltung-container">
     <div class="haltung-heading-block ein">
       <h2 class="haltung-heading" id="haltung-titel">Unsere Haltung</h2>
       <p class="haltung-sub">Was uns trägt — und was uns unterscheidet.</p>
     </div>
-    <div class="haltung-grid ein">
-      <div class="haltung-karte-wrap">
-        <div class="haltung-karte">
-          <div class="haltung-karte-icon" aria-hidden="true">◈</div>
-          <h3>Gemeinnützig</h3>
-          <p>Wir handeln ohne Gewinnabsicht. Alles, was wir aufbauen, dient dem Verein — nicht einzelnen Personen. Jeder Beitrag fließt zurück in die Gemeinschaft.</p>
-        </div>
-      </div>
-      <div class="haltung-karte-wrap">
-        <div class="haltung-karte">
-          <div class="haltung-karte-icon" aria-hidden="true">◈</div>
-          <h3>Respekt</h3>
-          <p>Jede Geschichte verdient Gehör. Bei uns gibt es keine falschen Gefühle, keine unreifen Fragen. Wer sich zeigt, wird gesehen — ohne Wertung.</p>
-        </div>
-      </div>
-      <div class="haltung-karte-wrap">
-        <div class="haltung-karte">
-          <div class="haltung-karte-icon" aria-hidden="true">◈</div>
-          <h3>Unabhängig</h3>
-          <p>Keine Partei, keine Doktrin, keine Ideologie. Wir sind ein Ort für Menschen — nicht für Meinungen. Deine Richtung bestimmst du selbst.</p>
-        </div>
-      </div>
-      <div class="haltung-karte-wrap">
-        <div class="haltung-karte">
-          <div class="haltung-karte-icon" aria-hidden="true">◈</div>
-          <h3>Kein Therapie-Ersatz</h3>
-          <p>Wir bieten Gemeinschaft und Orientierung. Wer professionelle Hilfe braucht, wird von uns ermutigt, sie zu suchen — nicht aufgehalten.</p>
-        </div>
-      </div>
+    <div class="haltung-zeilen">{haltung_zeilen}
     </div>
   </div>
 </section>

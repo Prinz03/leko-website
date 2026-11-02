@@ -99,8 +99,8 @@ dialog.modal[open] .modal-innen{animation:modal-ein .5s var(--weich) both}
   .ein{opacity:1;transform:none}
 }
 
-/* ═══ STARTSEITE: HERO (sticky, tritt beim Scrollen zurück) ═══════════ */
-.hero-outer{height:160vh;position:relative;background:var(--black);--p:0}
+/* ═══ STARTSEITE: HERO (sticky; Headline weicht beim Scrollen dem Kompass) ═══ */
+.hero-outer{height:250vh;position:relative;background:var(--black);--p:0}
 .hero-sticky{position:sticky;top:0;height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden}
 /* Lichtkegel von unten – die „Bühne“, auf der die Headline steht */
 .hero-licht{position:absolute;inset:0;pointer-events:none;opacity:calc(.75 + var(--p) * .5);transform:scale(calc(1 + var(--p) * .3));transform-origin:50% 100%}
@@ -110,7 +110,13 @@ dialog.modal[open] .modal-innen{animation:modal-ein .5s var(--weich) both}
 .hero-licht::after{content:"";position:absolute;left:8%;right:8%;bottom:18%;height:1px;background:linear-gradient(90deg,transparent,rgba(240,216,104,.55),transparent);
   box-shadow:0 0 24px 2px rgba(201,168,76,.35)}
 .hero-sticky::after{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 85% 75% at 50% 45%,transparent 55%,rgba(0,0,0,.85))}
-.hero-content{position:relative;z-index:10;text-align:center;opacity:calc(1 - var(--p) * 1.5);transform:translateY(calc(var(--p) * -80px)) scale(calc(1 - var(--p) * .08))}
+.hero-content{position:relative;z-index:10;text-align:center;transition:opacity .15s linear,transform .15s linear}
+.hero-kompass{position:absolute;top:50%;left:50%;width:320px;height:320px;transform:translate(-50%,calc(-50% + 40px));opacity:0;
+  transition:opacity .8s ease,transform .8s var(--weich);pointer-events:none;z-index:2;filter:drop-shadow(0 0 30px rgba(201,168,76,.25))}
+.hero-kompass.sichtbar{opacity:1;transform:translate(-50%,-50%)}
+.hero-kompass svg{display:block;width:100%;height:100%}
+.hero-kompass .nadel{transform-origin:160px 160px;transform:rotate(var(--winkel,0deg));transition:transform .1s linear;filter:drop-shadow(0 0 6px rgba(0,0,0,.6))}
+@media (max-width:600px){.hero-kompass{width:220px;height:220px}}
 .scroll-indicator{position:absolute;bottom:36px;left:50%;width:1px;height:56px;margin-left:-.5px;z-index:20;overflow:hidden;background:rgba(255,255,255,.15)}
 .scroll-indicator span{position:absolute;left:0;top:-50%;width:100%;height:50%;background:linear-gradient(transparent,var(--gold-hell));animation:fallen 2s var(--weich) infinite}
 @keyframes fallen{to{top:100%}}
@@ -142,46 +148,65 @@ dialog.modal[open] .modal-innen{animation:modal-ein .5s var(--weich) both}
   font-size:clamp(2.8rem,7vw,5.5rem);line-height:1.1;font-weight:700;letter-spacing:-.045em;color:var(--white);text-wrap:balance}
 .kennst-card{padding-top:calc(var(--nav-h) + clamp(4.5rem,9vw,8rem))}
 
-/* ═══ HALTUNG: 2×2-GRID ═════════════════════════════════════════════════ */
+/* ═══ HALTUNG: Feature-Zeilen im DJI-Stil ═════════════════════════════ */
 .haltung-section{background:var(--black);padding:clamp(110px,14vw,180px) 2rem}
-.haltung-container{max-width:1000px;margin:0 auto}
+.haltung-container{max-width:900px;margin:0 auto}
 .haltung-heading-block{text-align:center;margin-bottom:clamp(48px,7vw,80px)}
 .haltung-heading{font-size:clamp(2.5rem,6vw,4.75rem);color:var(--white);margin-bottom:1rem}
 .haltung-sub{font-size:clamp(1.1rem,1.7vw,1.4rem);font-weight:500;letter-spacing:-.02em;color:var(--text-2)}
-.haltung-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
-@media (max-width:640px){.haltung-grid{grid-template-columns:1fr}.haltung-section{padding:5rem 1.25rem}}
-.haltung-karte-icon{font-size:1.4rem;color:var(--gold);margin-bottom:1rem;opacity:.85}
-.haltung-karte h3{font-size:1.6rem;color:var(--white);margin-bottom:.8rem}
-.haltung-karte p{font-size:1rem;color:var(--text-2);line-height:1.65}
+.haltung-zeile {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 3rem;
+  padding: 4rem 3rem;
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.haltung-zeile.sichtbar {
+  opacity: 1;
+  transform: none;
+}
+.haltung-zeile:nth-child(odd)  { background: #0a0a0a; }
+.haltung-zeile:nth-child(even) { background: #111; }
+.hz-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: #c9a84c;
+  display: block;
+  margin-bottom: 1rem;
+}
+.hz-titel {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #fff;
+  margin: 0 0 1.25rem;
+  line-height: 1.2;
+}
+.hz-body {
+  font-size: 1rem;
+  color: rgba(255,255,255,0.55);
+  line-height: 1.8;
+  max-width: 520px;
+}
+.hz-icon { color: #c9a84c; }
+.hz-icon svg {
+  display: block;
+  width: 90px;
+  height: 90px;
+  opacity: 0.7;
+}
+@media (max-width: 600px) {
+  .haltung-section { padding: 5rem 1.25rem; }
+  .haltung-zeile { grid-template-columns: 1fr; padding: 3rem 1.5rem; }
+  .hz-icon { display: none; }
+  .hz-titel { font-size: 1.6rem; }
+}
 
 @media (prefers-reduced-motion:reduce){
   .scroll-indicator span{animation:none}
-}
-
-/* ─── Haltung Premium-Karten ─────────────────────────────── */
-.haltung-karte-wrap {
-  background: linear-gradient(135deg,
-    #c9a84c 0%,
-    #3a2206 40%,
-    #c9a84c 70%,
-    #f0d868 100%
-  );
-  border-radius: 6px;
-  padding: 1.5px;
-  display: flex;
-  flex-direction: column;
-  transition: transform 0.25s ease;
-}
-.haltung-karte-wrap:hover {
-  transform: translateY(-4px);
-}
-.haltung-karte {
-  background: #0e0c06;
-  border-radius: 5px;
-  padding: 2rem;
-  flex: 1;
-  transition: box-shadow 0.25s ease;
-}
-.haltung-karte-wrap:hover .haltung-karte {
-  box-shadow: 0 0 32px rgba(201,168,76,0.18);
 }

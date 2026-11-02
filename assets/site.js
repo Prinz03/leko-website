@@ -1,4 +1,4 @@
-/* #LeKo – gemeinsame Logik: Header, Mobil-Menü, Impressum-Modal, Scroll-Einblendung, Akkordeons */
+/* #LeKo – gemeinsame Logik: Header, Mobil-Menü, Impressum-Modal, Scroll-Einblendung, Akkordeons, Väter-App, Haltung */
 (function () {
   'use strict';
   var ruhig = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -62,4 +62,51 @@
       knopf.setAttribute('aria-expanded', String(auf));
     });
   });
+
+  // Väter-App: Handy steht, die Features wechseln mit dem Scroll-Fortschritt
+  (function initAppScroll() {
+    var outer = document.querySelector('.app-sticky-outer'), schritte = document.querySelectorAll('.app-schritt');
+    var handy = document.querySelector('.app-handy'), titel = document.querySelector('.handy-aktiv-titel'), text = document.querySelector('.handy-aktiv-text');
+    var punkte = document.querySelectorAll('.handy-punkte i');
+    if (!outer || !schritte.length) return;
+    var daten = Array.prototype.map.call(schritte, function (s) {
+      return { titel: s.querySelector('h3').textContent, text: s.querySelector('p').textContent };
+    });
+    var aktuell = -1, glimmen;
+    function update() {
+      var weg = outer.offsetHeight - window.innerHeight;
+      var prog = weg > 0 ? Math.max(0, Math.min(1, -outer.getBoundingClientRect().top / weg)) : 0;
+      var schritt = Math.min(schritte.length - 1, Math.floor(prog * schritte.length));
+      if (schritt === aktuell) return;
+      aktuell = schritt;
+      schritte.forEach(function (s, i) { s.classList.toggle('aktiv', i === schritt); });
+      punkte.forEach(function (p, i) { p.classList.toggle('an', i === schritt); });
+      if (titel) titel.textContent = daten[schritt].titel;
+      if (text) text.textContent = daten[schritt].text;
+      if (handy) {  // kurzes Aufglühen beim Wechsel
+        handy.classList.add('glueht');
+        clearTimeout(glimmen);
+        glimmen = setTimeout(function () { handy.classList.remove('glueht'); }, 400);
+      }
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+  })();
+
+  // Haltung: Zeilen gleiten nacheinander von unten herein
+  (function initHaltungScroll() {
+    var zeilen = document.querySelectorAll('.haltung-zeile');
+    if (!zeilen.length) return;
+    if (!('IntersectionObserver' in window) || ruhig) { zeilen.forEach(function (z) { z.classList.add('sichtbar'); }); return; }
+    var obs = new IntersectionObserver(function (es) {
+      es.forEach(function (e, i) {
+        if (e.isIntersecting) {
+          setTimeout(function () { e.target.classList.add('sichtbar'); }, i * 150);
+          obs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.2 });
+    zeilen.forEach(function (z) { obs.observe(z); });
+  })();
 })();
