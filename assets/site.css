@@ -122,19 +122,14 @@ dialog.modal[open] .modal-innen{animation:modal-ein .5s var(--weich) both}
 /* ═══ BRÜCKEN-SATZ ═══════════════════════════════════════════════════════ */
 .bruecke-section{background:#0a0a0a;padding:5rem 2rem 4rem;text-align:center}
 .bruecke-inner{max-width:700px;margin:0 auto}
-.bruecke-text{font-family:'Playfair Display',serif;font-size:clamp(2rem,5vw,3.5rem);color:#f0e6c8;line-height:1.2;margin:0}
-.bruecke-text--sub{color:#c9a84c;margin-top:.3rem;opacity:.85}
+.bruecken-satz{font-size:clamp(1.35rem,3.5vw,2.1rem);font-weight:700;line-height:1.5;text-align:center;margin:2.5rem auto 3rem;max-width:560px;color:var(--white)}
+.bruecken-satz span{display:block}
+.bruecken-gold{color:var(--gold);font-family:var(--serif);font-style:italic;font-size:1.1em;margin-top:.25rem}
 
-/* ═══ 5 SÄULEN: VEREINSSIEGEL ═══════════════════════════════════════════ */
-.vereinssiegel{position:relative;width:160px;height:160px;flex-shrink:0}
-.netz .vereinssiegel{position:absolute;left:50%;top:50%;margin:-80px 0 0 -80px;z-index:2}
-.siegel-glow{position:absolute;inset:-20px;border-radius:50%;background:radial-gradient(circle,rgba(201,168,76,.18) 0%,transparent 70%);animation:siegelPulse 4s ease-in-out infinite}
-@keyframes siegelPulse{0%,100%{opacity:.5;transform:scale(1)}50%{opacity:1;transform:scale(1.05)}}
-.siegel-svg{position:relative;width:100%;height:100%;display:block;border-radius:50%;background:#0a0a0a}
-
-/* Label über den Sticky Cards („Kennst du das?“) */
-.haltung-label{position:absolute;top:calc(var(--nav-h) + 28px);left:50%;transform:translateX(-50%);font-family:'Playfair Display',serif;font-size:.75rem;color:#c9a84c;
-  letter-spacing:8px;text-transform:uppercase;opacity:.6;white-space:nowrap;z-index:2}
+/* Überschrift über den Sticky Cards („Kennst du das?“) */
+.kennst-du-das-titel{position:absolute;top:calc(var(--nav-h) + 24px);left:var(--gutter-l);right:var(--gutter-r);z-index:2;text-align:center;
+  font-family:var(--serif);font-size:clamp(2.8rem,7vw,5.5rem);line-height:1.1;font-weight:800;letter-spacing:-.02em;color:#f0e6c8;text-wrap:balance}
+.kennst-card{padding-top:calc(var(--nav-h) + clamp(4.5rem,9vw,8rem))}
 
 /* ═══ HALTUNG: 2×2-GRID ═════════════════════════════════════════════════ */
 .haltung-section{background:#0a0a0a;padding:7rem 2rem}
@@ -142,19 +137,40 @@ dialog.modal[open] .modal-innen{animation:modal-ein .5s var(--weich) both}
 .haltung-heading-block{text-align:center;margin-bottom:4rem}
 .haltung-heading{font-family:'Playfair Display',serif;font-size:clamp(2.4rem,5vw,4rem);color:#f0e6c8;margin-bottom:.8rem;line-height:1.15}
 .haltung-sub{font-family:Inter,sans-serif;font-size:1rem;color:rgba(201,168,76,.65);letter-spacing:1px}
-.haltung-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:3rem}
+.haltung-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
 @media (max-width:640px){.haltung-grid{grid-template-columns:1fr}.haltung-section{padding:5rem 1.25rem}}
-.haltung-karte{padding:2.2rem;border:1px solid rgba(201,168,76,.18);border-radius:3px;background:rgba(201,168,76,.03);transition:border-color .3s ease,background .3s ease}
-.haltung-karte:hover{border-color:rgba(201,168,76,.4);background:rgba(201,168,76,.06)}
 .haltung-karte-icon{font-size:1.4rem;color:#c9a84c;margin-bottom:1rem;opacity:.8}
 .haltung-karte h3{font-family:'Playfair Display',serif;font-size:1.5rem;color:#f0e6c8;margin-bottom:.8rem}
 .haltung-karte p{font-family:Inter,sans-serif;font-size:.95rem;color:rgba(240,230,200,.6);line-height:1.7}
-.krisen-box{text-align:center;padding:1.5rem 2rem;border:1px solid rgba(201,168,76,.25);border-radius:3px;background:rgba(201,168,76,.04)}
-.krisen-title{font-family:'Playfair Display',serif;font-size:.8rem;letter-spacing:5px;color:#c9a84c;margin-bottom:1rem;opacity:.7;text-transform:uppercase}
-.krisen-nummern{display:flex;gap:2rem;justify-content:center;flex-wrap:wrap}
-.krisen-nummern a{font-family:'Playfair Display',serif;font-size:.95rem;color:#c9a84c;text-decoration:none;opacity:.85}
-.krisen-nummern a:hover{opacity:1}
 
 @media (prefers-reduced-motion:reduce){
   .scroll-indicator{animation:none}
+}
+
+/* ─── Haltung Premium-Karten ─────────────────────────────── */
+.haltung-karte-wrap {
+  background: linear-gradient(135deg,
+    #c9a84c 0%,
+    #3a2206 40%,
+    #c9a84c 70%,
+    #f0d868 100%
+  );
+  border-radius: 6px;
+  padding: 1.5px;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.25s ease;
+}
+.haltung-karte-wrap:hover {
+  transform: translateY(-4px);
+}
+.haltung-karte {
+  background: #0e0c06;
+  border-radius: 5px;
+  padding: 2rem;
+  flex: 1;
+  transition: box-shadow 0.25s ease;
+}
+.haltung-karte-wrap:hover .haltung-karte {
+  box-shadow: 0 0 32px rgba(201,168,76,0.18);
 }

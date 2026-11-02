@@ -44,29 +44,24 @@ MINI_KOMPASS = ('<svg class="mini-kompass" viewBox="0 0 60 60" aria-hidden="true
 
 # ═══ Säulen ═══
 SAEULEN = [
-    ('stern', 'Resilienz &amp; Persönlichkeit', 'Mentale Stärke, Klarheit und Haltung. Nicht brechen, sondern wachsen. In Bildungsseminaren und Gesprächen geht es um Selbstführung, den Umgang mit Druck und innere Stabilität – damit du auch in stürmischen Zeiten Kurs hältst.'),
-    ('hantel', 'Sport &amp; Bewegung', 'Ein starker Körper ist das Fundament. Gemeinsame Trainings und Events, vom lockeren Lauf bis zur echten Herausforderung. Jeder startet dort, wo er gerade steht – es geht um Weiterkommen, nicht um Höchstleistung.'),
-    ('leute', 'Gemeinschaft', 'Männer, die zuhören, ohne zu urteilen. Und die da sind, wenn es zählt. Bei unseren Treffen, in der Telegram-Community und überall dort, wo einer den anderen braucht.'),
-    ('vater', 'Vaterschaft &amp; Neuanfang', 'Der Vater sein, den du dir selbst gewünscht hättest. Auch nach einer Trennung. Austausch mit Männern in ähnlicher Lage und Orientierung, wenn der Alltag plötzlich ein anderer ist.'),
-    ('chip', 'Neue Technologien', 'KI und digitale Werkzeuge verstehen und nutzen, statt abgehängt zu werden. Wir erklären verständlich und praxisnah – ohne Fachchinesisch.'),
+    ('Orientierung', 'Der Vater sein, den du dir selbst gewünscht hättest. Auch nach einer Trennung. Austausch mit Männern in ähnlicher Lage – und Orientierung, wenn der Alltag plötzlich ein anderer ist.'),
+    ('Gemeinschaft', 'Männer, die zuhören, ohne zu urteilen. Und die da sind, wenn es zählt. Bei unseren Treffen, in der Telegram-Community und überall dort, wo einer den anderen braucht.'),
+    ('Stärke', 'Ein starker Körper ist das Fundament. Gemeinsame Trainings und Events – vom lockeren Lauf bis zur echten Herausforderung. Jeder startet dort, wo er gerade steht.'),
+    ('Resilienz', 'Mentale Stärke, Klarheit und Haltung. Nicht brechen, sondern wachsen. Selbstführung, Umgang mit Druck und innere Stabilität – damit du auch in stürmischen Zeiten Kurs hältst.'),
+    ('Verantwortung', 'KI und digitale Werkzeuge verstehen und nutzen, statt abgehängt zu werden. Wir erklären verständlich und praxisnah – Verantwortung beginnt damit, informiert zu sein.'),
 ]
-R_NETZ = 38
-pos = [(round(50 + R_NETZ * math.cos(math.radians(-90 + 72 * n)), 2), round(50 + R_NETZ * math.sin(math.radians(-90 + 72 * n)), 2)) for n in range(5)]
-FLOAT = ['3s', '3.5s', '4s', '4.5s', '5s']
-linien = ''.join(
-    f'<path class="netz-linie" id="nl-{n}" data-linie="{n}" d="M50 50L{x} {y}"/>'
-    f'<circle class="energie" r=".9"><animateMotion dur="2.4s" begin="{-n * .45:.2f}s" repeatCount="indefinite"><mpath href="#nl-{n}"/></animateMotion></circle>'
-    for n, (x, y) in enumerate(pos))
-knoten = ''.join(
-    f'\n      <button class="knoten" type="button" data-saeule="{n}" style="--x:{x}%;--y:{y}%;--f:{FLOAT[n]}" aria-haspopup="dialog">'
-    f'{ico(I[k])}<span class="knoten-nr" aria-hidden="true">{n + 1}</span><span class="knoten-name">{t}</span></button>'
-    for n, ((k, t, _), (x, y)) in enumerate(zip(SAEULEN, pos)))
+saeulen_bau = ''.join(
+    f'\n      <div class="saeule" data-nr="{n}"><div class="saeule-kapitell"></div><div class="saeule-schaft"></div><div class="saeule-basis"></div></div>'
+    for n in range(len(SAEULEN)))
+saeulen_karten = ''.join(
+    f'\n    <article class="saeule-karte" data-nr="{n}" role="listitem" tabindex="0">'
+    f'<div class="sk-nr">{n + 1:02d}</div><h3 class="sk-name">{t}</h3><p class="sk-text">{txt}</p></article>'
+    for n, (t, txt) in enumerate(SAEULEN))
 saeulen_liste = ''.join(
-    f'\n      <div class="akk-item"><button class="akk-frage" type="button" aria-expanded="false" aria-controls="sl-{n}">'
-    f'<span class="akk-ico">{ico(I[k])}</span><span class="akk-titel"><small>Säule {n + 1}</small>{t}</span><span class="chevron">{ico(I["pfeil-ab"], "2")}</span></button>'
+    f'\n    <div class="akk-item"><button class="akk-frage" type="button" aria-expanded="false" aria-controls="sl-{n}">'
+    f'<span class="akk-titel"><small>Säule {n + 1}</small>{t}</span><span class="chevron">{ico(I["pfeil-ab"], "2")}</span></button>'
     f'<div class="akk-antwort" id="sl-{n}" role="region"><p>{txt}</p></div></div>'
-    for n, (k, t, txt) in enumerate(SAEULEN))
-saeulen_js = ',\n    '.join("{ titel: '" + t.replace('&amp;', '&') + "', text: '" + txt + "' }" for _, t, txt in SAEULEN)
+    for n, (t, txt) in enumerate(SAEULEN))
 
 # ═══ App ═══
 FEATURES_L = [('waage', 'Rechtliche Orientierung', 'Obsorge, Besuchsrecht, Unterhalt — klar erklärt nach österreichischem Recht.'),
@@ -150,7 +145,7 @@ KOPF_META = '''<meta charset="UTF-8">
 <link rel="stylesheet" href="assets/site.css">'''
 
 INDEX_CSS = (HIER / 'index.css').read_text()
-INDEX_JS = (HIER / 'index.js').read_text().replace('/*SAEULEN*/', saeulen_js)
+INDEX_JS = (HIER / 'index.js').read_text()
 
 index = f'''<!DOCTYPE html>
 <html lang="de-AT">
@@ -196,15 +191,17 @@ index = f'''<!DOCTYPE html>
 <!-- ═══ BRÜCKE ═══ -->
 <section class="bruecke-section">
   <div class="bruecke-inner">
-    <p class="bruecke-text">Du bist nicht allein damit.</p>
-    <p class="bruecke-text bruecke-text--sub">Es ist nicht zu spät.</p>
+    <p class="bruecken-satz">
+      <span>Du bist nicht allein damit.</span>
+      <span class="bruecken-gold">Es ist nicht zu spät.</span>
+    </p>
   </div>
 </section>
 
 <!-- ═══ 2 · KENNST DU DAS (Sticky Cards) ═══ -->
-<section class="kennst-outer" id="kennst-du-das" aria-label="Kennst du das?">
+<section class="kennst-outer" id="kennst-du-das" aria-labelledby="kennst-titel">
   <div class="kennst-sticky">
-    <div class="haltung-label">Kennst du das?</div>
+    <h2 class="kennst-du-das-titel" id="kennst-titel">Kennst du das?</h2>
     <div class="kennst-progress">
       <div class="kennst-progress-bar" id="kennstBar"></div>
     </div>
@@ -243,52 +240,27 @@ index = f'''<!DOCTYPE html>
   </div>
 </section>
 
-<!-- ═══ 3 · 5 SÄULEN ═══ -->
+<!-- ═══ 3 · 5 SÄULEN (Tempel) ═══ -->
 <section class="sektion saeulen" id="saeulen" aria-labelledby="saeulen-titel">
   <div class="wrap">
-    <div class="kopfzeile ein">
-      <p class="eyebrow">Was wir tun</p>
-      <h2 id="saeulen-titel">Die 5 Säulen von <em>#LeKo</em></h2>
-      <p class="lead">Jede Säule ist ein Bereich, in dem wir dich fördern und fordern. <span class="nur-gross">Klick auf eine Säule.</span></p>
+  <h2 id="saeulen-titel">Die 5 Säulen von <em>#LeKo</em></h2>
+  <p class="lead saeulen-lead">Jede Säule trägt. Gemeinsam tragen wir dich.</p>
+
+  <div class="saeulen-tempel ein" aria-hidden="true">
+    <div class="tempel-gebälk"></div>
+    <div class="saeulen-reihe">{saeulen_bau}
     </div>
-    <div class="netz ein" id="netz">
-      <svg class="netz-linien" viewBox="0 0 100 100" aria-hidden="true">{linien}</svg>
-      <div class="vereinssiegel" id="saulenChip" aria-hidden="true">
-        <div class="siegel-glow"></div>
-        <svg class="siegel-svg" viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="80" cy="80" r="76" fill="none" stroke="#c9a84c" stroke-width="1.5" opacity="0.6"/>
-          <circle cx="80" cy="80" r="68" fill="none" stroke="#c9a84c" stroke-width="0.5" opacity="0.3"/>
-          <path id="kreisTextPfad" d="M80,80 m-63,0 a63,63 0 1,1 126,0 a63,63 0 1,1 -126,0" fill="none"/>
-          <text font-family="Playfair Display,serif" font-size="9.5" fill="#c9a84c" letter-spacing="3.5" opacity="0.85"><textPath href="#kreisTextPfad" startOffset="8%">VEREIN LEBENSKOMPASS · ÖSTERREICH ·</textPath></text>
-          <circle cx="80" cy="80" r="54" fill="#0f0e08" stroke="#c9a84c" stroke-width="1" opacity="0.5"/>
-          <circle cx="80" cy="58" r="9" fill="none" stroke="#c9a84c" stroke-width="1.5"/>
-          <path d="M65,90 Q80,76 95,90" fill="none" stroke="#c9a84c" stroke-width="1.5" stroke-linecap="round"/>
-          <circle cx="57" cy="62" r="7" fill="none" stroke="#c9a84c" stroke-width="1.2" opacity="0.7"/>
-          <path d="M46,90 Q57,79 68,90" fill="none" stroke="#c9a84c" stroke-width="1.2" stroke-linecap="round" opacity="0.7"/>
-          <circle cx="103" cy="62" r="7" fill="none" stroke="#c9a84c" stroke-width="1.2" opacity="0.7"/>
-          <path d="M92,90 Q103,79 114,90" fill="none" stroke="#c9a84c" stroke-width="1.2" stroke-linecap="round" opacity="0.7"/>
-          <path d="M64,66 Q80,56 96,66" fill="none" stroke="#c9a84c" stroke-width="0.8" stroke-dasharray="2,3" opacity="0.45"/>
-          <text x="80" y="116" text-anchor="middle" font-family="Playfair Display,serif" font-size="8.5" fill="#c9a84c" letter-spacing="3" opacity="0.8">LEBENSKOMPASS</text>
-          <line x1="55" y1="108" x2="105" y2="108" stroke="#c9a84c" stroke-width="0.5" opacity="0.4"/>
-          <circle cx="80" cy="27" r="2" fill="#c9a84c" opacity="0.6"/>
-          <circle cx="80" cy="133" r="2" fill="#c9a84c" opacity="0.6"/>
-          <circle cx="27" cy="80" r="2" fill="#c9a84c" opacity="0.6"/>
-          <circle cx="133" cy="80" r="2" fill="#c9a84c" opacity="0.6"/>
-        </svg>
-      </div>{knoten}
-    </div>
-    <div class="saeulen-liste">{saeulen_liste}
-    </div>
+    <div class="tempel-stylobat"></div>
+  </div>
+
+  <div class="saeulen-karten" role="list">{saeulen_karten}
+  </div>
+
+  <!-- Akkordeon für mobile -->
+  <div class="saeulen-akk nur-klein" role="list">{saeulen_liste}
+  </div>
   </div>
 </section>
-
-<dialog class="modal" id="saeule-panel" aria-labelledby="saeule-titel">
-  <button class="schliessen" type="button" data-schliessen aria-label="Schließen">×</button>
-  <div class="modal-innen">
-    <div class="panel-kopf"><span class="panel-ico" id="saeule-ico"></span><div><p class="eyebrow" id="saeule-nr"></p><h2 id="saeule-titel"></h2></div></div>
-    <p id="saeule-text"></p>
-  </div>
-</dialog>
 
 <!-- ═══ 4 · VÄTER-APP ═══ -->
 <section class="sektion app" id="app" aria-labelledby="app-titel">
@@ -329,33 +301,33 @@ index = f'''<!DOCTYPE html>
       <p class="haltung-sub">Was uns trägt — und was uns unterscheidet.</p>
     </div>
     <div class="haltung-grid">
-      <div class="haltung-karte">
-        <div class="haltung-karte-icon" aria-hidden="true">◈</div>
-        <h3>Gemeinnützig</h3>
-        <p>Wir handeln ohne Gewinnabsicht. Alles, was wir aufbauen, dient dem Verein — nicht einzelnen Personen. Jeder Beitrag fließt zurück in die Gemeinschaft.</p>
+      <div class="haltung-karte-wrap">
+        <div class="haltung-karte">
+          <div class="haltung-karte-icon" aria-hidden="true">◈</div>
+          <h3>Gemeinnützig</h3>
+          <p>Wir handeln ohne Gewinnabsicht. Alles, was wir aufbauen, dient dem Verein — nicht einzelnen Personen. Jeder Beitrag fließt zurück in die Gemeinschaft.</p>
+        </div>
       </div>
-      <div class="haltung-karte">
-        <div class="haltung-karte-icon" aria-hidden="true">◈</div>
-        <h3>Respekt</h3>
-        <p>Jede Geschichte verdient Gehör. Bei uns gibt es keine falschen Gefühle, keine unreifen Fragen. Wer sich zeigt, wird gesehen — ohne Wertung.</p>
+      <div class="haltung-karte-wrap">
+        <div class="haltung-karte">
+          <div class="haltung-karte-icon" aria-hidden="true">◈</div>
+          <h3>Respekt</h3>
+          <p>Jede Geschichte verdient Gehör. Bei uns gibt es keine falschen Gefühle, keine unreifen Fragen. Wer sich zeigt, wird gesehen — ohne Wertung.</p>
+        </div>
       </div>
-      <div class="haltung-karte">
-        <div class="haltung-karte-icon" aria-hidden="true">◈</div>
-        <h3>Unabhängig</h3>
-        <p>Keine Partei, keine Doktrin, keine Ideologie. Wir sind ein Ort für Menschen — nicht für Meinungen. Deine Richtung bestimmst du selbst.</p>
+      <div class="haltung-karte-wrap">
+        <div class="haltung-karte">
+          <div class="haltung-karte-icon" aria-hidden="true">◈</div>
+          <h3>Unabhängig</h3>
+          <p>Keine Partei, keine Doktrin, keine Ideologie. Wir sind ein Ort für Menschen — nicht für Meinungen. Deine Richtung bestimmst du selbst.</p>
+        </div>
       </div>
-      <div class="haltung-karte">
-        <div class="haltung-karte-icon" aria-hidden="true">◈</div>
-        <h3>Kein Therapie-Ersatz</h3>
-        <p>Wir bieten Gemeinschaft und Orientierung. Wer professionelle Hilfe braucht, wird von uns ermutigt, sie zu suchen — nicht aufgehalten.</p>
-      </div>
-    </div>
-    <div class="krisen-box">
-      <p class="krisen-title">Notfall? Diese Nummern helfen sofort</p>
-      <div class="krisen-nummern">
-        <a href="tel:142">142 — Telefonseelsorge</a>
-        <a href="tel:144">144 — Rettung</a>
-        <a href="tel:133">133 — Polizei</a>
+      <div class="haltung-karte-wrap">
+        <div class="haltung-karte">
+          <div class="haltung-karte-icon" aria-hidden="true">◈</div>
+          <h3>Kein Therapie-Ersatz</h3>
+          <p>Wir bieten Gemeinschaft und Orientierung. Wer professionelle Hilfe braucht, wird von uns ermutigt, sie zu suchen — nicht aufgehalten.</p>
+        </div>
       </div>
     </div>
   </div>

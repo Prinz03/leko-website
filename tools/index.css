@@ -16,25 +16,38 @@
 .auftritt{opacity:0;transform:translateY(18px);animation:auftritt 1.1s var(--weich) forwards;animation-delay:var(--d,0s)}
 @keyframes auftritt{to{opacity:1;transform:none}}
 
-/* ─── 3 · Säulen-Netz ────────────────────────────────────────────────── */
-.saeulen{background:radial-gradient(ellipse 50% 45% at 50% 60%,rgba(201,168,76,.07),transparent 70%),var(--black)}
-.netz{position:relative;width:min(100%,680px);aspect-ratio:1;margin:0 auto}
-.netz-linien{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
-.netz-linie{fill:none;stroke:var(--gold);stroke-width:.25;opacity:.4;transition:opacity .4s,stroke-width .4s}
-.netz-linie.aktiv{opacity:1;stroke-width:.7;filter:drop-shadow(0 0 1.5px var(--gold))}
-.energie{fill:var(--gold-hell);filter:drop-shadow(0 0 1px var(--gold))}
-.knoten{position:absolute;left:var(--x);top:var(--y);z-index:3;width:80px;height:80px;margin:-40px 0 0 -40px;border-radius:50%;
-  border:1px solid var(--gold);background:var(--surface);color:var(--gold-hell);display:grid;place-items:center;cursor:pointer;
-  transition:box-shadow .4s,background .4s;animation:schweben var(--f) ease-in-out infinite}
-.knoten svg{width:30px;height:30px}
-.knoten-nr{position:absolute;top:-6px;right:-6px;width:26px;height:26px;border-radius:50%;background:var(--gold);color:var(--black);font:700 .75rem/26px var(--sans);text-align:center}
-.knoten-name{position:absolute;top:calc(100% + 12px);left:50%;transform:translateX(-50%);width:max-content;max-width:11em;color:var(--white);
-  font:500 .92rem/1.3 var(--sans);text-align:center;text-shadow:0 0 12px var(--black),0 0 4px var(--black)}
-.knoten:hover,.knoten:focus-visible,.knoten.aktiv{background:radial-gradient(circle at 40% 35%,rgba(226,201,126,.32),var(--surface) 72%);box-shadow:0 0 44px -4px var(--gold-glow);outline:none}
-@keyframes schweben{0%,100%{translate:0 0}50%{translate:0 -8px}}
-.saeulen-liste{display:none}
-@media (min-width:721px){.nur-gross{display:inline}}
-@media (max-width:720px){.netz,.nur-gross{display:none}.saeulen-liste{display:block}}
+/* ─── 3 · Säulen-Tempel ──────────────────────────────────────────────── */
+.saeulen{background:radial-gradient(ellipse 50% 45% at 50% 40%,rgba(201,168,76,.07),transparent 70%),var(--black);text-align:center}
+.saeulen-lead{text-align:center;margin:18px auto 3rem}
+.saeulen-tempel{display:flex;flex-direction:column;align-items:center;margin:0 auto 3rem;max-width:700px;user-select:none;padding-top:clamp(36px,6vw,58px)}
+.tempel-gebälk{position:relative;width:min(660px,100%);height:22px;border-radius:2px;background:linear-gradient(180deg,var(--gold-hell),var(--gold) 55%,var(--gold-dunkel));
+  box-shadow:0 0 50px -10px var(--gold-glow)}
+.tempel-gebälk::before{content:"";position:absolute;left:-1.5%;right:-1.5%;bottom:calc(100% + 4px);height:clamp(32px,6vw,54px);
+  background:linear-gradient(180deg,var(--gold-hell),var(--gold-dunkel));clip-path:polygon(0 100%,50% 0,100% 100%,94% 100%,50% 18%,6% 100%)}
+.tempel-gebälk::after{content:"";position:absolute;left:0;right:0;top:100%;height:6px;background:repeating-linear-gradient(90deg,var(--gold-dunkel) 0 10px,transparent 10px 16px)}
+.saeulen-reihe{display:flex;justify-content:space-around;width:min(600px,92%);margin-top:6px}
+.saeule{display:flex;flex-direction:column;align-items:center;width:clamp(40px,8vw,64px);transform-origin:bottom;transition:filter .4s,transform 1s var(--weich),opacity 1s var(--weich)}
+.saeule-kapitell{width:100%;height:14px;border-radius:3px 3px 0 0;background:linear-gradient(180deg,var(--gold-hell),var(--gold))}
+.saeule-kapitell::after{content:"";display:block;width:76%;height:6px;margin:14px auto 0;background:var(--gold-dunkel)}
+.saeule-schaft{width:68%;height:clamp(150px,24vw,220px);margin-top:-6px;
+  background:repeating-linear-gradient(90deg,rgba(0,0,0,.28) 0 2px,transparent 2px 7px),linear-gradient(90deg,var(--gold-dunkel),var(--gold-hell) 40%,var(--gold) 65%,var(--gold-dunkel))}
+.saeule-basis{width:90%;height:12px;border-radius:0 0 2px 2px;background:linear-gradient(180deg,var(--gold),var(--gold-dunkel))}
+.saeule.aktiv,.saeule.fest{filter:brightness(1.25) drop-shadow(0 0 16px var(--gold))}
+.tempel-stylobat{width:min(700px,100%);height:14px;background:linear-gradient(180deg,var(--gold),var(--gold-dunkel));box-shadow:0 10px 0 -3px rgba(138,109,42,.55),0 20px 0 -6px rgba(138,109,42,.3)}
+.saeulen-tempel.ein{opacity:1;transform:none}
+.saeulen-tempel .saeule{opacity:0;transform:scaleY(.2)}
+.saeulen-tempel.da .saeule{opacity:1;transform:none}
+.saeulen-tempel .saeule:nth-child(2){transition-delay:.08s}.saeulen-tempel .saeule:nth-child(3){transition-delay:.16s}
+.saeulen-tempel .saeule:nth-child(4){transition-delay:.24s}.saeulen-tempel .saeule:nth-child(5){transition-delay:.32s}
+.saeulen-karten{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;text-align:left;margin-top:clamp(28px,4vw,48px)}
+.saeule-karte{padding:1.6rem 1.4rem;border:1px solid var(--linie);border-radius:4px;background:var(--surface);cursor:default;
+  transition:border-color .3s,box-shadow .3s,transform .3s var(--weich)}
+.saeule-karte:hover,.saeule-karte:focus-visible{border-color:var(--gold);box-shadow:0 0 44px -10px var(--gold-glow);transform:translateY(-4px);outline:none}
+.sk-nr{font-family:var(--serif);font-size:.85rem;color:var(--gold);letter-spacing:4px;opacity:.75}
+.sk-name{font-family:var(--serif);font-size:1.4rem;color:#f0e6c8;margin:.5rem 0 .7rem}
+.sk-text{color:var(--text-2);font-size:.92rem;line-height:1.65}
+.saeulen-akk{display:none;text-align:left}
+@media (max-width:720px){.saeulen-karten{display:none}.saeulen-akk{display:block}.saeulen-tempel{margin-bottom:2.5rem}}
 
 /* Akkordeon (Säulen am Handy, FAQ) */
 .akk-item{border-bottom:1px solid var(--linie);transition:box-shadow .4s,background .4s}

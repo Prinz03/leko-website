@@ -29,26 +29,20 @@
   }
   stickyKarten('.kennst-outer', '.kennst-card', 'kennstBar');
 
-  // Säulen: Klick auf einen Knoten öffnet das Panel, die Linie zum Zentrum leuchtet
-  var SAEULEN = [
-      /*SAEULEN*/
-  ];
-  var panel = document.getElementById('saeule-panel');
-  function aktivWeg() { document.querySelectorAll('.knoten.aktiv, .netz-linie.aktiv').forEach(function (el) { el.classList.remove('aktiv'); }); }
-  document.querySelectorAll('.knoten').forEach(function (k) {
-    k.addEventListener('click', function () {
-      var n = +k.dataset.saeule, s = SAEULEN[n];
-      document.getElementById('saeule-ico').innerHTML = k.querySelector('svg').outerHTML;
-      document.getElementById('saeule-nr').textContent = 'Säule ' + (n + 1);
-      document.getElementById('saeule-titel').textContent = s.titel;
-      document.getElementById('saeule-text').textContent = s.text;
-      aktivWeg();
-      k.classList.add('aktiv');
-      document.querySelector('[data-linie="' + n + '"]').classList.add('aktiv');
-      if (panel.showModal) panel.showModal();
+  // Säulen: Karte hervorheben lässt die passende Säule im Tempel aufleuchten
+  document.querySelectorAll('.saeule-karte').forEach(function (karte) {
+    var saeule = document.querySelector('.saeule[data-nr="' + karte.dataset.nr + '"]');
+    if (!saeule) return;
+    function an() { saeule.classList.add('aktiv'); }
+    function aus() { saeule.classList.remove('aktiv'); }
+    karte.addEventListener('mouseenter', an); karte.addEventListener('mouseleave', aus);
+    karte.addEventListener('focus', an); karte.addEventListener('blur', aus);
+    karte.addEventListener('click', function () {
+      var war = saeule.classList.contains('fest');
+      document.querySelectorAll('.saeule.fest').forEach(function (s) { s.classList.remove('fest'); });
+      saeule.classList.toggle('fest', !war);
     });
   });
-  panel.addEventListener('close', aktivWeg);
 
   // App: geschwungene Linien von jeder Feature-Bubble zum Handy, mit wanderndem Energie-Punkt
   var buehne = document.getElementById('app-buehne'), svg = document.getElementById('app-linien'), handy = document.getElementById('handy');
