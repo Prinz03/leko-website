@@ -256,8 +256,7 @@ index = f'''<!DOCTYPE html>
     </ul>
     <div class="app-geraet" id="app-geraet">
       <img class="app-mockup" src="assets/img/iphone-mockup.png" width="603" height="1200" alt="" loading="lazy" decoding="async">
-      <img class="app-screen-bild" src="assets/img/app-screen.png" width="600" height="1128"
-           alt="Startbildschirm der KOMPASS-App: „Willkommen bei KOMPASS. Dein Werkzeug für schwierige Zeiten – von Vätern für Väter.“" loading="lazy" decoding="async">
+      <video class="app-screen-bild" autoplay loop muted playsinline src="assets/video/kompass-demo.mp4" aria-label="Demo der KOMPASS-App"></video>
       <span class="app-koerper" id="app-koerper" aria-hidden="true"></span>
     </div>
   </div>
