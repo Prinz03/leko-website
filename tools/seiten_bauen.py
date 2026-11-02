@@ -73,16 +73,15 @@ FEATURES = [
     ('Fachliche Kontakte', 'Direkter Zugang zu Familienrechts-Experten.'),
     ('Sportevents &amp; Mitglieder', 'Gemeinsame Aktivitäten und ein exklusiver Bereich nur für Mitglieder.'),
 ]  # Jarvis gehört nicht in die Väter-App
-APP_BADGES = [  # (Platz, Emoji, Titel) – je zwei links und rechts, einer mittig unter dem Handy
-    ('links', '⚖️', 'Rechtliche Orientierung'),
-    ('links', '👥', 'Väter-Community'),
-    ('rechts', '👨‍⚖️', 'Fachliche Kontakte'),
-    ('rechts', '🏋️', 'Sport &amp; Events'),
-    ('unten', '📅', 'Kalender &amp; Kinderzeit'),
+APP_BADGES = [  # (Platz für die Linien, CSS-Position, Emoji, Titel) – 2 links, 2 rechts, 1 unten Mitte
+    ('links', 'badge-top-left', '⚖️', 'Rechtliche Orientierung'),
+    ('links', 'badge-mid-left', '👥', 'Väter-Community'),
+    ('rechts', 'badge-top-right', '👨‍⚖️', 'Fachliche Kontakte'),
+    ('rechts', 'badge-mid-right', '🏋️', 'Sport &amp; Events'),
+    ('unten', 'badge-bottom-center', '📅', 'Kalender &amp; Kinderzeit'),
 ]
-def app_badges(platz):
-    return ''.join(f'\n          <li class="app-badge" data-platz="{s}" data-reveal><span class="ab-icon" aria-hidden="true">{e}</span>{h}</li>'
-                   for s, e, h in APP_BADGES if s == platz)
+app_badges = ''.join(f'\n      <li class="app-badge {pos}" data-platz="{s}" data-reveal><span class="ab-icon" aria-hidden="true">{e}</span>{h}</li>'
+                     for s, pos, e, h in APP_BADGES)
 app_mobil = ''.join(f'\n    <div class="app-mobile-feature" data-reveal><h3>{h}</h3><p>{txt}</p></div>' for h, txt in FEATURES)
 
 # ═══ Haltung (2×2) ═══
@@ -232,7 +231,7 @@ index = f'''<!DOCTYPE html>
   </div>
   <div class="app-buehne" id="app-buehne">
     <svg class="app-linien" id="app-linien" aria-hidden="true"></svg>
-    <ul class="app-badges links" aria-label="Funktionen der App">{app_badges('links')}
+    <ul class="app-badges" aria-label="Funktionen der App">{app_badges}
     </ul>
     <div class="app-geraet" id="app-geraet">
       <img class="app-mockup" src="assets/img/iphone-mockup.png" width="603" height="1200" alt="" loading="lazy" decoding="async">
@@ -240,10 +239,6 @@ index = f'''<!DOCTYPE html>
            alt="Startbildschirm der KOMPASS-App: „Willkommen bei KOMPASS. Dein Werkzeug für schwierige Zeiten – von Vätern für Väter.“" loading="lazy" decoding="async">
       <span class="app-koerper" id="app-koerper" aria-hidden="true"></span>
     </div>
-    <ul class="app-badges rechts" aria-label="Weitere Funktionen der App">{app_badges('rechts')}
-    </ul>
-    <ul class="app-badges unten" aria-label="Weitere Funktion der App">{app_badges('unten')}
-    </ul>
   </div>
   <div class="app-mobile-list wrap">{app_mobil}
   </div>

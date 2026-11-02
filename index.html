@@ -68,24 +68,28 @@
 /* ─── 4 · VÄTER-APP: Handy in der Mitte, Features per Strom-Linie verbunden ─── */
 .app{background:radial-gradient(ellipse 60% 50% at 50% 55%,rgba(201,168,76,.08) 0%,transparent 70%),#000;min-height:100vh;overflow:hidden;padding:clamp(110px,14vw,170px) 0 clamp(90px,12vw,150px)}
 .app-kopf{text-align:center;display:grid;justify-items:center;gap:18px;margin-bottom:clamp(48px,7vw,80px)}
-.app-buehne{position:relative;max-width:1200px;margin:0 auto;padding:0 2rem;display:grid;grid-template-columns:1fr auto 1fr;align-items:stretch;column-gap:clamp(48px,8vw,120px);row-gap:28px}
+/* Bühne: Handy mittig oben, Badges absolut darum herum (2 links, 2 rechts, 1 unten Mitte) */
+.app-buehne{position:relative;max-width:1200px;height:780px;margin:0 auto}
 .app-linien{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none}
 .app-bahn{fill:none;stroke:rgba(201,168,76,.35);stroke-width:2.5;filter:drop-shadow(0 0 6px #C9A84C)}
 /* elektrischer Strom: breite helle Impulse laufen schnell die Linie entlang */
 .app-strom{fill:none;stroke:#E8C878;stroke-width:3.5;stroke-linecap:round;stroke-dasharray:14 26;animation:strom 1.5s linear infinite;filter:drop-shadow(0 0 6px #C9A84C)}
 @keyframes strom{to{stroke-dashoffset:-40}}
-/* je zwei Badges links und rechts (oben + unten), einer mittig unter dem Handy */
-.app-badges{list-style:none;display:flex;flex-direction:column;justify-content:space-around;position:relative;z-index:1}
-.app-badges.links{align-items:flex-end}
-.app-badges.rechts{align-items:flex-start}
-.app-badges.unten{grid-column:2;align-items:center}
-.app-badge{display:inline-flex;align-items:center;gap:14px;padding:16px 28px 16px 20px;border:1px solid var(--gold);border-radius:999px;background:rgba(17,17,17,.92);
+.app-badges{list-style:none}
+.badge-top-left{left:5%;top:25%}
+.badge-mid-left{left:5%;top:55%}
+.badge-top-right{right:5%;top:25%}
+.badge-mid-right{right:5%;top:55%}
+/* zentriert ohne transform – die Einblend-Animation setzt transform am Ende auf none */
+.badge-bottom-center{left:0;right:0;margin-inline:auto;width:max-content;bottom:5%}
+.app-badge{position:absolute;z-index:1;display:flex;align-items:center;gap:14px;padding:16px 28px 16px 20px;border:1px solid var(--gold);border-radius:999px;background:rgba(17,17,17,.92);
   font-size:1rem;font-weight:600;color:var(--text-white);white-space:nowrap;box-shadow:0 0 34px -8px rgba(201,168,76,.45);transition:box-shadow .3s,background .3s}
 .app-badge:hover{background:var(--bg-elevated);box-shadow:0 0 60px -4px rgba(201,168,76,.75)}
 .ab-icon{font-size:1.35rem;line-height:1}
 /* Handy: generiertes iPhone-Mockup (zugeschnitten auf 603×1200), darin der echte App-Screen.
    Prozentwerte im Bild ausgemessen: Screen innen 15,2 % von links, 72,3 % breit, endet bei 85,5 % Höhe. */
-.app-geraet{position:relative;height:600px;aspect-ratio:603/1200;max-width:100%}
+/* ohne transform/z-index zentriert, damit mix-blend-mode mit dem Goldschein der Sektion mischt */
+.app-geraet{position:absolute;top:0;left:0;right:0;margin-inline:auto;height:600px;width:301.5px}
 .app-mockup{display:block;width:100%;height:100%;mix-blend-mode:lighten}  /* Schwarz im Bild nimmt den Goldschein dahinter an */
 /* Screenshot ist breiter als der Screen (0,53 zu 0,45): volle Breite, unten bündig – oben bleibt schwarzer Screen mit der Dynamic Island */
 .app-screen-bild{position:absolute;left:15.2%;width:72.3%;top:17.15%;height:auto;aspect-ratio:600/1128;
@@ -95,9 +99,9 @@
 @media (prefers-reduced-motion:reduce){.app-strom{animation:none;stroke-dasharray:none;opacity:.6}}
 .app-mobile-list{display:none}
 @media (max-width:899px){
-  .app-buehne{grid-template-columns:1fr;justify-items:center;padding:0 var(--gutter-r) 0 var(--gutter-l)}
+  .app-buehne{height:auto;padding:0 var(--gutter-r) 0 var(--gutter-l)}
   .app-linien,.app-badges{display:none}
-  .app-geraet{height:auto;width:min(80vw,340px)}
+  .app-geraet{position:relative;height:auto;width:min(80vw,340px);aspect-ratio:603/1200}
   .app-mobile-list{display:block;padding-top:clamp(48px,10vw,72px)}
   .app-mobile-feature{border-left:3px solid var(--gold);padding:1.5rem 1.5rem 1.5rem 2rem;margin-bottom:2rem;background:var(--bg-card);border-radius:0 12px 12px 0}
   .app-mobile-feature h3{color:var(--gold);font-size:1rem;margin-bottom:.5rem;text-transform:uppercase;letter-spacing:.05em}
@@ -229,9 +233,12 @@
   </div>
   <div class="app-buehne" id="app-buehne">
     <svg class="app-linien" id="app-linien" aria-hidden="true"></svg>
-    <ul class="app-badges links" aria-label="Funktionen der App">
-          <li class="app-badge" data-platz="links" data-reveal><span class="ab-icon" aria-hidden="true">⚖️</span>Rechtliche Orientierung</li>
-          <li class="app-badge" data-platz="links" data-reveal><span class="ab-icon" aria-hidden="true">👥</span>Väter-Community</li>
+    <ul class="app-badges" aria-label="Funktionen der App">
+      <li class="app-badge badge-top-left" data-platz="links" data-reveal><span class="ab-icon" aria-hidden="true">⚖️</span>Rechtliche Orientierung</li>
+      <li class="app-badge badge-mid-left" data-platz="links" data-reveal><span class="ab-icon" aria-hidden="true">👥</span>Väter-Community</li>
+      <li class="app-badge badge-top-right" data-platz="rechts" data-reveal><span class="ab-icon" aria-hidden="true">👨‍⚖️</span>Fachliche Kontakte</li>
+      <li class="app-badge badge-mid-right" data-platz="rechts" data-reveal><span class="ab-icon" aria-hidden="true">🏋️</span>Sport &amp; Events</li>
+      <li class="app-badge badge-bottom-center" data-platz="unten" data-reveal><span class="ab-icon" aria-hidden="true">📅</span>Kalender &amp; Kinderzeit</li>
     </ul>
     <div class="app-geraet" id="app-geraet">
       <img class="app-mockup" src="assets/img/iphone-mockup.png" width="603" height="1200" alt="" loading="lazy" decoding="async">
@@ -239,13 +246,6 @@
            alt="Startbildschirm der KOMPASS-App: „Willkommen bei KOMPASS. Dein Werkzeug für schwierige Zeiten – von Vätern für Väter.“" loading="lazy" decoding="async">
       <span class="app-koerper" id="app-koerper" aria-hidden="true"></span>
     </div>
-    <ul class="app-badges rechts" aria-label="Weitere Funktionen der App">
-          <li class="app-badge" data-platz="rechts" data-reveal><span class="ab-icon" aria-hidden="true">👨‍⚖️</span>Fachliche Kontakte</li>
-          <li class="app-badge" data-platz="rechts" data-reveal><span class="ab-icon" aria-hidden="true">🏋️</span>Sport &amp; Events</li>
-    </ul>
-    <ul class="app-badges unten" aria-label="Weitere Funktion der App">
-          <li class="app-badge" data-platz="unten" data-reveal><span class="ab-icon" aria-hidden="true">📅</span>Kalender &amp; Kinderzeit</li>
-    </ul>
   </div>
   <div class="app-mobile-list wrap">
     <div class="app-mobile-feature" data-reveal><h3>Rechtliche Orientierung</h3><p>Obsorge, Besuchsrecht, Unterhalt – klar erklärt.</p></div>
