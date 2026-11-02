@@ -99,54 +99,84 @@ dialog.modal[open] .modal-innen{animation:modal-ein .5s var(--weich) both}
   .ein{opacity:1;transform:none}
 }
 
-/* ═══ STARTSEITE: HERO (sticky; Headline weicht beim Scrollen dem Kompass) ═══ */
-.hero-outer{height:250vh;position:relative;background:var(--black);--p:0}
-.hero-sticky{position:sticky;top:0;height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden}
-/* Lichtkegel von unten – die „Bühne“, auf der die Headline steht */
-.hero-licht{position:absolute;inset:0;pointer-events:none;opacity:calc(.75 + var(--p) * .5);transform:scale(calc(1 + var(--p) * .3));transform-origin:50% 100%}
+/* ═══ STARTSEITE: HERO (sticky; Text tritt stufenweise zurück, Licht wird stärker) ═══ */
+.hero-outer { min-height: 200vh; position: relative; background: var(--black); --p: 0; }
+.hero-inner {
+  position: sticky; top: 0; height: 100vh; overflow: hidden;
+  display: flex; flex-direction: column;
+  justify-content: center; align-items: center;
+  text-align: center; padding: 0 2rem;
+}
+.hero-inner > :not(.hero-licht) { position: relative; z-index: 2; }
+/* Goldener Lichtkegel von unten – er ist der Held */
+.hero-licht{position:absolute;inset:0;pointer-events:none;opacity:calc(.7 + var(--p) * .8);transform:scale(calc(1 + var(--p) * .35));transform-origin:50% 100%}
 .hero-licht::before{content:"";position:absolute;inset:0;
   background:radial-gradient(ellipse 55% 38% at 50% 104%,rgba(240,216,104,.30),rgba(201,168,76,.10) 45%,transparent 72%),
     conic-gradient(from 180deg at 50% 112%,transparent 152deg,rgba(240,216,104,.07) 166deg,transparent 174deg,transparent 186deg,rgba(240,216,104,.07) 194deg,transparent 208deg)}
 .hero-licht::after{content:"";position:absolute;left:8%;right:8%;bottom:18%;height:1px;background:linear-gradient(90deg,transparent,rgba(240,216,104,.55),transparent);
   box-shadow:0 0 24px 2px rgba(201,168,76,.35)}
-.hero-sticky::after{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 85% 75% at 50% 45%,transparent 55%,rgba(0,0,0,.85))}
-.hero-content{position:relative;z-index:10;text-align:center;transition:opacity .15s linear,transform .15s linear}
-.hero-kompass{position:absolute;top:50%;left:50%;width:320px;height:320px;transform:translate(-50%,calc(-50% + 40px));opacity:0;
-  transition:opacity .8s ease,transform .8s var(--weich);pointer-events:none;z-index:2;filter:drop-shadow(0 0 30px rgba(201,168,76,.25))}
-.hero-kompass.sichtbar{opacity:1;transform:translate(-50%,-50%)}
-.hero-kompass svg{display:block;width:100%;height:100%}
-.hero-kompass .nadel{transform-origin:160px 160px;transform:rotate(var(--winkel,0deg));transition:transform .1s linear;filter:drop-shadow(0 0 6px rgba(0,0,0,.6))}
-@media (max-width:600px){.hero-kompass{width:220px;height:220px}}
-.scroll-indicator{position:absolute;bottom:36px;left:50%;width:1px;height:56px;margin-left:-.5px;z-index:20;overflow:hidden;background:rgba(255,255,255,.15)}
-.scroll-indicator span{position:absolute;left:0;top:-50%;width:100%;height:50%;background:linear-gradient(transparent,var(--gold-hell));animation:fallen 2s var(--weich) infinite}
-@keyframes fallen{to{top:100%}}
+.hero-inner::after{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 85% 75% at 50% 45%,transparent 55%,rgba(0,0,0,.85))}
+.hero-pre {
+  font-size: clamp(0.75rem, 1.5vw, 0.9rem); font-weight: 600;
+  letter-spacing: 5px; text-transform: uppercase;
+  color: #c9a84c; margin-bottom: 1.5rem;
+}
+.hero-h1 {
+  font-size: clamp(3.5rem, 10vw, 9rem);
+  font-weight: 900; line-height: 1.0;
+  letter-spacing: -0.03em; margin: 0 0 2rem;
+}
+.h1-weiss { display: block; color: #fff; }
+.h1-gold  { display: block; color: #c9a84c; }
+.hero-sub {
+  font-size: clamp(1rem, 2.2vw, 1.25rem);
+  color: rgba(255,255,255,0.6); max-width: 560px;
+  line-height: 1.7; margin-bottom: 2.5rem;
+}
+.scroll-pfeil{position:absolute!important;bottom:32px;left:50%;width:28px;height:28px;margin-left:-14px;color:var(--gold);animation:pfeil 1.8s ease-in-out infinite}
+.scroll-pfeil svg{display:block;width:100%;height:100%}
+@keyframes pfeil{0%,100%{transform:translateY(0)}50%{transform:translateY(8px)}}
 
-/* ═══ BRÜCKEN-SATZ (leuchtet Zeile für Zeile beim Scrollen auf) ════════ */
-.bruecke-section{height:220vh;position:relative;background:var(--black)}
-.bruecke-inner{position:sticky;top:0;height:100vh;display:grid;place-items:center;padding:0 var(--gutter-r) 0 var(--gutter-l)}
-.bruecken-satz{font-size:clamp(2.3rem,6.5vw,5.5rem);font-weight:600;line-height:1.08;letter-spacing:-.04em;text-align:center;max-width:15em;color:var(--white)}
-.bruecken-satz span{display:block;--l:1;opacity:calc(.14 + var(--l) * .86);transition:opacity .2s linear}
-.bruecken-gold{background:var(--gold-verlauf);-webkit-background-clip:text;background-clip:text;color:transparent;margin-top:.12em}
-
-/* ═══ STICKY CARDS: KENNST DU DAS? ══════════════════════════════════════ */
-.kennst-outer{height:500vh;position:relative}
-.kennst-sticky{position:sticky;top:0;height:100vh;overflow:hidden;background:var(--black);display:flex;align-items:center;justify-content:center}
-.kennst-sticky::before{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 50% 40% at 50% 62%,rgba(201,168,76,.07),transparent 70%)}
-.kennst-progress{position:absolute;bottom:40px;left:50%;transform:translateX(-50%);width:120px;height:2px;background:rgba(255,255,255,.15);border-radius:2px}
-.kennst-progress-bar{height:100%;width:25%;background:var(--gold);border-radius:2px;transition:width .4s ease}
-.kennst-card{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:2rem;opacity:0;transform:translateY(60px) scale(.97);
-  transition:opacity .8s var(--weich),transform .8s var(--weich);pointer-events:none}
-.kennst-card.active{opacity:1;transform:translateY(0) scale(1);pointer-events:all}
-.kennst-card-inner{max-width:760px;text-align:center;padding:3rem 2.5rem}
-.kennst-nummer{display:block;font-size:.85rem;font-weight:600;color:var(--gold);letter-spacing:.2em;margin-bottom:1.4rem}
-.kennst-card h3{font-size:clamp(2rem,4.6vw,3.6rem);font-weight:600;letter-spacing:-.035em;color:var(--white);line-height:1.08;margin-bottom:1.4rem}
-.kennst-card p{font-size:clamp(1.05rem,1.5vw,1.25rem);color:var(--text-2);line-height:1.6;max-width:540px;margin:0 auto}
-@media (max-width:560px){.kennst-card{padding:1.25rem}.kennst-card-inner{padding:2rem .5rem}}
-
-/* Überschrift über den Sticky Cards („Kennst du das?“) */
-.kennst-du-das-titel{position:absolute;top:calc(var(--nav-h) + 28px);left:var(--gutter-l);right:var(--gutter-r);z-index:2;text-align:center;
-  font-size:clamp(2.8rem,7vw,5.5rem);line-height:1.1;font-weight:700;letter-spacing:-.045em;color:var(--white);text-wrap:balance}
-.kennst-card{padding-top:calc(var(--nav-h) + clamp(4.5rem,9vw,8rem))}
+/* ═══ KENNST DU DAS? – emotionaler Spiegel ══════════════════════════════ */
+.problem-section {
+  padding: 8rem 2rem; background: #000;
+  text-align: center;
+}
+.problem-inner { max-width: 760px; margin: 0 auto; }
+.problem-titel {
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  font-weight: 900; margin-bottom: 4rem;
+}
+.pt-gold { color: #c9a84c; }
+.pp {
+  font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+  color: rgba(255,255,255,0.35);
+  line-height: 1.6; margin-bottom: 1.5rem;
+  opacity: 0; transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease, color 0.6s ease;
+}
+.pp.sichtbar {
+  opacity: 1; transform: none;
+  color: rgba(255,255,255,0.85);
+}
+.bruecke {
+  margin-top: 5rem; padding-top: 4rem;
+  border-top: 1px solid rgba(201,168,76,0.2);
+}
+.bruecke-zeile1 {
+  font-size: clamp(1.3rem, 3vw, 2rem);
+  color: rgba(255,255,255,0.7); margin-bottom: 0.5rem;
+  opacity: 0; transform: translateY(15px);
+  transition: opacity 0.7s ease 0.2s, transform 0.7s ease 0.2s;
+}
+.bruecke-zeile2 {
+  font-size: clamp(1.5rem, 3.5vw, 2.4rem);
+  font-weight: 700; color: #c9a84c; font-style: italic;
+  opacity: 0; transform: translateY(15px);
+  transition: opacity 0.7s ease 0.5s, transform 0.7s ease 0.5s;
+}
+.bruecke-zeile1.sichtbar,
+.bruecke-zeile2.sichtbar { opacity: 1; transform: none; }
 
 /* ═══ HALTUNG: Feature-Zeilen im DJI-Stil ═════════════════════════════ */
 .haltung-section{background:var(--black);padding:clamp(110px,14vw,180px) 2rem}
@@ -208,5 +238,5 @@ dialog.modal[open] .modal-innen{animation:modal-ein .5s var(--weich) both}
 }
 
 @media (prefers-reduced-motion:reduce){
-  .scroll-indicator span{animation:none}
+  .scroll-pfeil{animation:none}
 }

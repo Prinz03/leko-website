@@ -62,42 +62,11 @@ FEATURES_L = [('waage', 'Rechtliche Orientierung', 'Obsorge, Besuchsrecht, Unter
 FEATURES_R = [('kontakt', 'Fachliche Kontakte', 'Direkter Zugang zu Familienrechts-Experten in Österreich.'),
               ('jarvis', 'Jarvis Vereinsassistent', 'KI-gestützte Antworten, Protokolle und Erinnerungen im Telegram.'),
               ('pokal', 'Sportevents &amp; Mitglieder', 'Gemeinsame Aktivitäten und ein exklusiver Bereich nur für Mitglieder.')]
-FEATURES = FEATURES_L + FEATURES_R
+FEATURES = [f for f in FEATURES_L + FEATURES_R if f[0] != 'jarvis']  # Jarvis gehört nicht in die Väter-App
 app_schritte = ''.join(
     f'\n        <div class="app-schritt" data-step="{n}"><span class="as-nr">{n + 1:02d}</span><h3>{h}</h3><p>{txt}</p></div>'
     for n, (_, h, txt) in enumerate(FEATURES))
 app_punkte = '<i></i>' * len(FEATURES)
-
-# ═══ Hero-Kompass (320 × 320, Mitte 160) ═══
-def kompass_svg():
-    k = 160
-    s = ['<circle cx="160" cy="160" r="152" fill="none" stroke="#c9a84c" stroke-width="2"/>',
-         '<circle cx="160" cy="160" r="136" fill="none" stroke="#f0d868" stroke-width="1" opacity=".8"/>']
-    for i in range(72):  # 72 Kerben à 5°, jede 45° lang
-        r1 = 136 if i % 9 == 0 else (142 if i % 3 == 0 else 146)
-        (x1, y1), (x2, y2) = pol(r1, i * 5, k), pol(152, i * 5, k)
-        s.append(f'<line x1="{x1}" y1="{y1}" x2="{x2}" y2="{y2}" stroke="#c9a84c" stroke-width="{1.6 if i % 9 == 0 else 1}"/>')
-    for b, g in (('N', 0), ('O', 90), ('S', 180), ('W', 270)):
-        x, y = pol(118, g, k)
-        s.append(f'<text x="{x}" y="{y}" text-anchor="middle" dominant-baseline="central" font-family="Inter,system-ui,sans-serif" font-size="17" font-weight="700" fill="#f0d868">{b}</text>')
-    rose = []
-    for n in range(8):  # 8-Punkte-Rose: lange Spitzen gold, kurze weiß
-        g = n * 45; lang = n % 2 == 0
-        spitze, seite = (100, 14) if lang else (62, 10)
-        tip, l, r = pol(spitze, g, k), pol(seite, g - 45, k), pol(seite, g + 45, k)
-        hell, dunkel = ('#f0d868', '#8a6d2a') if lang else ('#ffffff', '#9a9a9a')
-        teil = (f'<polygon points="{k},{k} {l[0]},{l[1]} {tip[0]},{tip[1]}" fill="{hell}"/>'
-                f'<polygon points="{k},{k} {r[0]},{r[1]} {tip[0]},{tip[1]}" fill="{dunkel}"/>')
-        rose.insert(len(rose) if lang else 0, teil)
-    s.append('<g opacity=".5">' + ''.join(rose) + '</g>')
-    s.append('<g class="nadel">'
-             '<polygon points="160,50 160,160 151,160" fill="#f0d868"/><polygon points="160,50 160,160 169,160" fill="#c9a84c"/>'
-             '<polygon points="160,270 160,160 151,160" fill="#ffffff"/><polygon points="160,270 160,160 169,160" fill="#bdbdbd"/>'
-             '<circle cx="160" cy="160" r="9" fill="#0b0b0b" stroke="#c9a84c" stroke-width="2"/><circle cx="160" cy="160" r="3.5" fill="#f0d868"/></g>')
-    return '<svg viewBox="0 0 320 320" xmlns="http://www.w3.org/2000/svg">' + ''.join(s) + '</svg>'
-
-
-KOMPASS = kompass_svg()
 
 # ═══ Haltung ═══
 I.update({
@@ -203,86 +172,51 @@ index = f'''<!DOCTYPE html>
 
 <main id="inhalt">
 
-<!-- ═══ 1 · HERO (Lichtbühne → Kompass beim Scrollen) ═══ -->
+<!-- ═══ 1 · HERO (sticky: das Licht wird stärker, der Text tritt stufenweise zurück) ═══ -->
 <section class="hero-outer" id="top">
-  <div class="hero-sticky">
+  <div class="hero-inner">
     <div class="hero-licht" aria-hidden="true"></div>
-
-    <div class="hero-content wrap">
-      <p class="eyebrow auftritt" style="--d:.5s">Es ist an der Zeit, Deinen Kompass neu auszurichten.</p>
-      <h1><span class="auftritt" style="--d:.8s">Stärker werden.</span><span class="gold-verlauf auftritt" style="--d:1.1s">Nicht allein.</span></h1>
-      <p class="lead auftritt" style="--d:1.25s">#LeKo ist die Gemeinschaft für Männer von 25 bis 50 in Kärnten: Bildungsseminare, Bewegung und Brüder, auf die du zählen kannst.</p>
-      <div class="knoepfe auftritt" style="--d:1.4s">
-        <a href="#mitglied" class="btn btn-gold">Jetzt Mitglied werden <span class="pfeil" aria-hidden="true">→</span></a>
-        <a href="#kontakt" class="btn btn-dunkel">Unverbindlich kennenlernen</a>
-      </div>
+    <p class="hero-pre auftritt" style="--d:.3s">Für Männer. In Kärnten. Ohne Ausrede.</p>
+    <h1 class="hero-h1">
+      <span class="h1-weiss auftritt" style="--d:.55s">Stärker werden.</span>
+      <span class="h1-gold auftritt" style="--d:.85s">Nicht allein.</span>
+    </h1>
+    <p class="hero-sub auftritt" style="--d:1.1s">#LeKo ist die Gemeinschaft für Männer von 25 bis 50 in Kärnten: Bildungsseminare, Bewegung und Brüder, auf die du zählen kannst.</p>
+    <div class="hero-ctas knoepfe auftritt" style="--d:1.25s">
+      <a href="#mitglied" class="btn btn-gold">Jetzt Mitglied werden <span class="pfeil" aria-hidden="true">→</span></a>
+      <a href="#saeulen" class="btn btn-dunkel">Unverbindlich kennenlernen</a>
     </div>
-
-    <div class="hero-kompass" aria-hidden="true">{KOMPASS}</div>
-
-    <div class="scroll-indicator" aria-hidden="true"><span></span></div>
-
+    <div class="scroll-pfeil" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+    </div>
   </div>
 </section>
 
-<!-- ═══ BRÜCKE ═══ -->
-<section class="bruecke-section">
-  <div class="bruecke-inner">
-    <p class="bruecken-satz">
-      <span>Du bist nicht allein damit.</span>
-      <span class="bruecken-gold">Es ist nicht zu spät.</span>
-    </p>
-  </div>
-</section>
-
-<!-- ═══ 2 · KENNST DU DAS (Sticky Cards) ═══ -->
-<section class="kennst-outer" id="kennst-du-das" aria-labelledby="kennst-titel">
-  <div class="kennst-sticky">
-    <h2 class="kennst-du-das-titel" id="kennst-titel">Kennst du das?</h2>
-    <div class="kennst-progress">
-      <div class="kennst-progress-bar" id="kennstBar"></div>
+<!-- ═══ 2 · KENNST DU DAS? (emotionaler Spiegel + Brücke) ═══ -->
+<section class="problem-section" id="problem" aria-labelledby="problem-titel">
+  <div class="problem-inner">
+    <h2 class="problem-titel" id="problem-titel">
+      <span class="pt-gold">Kennst du das?</span>
+    </h2>
+    <div class="problem-punkte">
+      <p class="pp" data-delay="0">Du gibst alles — und trotzdem reicht es nie.</p>
+      <p class="pp" data-delay="150">Du willst für deine Kinder da sein, aber der Alltag holt dich ein.</p>
+      <p class="pp" data-delay="300">Echte Gespräche? Fehlanzeige. Männer reden nicht.</p>
+      <p class="pp" data-delay="450">Du weißt, du könntest mehr sein. Dir fehlt nur der Rahmen.</p>
     </div>
-
-    <div class="kennst-card" data-index="0">
-      <div class="kennst-card-inner">
-        <span class="kennst-nummer">01</span>
-        <h3>Du willst mehr —<br>weißt aber nicht wie.</h3>
-        <p>Du spürst, dass da noch mehr in dir steckt. Aber der Alltag holt dich immer wieder ein. Und du weißt nicht, wo du anfangen sollst.</p>
-      </div>
-    </div>
-
-    <div class="kennst-card" data-index="1">
-      <div class="kennst-card-inner">
-        <span class="kennst-nummer">02</span>
-        <h3>Du fühlst dich<br>allein damit.</h3>
-        <p>In deinem Umfeld redet niemand über solche Dinge. Also hältst du es für dich. Dabei bräuchtest du genau jetzt jemanden, der zuhört.</p>
-      </div>
-    </div>
-
-    <div class="kennst-card" data-index="2">
-      <div class="kennst-card-inner">
-        <span class="kennst-nummer">03</span>
-        <h3>Der innere Kompass<br>zeigt kein Nord.</h3>
-        <p>Entscheidungen fallen schwer. Du weißt nicht, was wirklich zu dir passt — und was du nur glaubst, tun zu müssen.</p>
-      </div>
-    </div>
-
-    <div class="kennst-card" data-index="3">
-      <div class="kennst-card-inner">
-        <span class="kennst-nummer">04</span>
-        <h3>Du bist bereit.<br>Aber es fehlt der Rahmen.</h3>
-        <p>Du willst wachsen, Verantwortung übernehmen, Gleichgesinnte finden. Was fehlt, ist eine Gemeinschaft, die das mit dir trägt.</p>
-      </div>
+    <div class="bruecke">
+      <p class="bruecke-zeile1">Du bist nicht allein damit.</p>
+      <p class="bruecke-zeile2">Es ist nicht zu spät.</p>
     </div>
   </div>
 </section>
 
 <!-- ═══ 3 · 5 SÄULEN ═══ -->
-<section class="sektion saeulen buehnenlicht" id="saeulen" aria-labelledby="saeulen-titel">
+<section class="sektion saeulen saeulen-section buehnenlicht" id="saeulen" aria-labelledby="saeulen-titel">
   <div class="wrap">
-  <h2 class="ein" id="saeulen-titel">Die 5 Säulen von <em>#LeKo</em></h2>
-  <p class="lead saeulen-lead ein" style="--v:.1s">Jede Säule trägt. Gemeinsam tragen wir dich.</p>
-  <div class="saeulen-karten ein" role="list">{saeulen_karten}
+  <h2 id="saeulen-titel">Die 5 Säulen von <em>#LeKo</em></h2>
+  <p class="saeulen-lead">Jede Säule trägt. Gemeinsam tragen wir dich.</p>
+  <div class="saeulen-karten" role="list">{saeulen_karten}
   </div>
   </div>
 </section>

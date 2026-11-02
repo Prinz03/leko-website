@@ -1,4 +1,4 @@
-/* #LeKo – gemeinsame Logik: Header, Mobil-Menü, Impressum-Modal, Scroll-Einblendung, Akkordeons, Väter-App, Haltung */
+/* #LeKo – gemeinsame Logik: Header, Mobil-Menü, Impressum-Modal, Scroll-Einblendung, Akkordeons, Kennst du das?, Väter-App, Haltung */
 (function () {
   'use strict';
   var ruhig = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -92,6 +92,22 @@
     window.addEventListener('scroll', update, { passive: true });
     window.addEventListener('resize', update);
     update();
+  })();
+
+  // Kennst du das?: die vier Sätze leuchten nacheinander auf, danach die Brücke
+  (function initProblem() {
+    var els = document.querySelectorAll('.pp, .bruecke-zeile1, .bruecke-zeile2');
+    if (!els.length) return;
+    if (!('IntersectionObserver' in window) || ruhig) { els.forEach(function (el) { el.classList.add('sichtbar'); }); return; }
+    var obs = new IntersectionObserver(function (es) {
+      es.forEach(function (e) {
+        if (e.isIntersecting) {
+          setTimeout(function () { e.target.classList.add('sichtbar'); }, parseInt(e.target.dataset.delay || 0, 10));
+          obs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.3 });
+    els.forEach(function (el) { obs.observe(el); });
   })();
 
   // Haltung: Zeilen gleiten nacheinander von unten herein

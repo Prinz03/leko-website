@@ -9,66 +9,57 @@
 /* Lichtkegel hinter einem Motiv – wie die Produktbühne bei DJI */
 .buehnenlicht{background:radial-gradient(ellipse 48% 42% at 50% var(--ly,40%),rgba(201,168,76,.14),rgba(201,168,76,.04) 45%,transparent 72%),var(--black)}
 
-/* ─── 1 · Hero-Text (Einblendung beim Laden) ─────────────────────────── */
-.hero-content{display:grid;justify-items:center;gap:26px}
-.hero-content h1{display:grid;font-size:clamp(3.4rem,11vw,8.5rem);font-weight:700;line-height:.98;letter-spacing:-.05em}
-.hero-content .lead{max-width:36rem;margin:0 auto}
-.knoepfe.auftritt{margin-top:8px}
-.auftritt{opacity:0;transform:translateY(24px);animation:auftritt 1.4s var(--weich) forwards;animation-delay:var(--d,0s)}
-@keyframes auftritt{to{opacity:1;transform:none}}
+/* ─── 1 · Hero: Einblendung beim Laden ───────────────────────────────── */
+/* „backwards“: nach dem Einblenden übernimmt wieder das Scroll-Skript Deckkraft und Lage */
+.auftritt{animation:auftritt 1.4s var(--weich) backwards;animation-delay:var(--d,0s)}
+@keyframes auftritt{from{opacity:0;transform:translateY(24px)}}
 
-/* ─── 3 · Säulen: 5 Karten mit Gold-Verlauf-Rahmen ───────────────────── */
-.saeulen{--ly:30%;text-align:center}
-.saeulen-lead{text-align:center;margin:20px auto clamp(48px,7vw,80px)}
+/* ─── 3 · Säulen: 5 Premium-Karten mit Gold-Verlauf-Rahmen ─────────────── */
+.saeulen{--ly:30%}
+.saeulen-section { padding: 8rem 0; }
+.saeulen-section h2 {
+  text-align: center; font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 900; margin-bottom: 0.75rem; color: #fff;
+}
+.saeulen-lead {
+  text-align: center; color: rgba(255,255,255,0.5);
+  font-size: 1.1rem; margin-bottom: 4rem;
+}
 .saeulen-karten {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  gap: 1.25rem;
-  max-width: 1200px;
-  margin: 0 auto;
-  text-align: left;
+  gap: 1rem; max-width: 1200px; margin: 0 auto;
 }
+@media(max-width:900px){ .saeulen-karten{grid-template-columns:repeat(3,1fr);} }
+@media(max-width:600px){ .saeulen-karten{grid-template-columns:1fr;} }
+
 .saeule-karte-wrap {
-  background: linear-gradient(135deg, #c9a84c 0%, #2a1a00 50%, #c9a84c 100%);
-  border-radius: 8px;
-  padding: 1.5px;
+  background: linear-gradient(135deg,#c9a84c 0%,#1a0f00 50%,#c9a84c 100%);
+  border-radius: 12px; padding: 1.5px;
   transition: transform 0.3s ease, filter 0.3s ease;
 }
 .saeule-karte-wrap:hover { transform: translateY(-6px); filter: brightness(1.25); }
 .saeule-karte {
-  background: #111;
-  border-radius: 7px;
-  padding: 1.75rem 1.25rem;
-  height: 100%;
+  background: #0d0d0d; border-radius: 11px;
+  padding: 2rem 1.5rem; height: 100%;
   transition: box-shadow 0.3s;
 }
 .saeule-karte-wrap:hover .saeule-karte {
-  box-shadow: 0 0 40px rgba(201,168,76,0.25);
+  box-shadow: 0 0 50px rgba(201,168,76,0.3);
 }
 .sk-nr {
-  font-size: 3rem;
-  font-weight: 800;
-  color: #c9a84c;
-  line-height: 1;
-  letter-spacing: -.04em;
-  margin-bottom: 0.75rem;
+  font-size: 3.5rem; font-weight: 900;
+  color: rgba(201,168,76,0.25); line-height: 1;
+  margin-bottom: 1rem; letter-spacing: -0.04em;
 }
 .sk-name {
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: #fff;
-  letter-spacing: -.01em;
-  margin: 0 0 0.75rem;
+  font-size: 1.15rem; font-weight: 700;
+  color: #fff; margin: 0 0 0.75rem;
 }
 .sk-text {
-  font-size: 0.85rem;
-  color: rgba(255,255,255,0.55);
-  line-height: 1.7;
-  margin: 0;
+  font-size: 0.82rem; color: rgba(255,255,255,0.45);
+  line-height: 1.7; margin: 0;
 }
-@media (max-width:1100px){.saeulen-karten{grid-template-columns:repeat(3,1fr)}}
-@media (max-width:760px){.saeulen-karten{grid-template-columns:repeat(2,1fr)}}
-@media (max-width:520px){.saeulen-karten{grid-template-columns:1fr}}
 
 /* Akkordeon (FAQ) */
 .akk-item{border-bottom:1px solid var(--linie);transition:background .4s}
@@ -87,7 +78,7 @@
 .app .kopfzeile{margin-bottom:0}
 .app-sticky-outer {
   /* Höhe = Anzahl Features × 100vh + 1 Bildschirm, damit genug Scrollraum da ist */
-  min-height: 700vh;
+  min-height: 600vh;
   position: relative;
 }
 .app-sticky-inner {
@@ -192,24 +183,28 @@
 .handy-punkte i{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.2);transition:background .3s,box-shadow .3s}
 .handy-punkte i.an{background:var(--gold);box-shadow:0 0 8px var(--gold)}
 
-/* Mobil: kein Sticky, linear untereinander */
-@media (max-width: 768px) {
-  .app-sticky-outer { min-height: auto; }
+/* Mobil: kein Sticky – Handy oben, Features als nummerierte Liste darunter */
+@media(max-width:768px){
+  .app-sticky-outer { min-height: auto !important; }
   .app-sticky-inner {
-    position: static;
-    height: auto;
-    grid-template-columns: 1fr;
-    padding: 4rem 1.5rem;
+    position: static !important; height: auto !important;
+    display: flex; flex-direction: column;
+    padding: 4rem 1.5rem; gap: 3rem;
   }
-  .app-handy-wrap { order: -1; margin-bottom: 3rem; }
+  .app-handy-wrap { order: -1; }
   .app-handy { width: 250px; height: 460px; }
   .app-schritt {
-    position: static;
-    opacity: 1;
-    transform: none;
+    position: static !important;
+    opacity: 1 !important; transform: none !important;
     margin-bottom: 2.5rem;
+    border-left: 2px solid #c9a84c;
+    padding-left: 1.5rem;
   }
-  .app-schritt.aktiv { transform: none; }
+  .app-schritt .as-nr {
+    font-size: 2rem; display: block; margin-bottom: 0.5rem;
+  }
+  .app-schritt h3 { font-size: 1.2rem; margin-bottom: 0.5rem; }
+  .app-schritt p  { font-size: 0.9rem; }
 }
 
 /* ─── 6 · Mitglied ───────────────────────────────────────────────────── */
